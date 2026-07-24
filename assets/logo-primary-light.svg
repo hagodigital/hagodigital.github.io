@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="400" viewBox="0 0 1600 400">
+
+    <g transform="translate(36,80) scale(0.95)">
+
+    <g transform="translate(12,0)">
+      <!-- H stem and crossbar (ivory for dark backgrounds) -->
+      <path fill="#F7F6F2" d="M24 24H68V99H151V141H68V216H24V24Z"/>
+      <!-- D outer form (ivory for dark backgrounds) -->
+      <path fill="#F7F6F2" fill-rule="evenodd" d="M151 24H195C255 24 296 64 296 120C296 176 255 216 195 216H151V174H195C229 174 251 151 251 120C251 89 229 66 195 66H151V24Z"/>
+      <!-- Structural cutout matches the navy backdrop to read as negative space -->
+      <path fill="#0B1020" d="M111 216V156L172 95V67L211 106V147L193 129L154 168V216H111Z"/>
+      <!-- Blue accent path (brightened for contrast on navy) -->
+      <path fill="#5B7BFF" d="M126 216V164L182 108V84L204 106V130L193 119L145 167V216H126Z"/>
+    </g>
+    </g>
+
+        <g font-family="Manrope, Cabin, Arial, sans-serif" font-weight="600" font-size="165" letter-spacing="-5">
+          <text x="365" y="255" fill="#F7F6F2">Hago</text>
+          <text x="760" y="255" fill="#5B7BFF">Digital</text>
+        </g>
+
+    </svg>
