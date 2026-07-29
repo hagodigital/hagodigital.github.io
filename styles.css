@@ -406,11 +406,9 @@ main > section:nth-of-type(even){background:var(--bg-2)}
 
 :root{
   --ease:cubic-bezier(.16,1,.3,1);
-  --feature-line:rgba(211,162,74,.42);
-  --feature-wash:rgba(211,162,74,.08);
 }
-:root[data-theme="light"]{ --feature-line:rgba(138,101,22,.38); --feature-wash:rgba(138,101,22,.06); }
-@media (prefers-color-scheme: light){ :root:not([data-theme]){ --feature-line:rgba(138,101,22,.38); --feature-wash:rgba(138,101,22,.06); } }
+:root[data-theme="light"]{ }
+@media (prefers-color-scheme: light){ :root:not([data-theme]){ } }
 
 html{ scroll-behavior:smooth; }
 @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
@@ -467,15 +465,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .icard p{ font-size:.9rem; line-height:1.6; }
 .icard .ico{ margin-bottom:16px; border:1px solid var(--line); }
 
-/* the on-request tier — visually the top rung, still opt-in */
-.icard.feature{ border-color:var(--feature-line);
   background:linear-gradient(180deg, var(--feature-wash), transparent 68%), var(--surface); }
-.icard.feature:hover{ border-color:var(--gold-ink); box-shadow:0 26px 60px -38px rgba(211,162,74,.5); }
-.icard.feature .ico{ border-color:var(--feature-line); }
-.icard.feature .ico svg{ color:var(--gold-ink); }
-.icard-tag{ display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:1.6px;
-  text-transform:uppercase; color:var(--gold-ink); border:1px solid var(--feature-line);
-  border-radius:999px; padding:4px 10px; margin-bottom:12px; }
 
 /* ---- section label rule ---- */
 .sol-group{ margin-bottom:18px; }
@@ -485,16 +475,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
    v4 — accent pattern, CTA block, ads-card hover
    ============================================================ */
 
-/* the on-request card resolves to brand blue on hover, not gold */
-.icard.feature:hover{
   border-color:var(--accent);
   box-shadow:0 0 0 1px var(--accent), 0 28px 64px -38px var(--accent-glow);
   background:linear-gradient(180deg, var(--accent-wash), transparent 68%), var(--surface);
 }
-.icard.feature:hover .ico{ border-color:var(--accent); }
-.icard.feature:hover .ico svg{ color:var(--accent-ink); }
-.icard.feature:hover .icard-tag{ color:var(--accent-ink); border-color:var(--accent); }
-.icard.feature .ico, .icard.feature .ico svg, .icard.feature .icard-tag{
   transition:color .28s var(--ease), border-color .28s var(--ease);
 }
 
@@ -554,8 +538,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .icard::after, .step::after, .channel-card::after{ transition:none; }
 }
 
-/* the on-request tier keeps its gold rest state, resolves to blue like the rest */
-.icard.feature:hover{ background:linear-gradient(180deg, var(--accent-wash), transparent 68%), var(--surface-2); }
 
 /* step number carries the accent instead of a border */
 .step .n{ font-size:.8rem; font-weight:600; }
@@ -621,3 +603,83 @@ footer{ border-top:1px solid var(--line); padding:84px 0 34px; background:var(--
 .navlink:hover::after, .navlink.active::after{ width:100%; }
 .btn-primary svg{ transition:transform .25s var(--ease); }
 .btn-primary:hover svg{ transform:translateX(3px); }
+
+
+/* ============================================================
+   v6 — symmetry, inverted tier, movement
+   ============================================================ */
+
+/* ---- What I do: an even 2x2, every card the same size ---- */
+.what-grid{ display:grid; gap:20px; grid-template-columns:1fr; }
+@media(min-width:720px){ .what-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; } }
+
+.wcard{
+  position:relative; overflow:hidden; display:flex; flex-direction:column;
+  border:1px solid var(--line); border-radius:var(--radius); background:var(--surface);
+  padding:30px 28px 32px; min-height:236px;
+  transition:transform .3s var(--ease), border-color .3s var(--ease),
+             background .3s var(--ease), box-shadow .3s var(--ease);
+}
+.wcard::after{
+  content:''; position:absolute; left:0; top:0; height:2px; width:0;
+  background:var(--accent); transition:width .45s var(--ease);
+}
+.wcard:hover{
+  transform:translateY(-4px); border-color:var(--line-2); background:var(--surface-2);
+  box-shadow:0 26px 56px -36px rgba(0,0,0,.65);
+}
+.wcard:hover::after{ width:100%; }
+
+.wtag{
+  font-family:var(--mono); font-size:10px; letter-spacing:1.7px; text-transform:uppercase;
+  color:var(--ink-faint); margin-bottom:22px; transition:color .3s var(--ease);
+}
+.wcard .ico{
+  width:42px; height:42px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+  background:var(--accent-wash); border:1px solid var(--line); margin-bottom:18px;
+  transition:background .3s var(--ease), border-color .3s var(--ease);
+}
+.wcard .ico svg{ width:20px; height:20px; color:var(--accent-ink); transition:color .3s var(--ease); }
+.wcard h4{ font-size:1.1rem; margin:0 0 9px; letter-spacing:-.015em; transition:color .3s var(--ease); }
+.wcard p{ font-size:.9rem; line-height:1.62; color:var(--ink-soft); margin:0; transition:color .3s var(--ease); }
+
+/* the on-request tier inverts on hover — the opposite of every other card */
+.wcard.invert:hover{
+  background:var(--accent); border-color:var(--accent);
+  box-shadow:0 26px 60px -30px var(--accent-glow);
+}
+.wcard.invert:hover::after{ width:0; }
+.wcard.invert:hover h4,
+.wcard.invert:hover p,
+.wcard.invert:hover .wtag{ color:var(--btn-ink); }
+.wcard.invert:hover .ico{ background:color-mix(in srgb, var(--btn-ink) 14%, transparent); border-color:transparent; }
+.wcard.invert:hover .ico svg{ color:var(--btn-ink); }
+
+@media (prefers-reduced-motion: reduce){
+  .wcard{ transition:none; }
+  .wcard:hover{ transform:none; }
+  .wcard::after{ transition:none; }
+}
+
+/* ---- movement ---- */
+@keyframes drift{
+  0%   { transform:translate3d(0,0,0) scale(1); }
+  50%  { transform:translate3d(-3%,2%,0) scale(1.06); }
+  100% { transform:translate3d(0,0,0) scale(1); }
+}
+.hero::before{ animation:drift 22s ease-in-out infinite; will-change:transform; }
+
+/* trades reveal in sequence rather than all at once */
+.trades.in-view li{ animation:rise .5s var(--ease) both; }
+.trades.in-view li:nth-child(1){animation-delay:.02s} .trades.in-view li:nth-child(2){animation-delay:.05s}
+.trades.in-view li:nth-child(3){animation-delay:.08s} .trades.in-view li:nth-child(4){animation-delay:.11s}
+.trades.in-view li:nth-child(5){animation-delay:.14s} .trades.in-view li:nth-child(6){animation-delay:.17s}
+.trades.in-view li:nth-child(7){animation-delay:.20s} .trades.in-view li:nth-child(8){animation-delay:.23s}
+.trades.in-view li:nth-child(9){animation-delay:.26s} .trades.in-view li:nth-child(10){animation-delay:.29s}
+.trades.in-view li:nth-child(11){animation-delay:.32s} .trades.in-view li:nth-child(12){animation-delay:.35s}
+.trades.in-view li:nth-child(13){animation-delay:.38s} .trades.in-view li:nth-child(14){animation-delay:.41s}
+
+@media (prefers-reduced-motion: reduce){
+  .hero::before{ animation:none; }
+  .trades.in-view li{ animation:none; }
+}
