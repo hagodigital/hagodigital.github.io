@@ -80,23 +80,77 @@
 <div class="wrap">
 
   <section class="tight reveal">
-    <h2>Two ways to reach us</h2>
+    <h2>Three ways to reach us</h2>
     <div class="contact-channels">
       <div class="channel-card">
-        <h3>Email</h3>
-        <a href="mailto:jp@hagodigital.ai?subject=Fit%20Call%20request">jp@hagodigital.ai</a>
+        <h3>Call</h3>
+        <a href="tel:+61432244202">+61 432 244 202</a>
       </div>
       <div class="channel-card">
         <h3>WhatsApp</h3>
         <a href="https://wa.me/61432244202">+61 432 244 202</a>
       </div>
+      <div class="channel-card">
+        <h3>Email</h3>
+        <a href="mailto:jp@hagodigital.ai?subject=Fit%20Call%20request">jp@hagodigital.ai</a>
+      </div>
     </div>
     <p class="lede" style="margin-top:18px;">Every enquiry gets a real, personal reply — not an autoresponder pretending to be one.</p>
   </section>
 
+  <section class="tight reveal" id="enquire">
+    <h2>Or tell us what's going on</h2>
+    <p class="lede">Fill this in and we'll come to the call already knowing something useful about your business, instead of spending the first ten minutes catching up.</p>
+
+    <form class="leadform" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="96e08144-d329-4fc8-ac25-4dcb30b21a0b">
+      <input type="hidden" name="subject" value="New enquiry from hagodigital.ai">
+      <input type="hidden" name="from_name" value="hagodigital.ai">
+      <input type="hidden" name="redirect" value="https://hagodigital.ai/thanks.html">
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <div class="row">
+        <div class="field">
+          <label for="f-name">Your name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="f-business">Business name</label>
+          <input id="f-business" name="business" type="text" autocomplete="organization" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+        </div>
+        <div class="field">
+          <label for="f-phone">Phone <span class="opt">(optional)</span></label>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-link">Website or Google Business Profile <span class="opt">(optional)</span></label>
+        <input id="f-link" name="link" type="text" inputmode="url" aria-describedby="f-link-hint">
+        <span class="hint" id="f-link-hint">If you don't have either yet, that's useful to know too — just leave it blank.</span>
+      </div>
+
+      <div class="field">
+        <label for="f-message">What's going on?</label>
+        <textarea id="f-message" name="message" required aria-describedby="f-message-hint"></textarea>
+        <span class="hint" id="f-message-hint">What you do, and what's not working right now. A couple of sentences is plenty.</span>
+      </div>
+
+      <button class="btn btn-primary" type="submit">Send enquiry</button>
+      <p class="form-note">Goes straight to JP's inbox. No newsletter, no automated sequence, and your details aren't shared with anyone.</p>
+    </form>
+  </section>
+
   <section class="tight reveal">
     <h2>What happens on the call</h2>
-    <p class="lede">We'll talk about where your business is right now, what's working and what isn't, and whether HagoDigital's model — build the Foundation, then fill it with customers — actually fits what you need. If it's not a fit, we'll say so.</p>
+    <p class="lede">We'll talk about where your business is right now, what's working and what isn't, and whether what we do — getting you found on Google, and chosen once you're found — actually fits what you need. If it's not a fit, we'll say so.</p>
   </section>
 
   <section class="tight reveal">
@@ -108,7 +162,8 @@
     <div class="final">
       <h2>Book a Fit Call</h2>
       <p>20 minutes. No pitch deck — just whether it's a fit.</p>
-      <a class="btn btn-primary" href="mailto:jp@hagodigital.ai?subject=Fit%20Call%20request">Book a Fit Call</a>
+      <a class="btn btn-primary" href="#enquire">Book a Fit Call</a>
+      <span class="btn-sub">Or call <a href="tel:+61432244202">+61 432 244 202</a></span>
     </div>
   </section>
 

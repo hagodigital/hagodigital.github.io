@@ -240,11 +240,38 @@ footer{ border-top:1px solid var(--line); padding:56px 0 40px; background:var(--
 
 /* ===== Contact page ===== */
 .contact-channels{ display:grid; gap:16px; margin-top:24px; }
-@media(min-width:640px){ .contact-channels{ grid-template-columns:1fr 1fr; } }
+@media(min-width:640px){ .contact-channels{ grid-template-columns:repeat(3,1fr); } }
 .channel-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); padding:24px; text-align:center; transition:.2s ease; }
 .channel-card:hover{ border-color:var(--line-2); background:var(--surface-2); }
 .channel-card h3{ font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 10px; font-weight:600; }
 .channel-card a{ font-weight:700; font-size:1.1rem; color:var(--accent-ink); }
+
+/* ===== Enquiry form ===== */
+.leadform{ display:flex; flex-direction:column; gap:18px; margin-top:26px; max-width:640px; }
+.leadform .row{ display:grid; gap:18px; }
+@media(min-width:620px){ .leadform .row{ grid-template-columns:1fr 1fr; } }
+.field{ display:flex; flex-direction:column; gap:7px; }
+.field label{ font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; }
+.field label .opt{ text-transform:none; letter-spacing:0; font-weight:500; }
+.field input,
+.field textarea{
+  font-family:var(--sans); font-size:1rem; color:var(--ink);
+  background:var(--surface); border:1px solid var(--ink-faint); border-radius:var(--radius-sm);
+  padding:13px 15px; width:100%; transition:border-color .18s ease, box-shadow .18s ease;
+  -webkit-appearance:none; appearance:none;
+}
+.field textarea{ min-height:130px; resize:vertical; line-height:1.55; }
+.field input:hover,
+.field textarea:hover{ border-color:var(--ink-soft); }
+.field input:focus-visible,
+.field textarea:focus-visible{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow); }
+.field input:user-invalid,
+.field textarea:user-invalid{ border-color:#E8836F; }
+.field .hint{ font-size:.8rem; color:var(--ink-soft); }
+.leadform .hp{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+.leadform button[type="submit"]{ align-self:flex-start; border:0; cursor:pointer; }
+.form-note{ font-size:.82rem; color:var(--ink-soft); max-width:52ch; }
+.form-note a{ color:var(--accent-ink); }
 
 /* ===== FAQ (How We Work detail) ===== */
 .faq{ display:flex; flex-direction:column; gap:12px; margin-top:24px; }
