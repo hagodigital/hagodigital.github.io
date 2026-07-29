@@ -84,7 +84,7 @@ a{ color:var(--accent-ink); text-decoration:none; }
 }
 .eyebrow::before{ content:""; width:22px; height:1px; background:var(--accent); opacity:.6; }
 .accent{ color:var(--accent-ink); }
-.hl{ color:var(--ink); background:linear-gradient(transparent 62%, var(--accent-wash) 62%); padding:0 .06em; }
+.hl{ color:var(--accent-ink); }
 
 /* section rhythm */
 section{ padding:96px 0; position:relative; }
@@ -479,3 +479,50 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* ---- section label rule ---- */
 .sol-group{ margin-bottom:18px; }
+
+
+/* ============================================================
+   v4 — accent pattern, CTA block, ads-card hover
+   ============================================================ */
+
+/* the on-request card resolves to brand blue on hover, not gold */
+.icard.feature:hover{
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px var(--accent), 0 28px 64px -38px var(--accent-glow);
+  background:linear-gradient(180deg, var(--accent-wash), transparent 68%), var(--surface);
+}
+.icard.feature:hover .ico{ border-color:var(--accent); }
+.icard.feature:hover .ico svg{ color:var(--accent-ink); }
+.icard.feature:hover .icard-tag{ color:var(--accent-ink); border-color:var(--accent); }
+.icard.feature .ico, .icard.feature .ico svg, .icard.feature .icard-tag{
+  transition:color .28s var(--ease), border-color .28s var(--ease);
+}
+
+/* larger primary button for the closing CTA */
+.btn-lg{ min-height:54px; padding:16px 28px; font-size:.98rem; border-radius:100px; }
+
+/* ---- closing CTA block ---- */
+.final{
+  border:1px solid var(--line-2); border-radius:24px;
+  background:radial-gradient(80% 130% at 50% 0%, var(--accent-wash), transparent 62%), var(--bg-2);
+  text-align:center; padding:76px 40px 68px;
+}
+.final .eyebrow{ justify-content:center; margin-bottom:18px; }
+.final h2{ margin:0 auto 16px; max-width:18ch; font-size:clamp(2rem,4.2vw,2.9rem); line-height:1.1; }
+.final p{ color:var(--ink-soft); font-size:1.05rem; max-width:46ch; margin:0 auto 34px; line-height:1.6; }
+.final-meta{
+  list-style:none; margin:34px 0 0; padding:0;
+  display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px 22px;
+  font-family:var(--mono); font-size:.76rem; letter-spacing:.04em; color:var(--ink-faint);
+}
+.final-meta li{ display:flex; align-items:center; gap:22px; }
+.final-meta li + li::before{ content:''; width:3px; height:3px; border-radius:50%; background:var(--line-2); flex:none; }
+.final-meta a{ color:var(--ink-soft); transition:color .2s var(--ease); }
+.final-meta a:hover{ color:var(--accent-ink); }
+@media(max-width:720px){
+  .final{ padding:56px 24px 52px; border-radius:20px; }
+  .final p{ font-size:1rem; }
+  .final-meta{ gap:12px; flex-direction:column; }
+  .final-meta li + li::before{ display:none; }
+  .final-meta li{ gap:0; }
+}
