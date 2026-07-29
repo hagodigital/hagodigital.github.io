@@ -465,7 +465,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .icard p{ font-size:.9rem; line-height:1.6; }
 .icard .ico{ margin-bottom:16px; border:1px solid var(--line); }
 
-  background:linear-gradient(180deg, var(--feature-wash), transparent 68%), var(--surface); }
 
 /* ---- section label rule ---- */
 .sol-group{ margin-bottom:18px; }
@@ -475,12 +474,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
    v4 — accent pattern, CTA block, ads-card hover
    ============================================================ */
 
-  border-color:var(--accent);
-  box-shadow:0 0 0 1px var(--accent), 0 28px 64px -38px var(--accent-glow);
-  background:linear-gradient(180deg, var(--accent-wash), transparent 68%), var(--surface);
-}
-  transition:color .28s var(--ease), border-color .28s var(--ease);
-}
 
 /* larger primary button for the closing CTA */
 .btn-lg{ min-height:54px; padding:16px 28px; font-size:.98rem; border-radius:100px; }
