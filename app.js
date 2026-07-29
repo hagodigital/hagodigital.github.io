@@ -28,17 +28,34 @@
   var navPanel = document.getElementById('navPanel');
 
   if (navToggle && navPanel) {
+    function setNav(open) {
+      navPanel.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+
     navToggle.addEventListener('click', function () {
-      var isOpen = navPanel.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      setNav(!navPanel.classList.contains('open'));
     });
 
     // Close the mobile panel after a link is tapped
     navPanel.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        navPanel.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', function () { setNav(false); });
+    });
+
+    // Escape closes it, and focus returns to the button that opened it
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navPanel.classList.contains('open')) {
+        setNav(false);
+        navToggle.focus();
+      }
+    });
+
+    // Tapping anywhere outside the panel closes it
+    document.addEventListener('click', function (e) {
+      if (!navPanel.classList.contains('open')) return;
+      if (navPanel.contains(e.target) || navToggle.contains(e.target)) return;
+      setNav(false);
     });
   }
 
