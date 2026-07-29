@@ -133,7 +133,16 @@ nav.top{ position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--
   .navlink,.nav-cta,.theme-toggle{ width:100%; text-align:left; padding:14px 4px; border-bottom:1px solid var(--line); border-radius:0; }
   .nav-cta{ background:none; color:var(--accent-ink); }
   .navtoggle{ display:flex; }
+  /* Dimmed backdrop while the menu is open: marks it as a layer and makes
+     tap-anywhere-to-dismiss discoverable. Sits behind the bar and the panel,
+     above the page. Clicks land on nav.top, which the outside-tap handler closes. */
+  nav.top:has(.navlinks.open)::after{
+    content:""; position:fixed; inset:0; z-index:-1;
+    background:rgba(0,0,0,.5); animation:scrim-in .2s ease both;
+  }
 }
+@keyframes scrim-in{ from{ opacity:0; } to{ opacity:1; } }
+@media(prefers-reduced-motion:reduce){ nav.top:has(.navlinks.open)::after{ animation:none; } }
 
 /* ===== Hero ===== */
 .hero{ position:relative; overflow:hidden; padding:104px 0 88px; border-bottom:1px solid var(--line); }
