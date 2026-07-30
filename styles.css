@@ -120,6 +120,13 @@ nav.top{ position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--
 .theme-toggle{ background:transparent; border:1px solid var(--line-2); color:var(--ink-soft); font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; padding:8px 12px; border-radius:100px; cursor:pointer; }
 .theme-toggle:hover{ color:var(--ink); border-color:var(--accent); }
 .nav-cta{ background:var(--accent); color:var(--btn-ink); font-weight:600; font-size:.85rem; padding:9px 16px; border-radius:100px; white-space:nowrap; }
+/* Phone link. Deliberately OUTSIDE .navlinks so it stays visible on mobile while
+   the panel is collapsed — someone who wants to talk right now shouldn't have to
+   open a menu to find the number. margin-left:auto groups it with the nav on
+   desktop and pins it beside the hamburger on mobile, from one rule. */
+.nav-phone{ margin-left:auto; display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:.78rem; font-weight:600; color:var(--accent-ink); border:1px solid var(--line-2); padding:8px 14px; border-radius:100px; white-space:nowrap; }
+.nav-phone:hover{ color:var(--ink); border-color:var(--accent); }
+.nav-phone svg{ width:14px; height:14px; flex:none; }
 .navtoggle{ display:none; background:none; border:none; cursor:pointer; padding:8px; flex-direction:column; gap:5px; }
 .navtoggle span{ width:22px; height:2px; background:var(--ink); display:block; border-radius:2px; transition:transform .2s ease, opacity .15s ease; }
 /* Open state: the three bars become an X, so the button reads as "close" */
@@ -128,6 +135,8 @@ nav.top{ position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--
 .navtoggle[aria-expanded="true"] span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
 @media(prefers-reduced-motion:reduce){ .navtoggle span{ transition:none; } }
 @media(max-width:820px){
+  /* Tighten so logo + number + hamburger all fit across a narrow phone. */
+  .nav-phone{ padding:7px 11px; font-size:.74rem; gap:6px; }
   .navlinks{ position:fixed; inset:97px 0 auto 0; background:var(--surface); border-bottom:1px solid var(--line); flex-direction:column; align-items:stretch; gap:0; padding:8px 24px 20px; transform:translateY(-8px); opacity:0; pointer-events:none; transition:.2s; }
   .navlinks.open{ transform:none; opacity:1; pointer-events:auto; }
   .navlink,.nav-cta,.theme-toggle{ width:100%; text-align:left; padding:14px 4px; border-bottom:1px solid var(--line); border-radius:0; }
