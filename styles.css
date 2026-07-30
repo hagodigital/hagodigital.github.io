@@ -700,45 +700,6 @@ footer{ border-top:1px solid var(--line); padding:84px 0 34px; background:var(--
   .trades.in-view li{ animation:none; }
 }
 
-/* ===== Pricing ===== */
-.price-grid{ display:grid; gap:20px; grid-template-columns:1fr; }
-@media(min-width:720px){ .price-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; } }
-
-.pcard{
-  position:relative; overflow:hidden; display:flex; flex-direction:column;
-  border:1px solid var(--line); border-radius:var(--radius); background:var(--surface);
-  padding:30px 28px 32px;
-  transition:transform .28s var(--ease), border-color .28s var(--ease),
-             background .28s var(--ease), box-shadow .28s var(--ease);
-}
-.pcard::after{
-  content:''; position:absolute; left:0; top:0; height:2px; width:0;
-  background:var(--accent); transition:width .45s var(--ease);
-}
-.pcard:hover{
-  transform:translateY(-4px); border-color:var(--line-2); background:var(--surface-2);
-  box-shadow:0 26px 56px -36px rgba(0,0,0,.65);
-}
-.pcard:hover::after{ width:100%; }
-.pcard h4{ font-size:1.1rem; margin:0 0 14px; letter-spacing:-.015em; }
-
-.pfig{ font-size:clamp(2.1rem,4.6vw,2.7rem); letter-spacing:-.04em; color:var(--ink); line-height:1; margin-bottom:8px; }
-.psub{ font-family:var(--mono); font-size:.72rem; letter-spacing:.04em; color:var(--ink-faint);
-  padding-bottom:18px; margin-bottom:18px; border-bottom:1px solid var(--line); }
-
-.plist{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
-.plist li{ position:relative; padding-left:24px; font-size:.9rem; line-height:1.6; color:var(--ink-soft); }
-.plist li::before{
-  content:''; position:absolute; left:0; top:.52em; width:9px; height:9px; border-radius:50%;
-  background:var(--accent-wash); border:1px solid var(--accent);
-}
-
-.pnote{ margin-top:22px; border:1px solid var(--line); border-radius:var(--radius);
-  background:var(--bg-2); padding:24px 26px; }
-.pnote p{ margin:0; font-size:.95rem; color:var(--ink-soft); }
-.pnote .gsub{ margin-top:10px; font-size:.88rem; color:var(--ink-faint); }
-
-@media (prefers-reduced-motion: reduce){
-  .pcard{ transition:none; }
-  .pcard:hover{ transform:none; }
-}
+/* Pricing section removed 2026-07-30 (JP) — figures came off the site entirely.
+   .price-grid / .pcard / .pfig / .psub / .plist / .pnote deleted with it.
+   .wtag is NOT pricing-only — it is still used by the offer grid above. */
