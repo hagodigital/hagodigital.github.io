@@ -204,7 +204,7 @@ nav.top{ position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--
 .icard:hover{ border-color:var(--line-2); background:var(--surface-2); }
 .icard .ico{ width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:var(--accent-wash); border:1px solid var(--line); margin-bottom:14px; }
 .icard .ico svg{ width:20px; height:20px; color:var(--accent); }
-.icard h4{ font-size:1rem; margin:0 0 6px; letter-spacing:-.01em; }
+.icard h3{ font-size:1rem; margin:0 0 6px; letter-spacing:-.01em; }
 .icard p{ font-size:.88rem; color:var(--ink-soft); margin:0; }
 
 /* ===== Steps ===== */
@@ -213,7 +213,7 @@ nav.top{ position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--
 .step{ border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--surface); padding:24px; }
 .step .n{ counter-increment:s; font-family:var(--mono); font-size:.72rem; color:var(--accent-ink); letter-spacing:.1em; }
 .step .n::before{ content:"0" counter(s); }
-.step h4{ font-size:1rem; margin:10px 0 6px; }
+.step h3{ font-size:1rem; margin:10px 0 6px; }
 .step p{ font-size:.86rem; color:var(--ink-soft); margin:0; }
 
 /* ===== Honest proof panel ===== */
@@ -243,7 +243,7 @@ nav.top{ position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--
 footer{ border-top:1px solid var(--line); padding:56px 0 40px; background:var(--bg-2); }
 .foot-grid{ display:grid; gap:32px; }
 @media(min-width:720px){ .foot-grid{ grid-template-columns:1.5fr 1fr 1fr 1fr; } }
-.foot-grid h5{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 14px; }
+.foot-grid h3{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 14px; }
 .foot-grid a{ display:block; color:var(--ink-soft); font-size:.9rem; margin-bottom:10px; }
 .foot-grid a:hover{ color:var(--ink); }
 .foot-bot{ margin-top:40px; padding-top:20px; border-top:1px solid var(--line); font-family:var(--mono); font-size:.72rem; color:var(--ink-faint); letter-spacing:.03em; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
@@ -484,7 +484,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* ---- cards ---- */
 .icard{ padding:26px 24px 28px; transition:transform .28s var(--ease), border-color .28s var(--ease), background .28s var(--ease), box-shadow .28s var(--ease); }
 .icard:hover{ transform:translateY(-3px); }
-.icard h4{ font-size:1.06rem; margin:0 0 8px; }
+.icard h3{ font-size:1.06rem; margin:0 0 8px; }
 .icard p{ font-size:.9rem; line-height:1.6; }
 .icard .ico{ margin-bottom:16px; border:1px solid var(--line); }
 
@@ -557,7 +557,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* step number carries the accent instead of a border */
 .step .n{ font-size:.8rem; font-weight:600; }
-.step h4{ font-size:1.04rem; margin:12px 0 8px; }
+.step h3{ font-size:1.04rem; margin:12px 0 8px; }
 .step p{ font-size:.88rem; line-height:1.6; }
 
 /* ---- trades: a list that reacts ---- */
@@ -592,7 +592,7 @@ footer{ border-top:1px solid var(--line); padding:84px 0 34px; background:var(--
 
 .foot-nav{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:34px 28px; }
 @media(min-width:620px){ .foot-nav{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
-.foot-nav h5{
+.foot-nav h3{
   font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
   color:var(--ink-faint); margin:0 0 16px; padding-bottom:12px; border-bottom:1px solid var(--line);
 }
@@ -625,9 +625,9 @@ footer{ border-top:1px solid var(--line); padding:84px 0 34px; background:var(--
    v6 — symmetry, inverted tier, movement
    ============================================================ */
 
-/* ---- What I do: an even 2x2, every card the same size ---- */
-.what-grid{ display:grid; gap:20px; grid-template-columns:1fr; }
-@media(min-width:720px){ .what-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; } }
+/* ---- What I do: auto-fit so the card count can change without leaving an orphan ---- */
+.what-grid{ display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
+@media(min-width:720px){ .what-grid{ gap:22px; } }
 
 .wcard{
   position:relative; overflow:hidden; display:flex; flex-direction:column;
@@ -656,20 +656,8 @@ footer{ border-top:1px solid var(--line); padding:84px 0 34px; background:var(--
   transition:background .3s var(--ease), border-color .3s var(--ease);
 }
 .wcard .ico svg{ width:20px; height:20px; color:var(--accent-ink); transition:color .3s var(--ease); }
-.wcard h4{ font-size:1.1rem; margin:0 0 9px; letter-spacing:-.015em; transition:color .3s var(--ease); }
+.wcard h3{ font-size:1.1rem; margin:0 0 9px; letter-spacing:-.015em; transition:color .3s var(--ease); }
 .wcard p{ font-size:.9rem; line-height:1.62; color:var(--ink-soft); margin:0; transition:color .3s var(--ease); }
-
-/* the on-request tier inverts on hover — the opposite of every other card */
-.wcard.invert:hover{
-  background:var(--accent); border-color:var(--accent);
-  box-shadow:0 26px 60px -30px var(--accent-glow);
-}
-.wcard.invert:hover::after{ width:0; }
-.wcard.invert:hover h4,
-.wcard.invert:hover p,
-.wcard.invert:hover .wtag{ color:var(--btn-ink); }
-.wcard.invert:hover .ico{ background:color-mix(in srgb, var(--btn-ink) 14%, transparent); border-color:transparent; }
-.wcard.invert:hover .ico svg{ color:var(--btn-ink); }
 
 @media (prefers-reduced-motion: reduce){
   .wcard{ transition:none; }
