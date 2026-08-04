@@ -118,8 +118,10 @@ nav.top{ position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--
 .navlinks{ display:flex; align-items:center; gap:24px; }
 .navlink{ font-size:.9rem; font-weight:500; color:var(--ink-soft); white-space:nowrap; }
 .navlink:hover{ color:var(--ink); }
-.theme-toggle{ background:transparent; border:1px solid var(--line-2); color:var(--ink-soft); font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; padding:8px 12px; border-radius:100px; cursor:pointer; }
-.theme-toggle:hover{ color:var(--ink); border-color:var(--accent); }
+/* Both are controls with no fill, so the border IS the control boundary and
+   carries the 3:1 of SC 1.4.11 — hence --edge, not the decorative --line-2. */
+.theme-toggle,.lang-toggle{ display:inline-flex; align-items:center; background:transparent; border:1px solid var(--edge); color:var(--ink-soft); font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; padding:8px 12px; border-radius:100px; cursor:pointer; }
+.theme-toggle:hover,.lang-toggle:hover{ color:var(--ink); border-color:var(--accent); }
 .nav-cta{ background:var(--accent); color:var(--btn-ink); font-weight:600; font-size:.85rem; padding:9px 16px; border-radius:100px; white-space:nowrap; }
 /* Phone link. Deliberately OUTSIDE .navlinks so it stays visible on mobile while
    the panel is collapsed — someone who wants to talk right now shouldn't have to
@@ -142,7 +144,7 @@ nav.top{ position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--
   .navlinks.open{ transform:none; opacity:1; pointer-events:auto; }
   /* 14px vertical clears the 44px tap target in tokens/hagodigital.json on every
      row. Measured at 360px: navlink 52, theme-toggle 44, nav-cta 50.8. */
-  .navlink,.nav-cta,.theme-toggle{ width:100%; text-align:left; padding:14px 4px; border-bottom:1px solid var(--line); border-radius:0; }
+  .navlink,.nav-cta,.theme-toggle,.lang-toggle{ width:100%; text-align:left; padding:14px 4px; border-bottom:1px solid var(--line); border-radius:0; }
   .nav-cta{ background:none; color:var(--accent-ink); }
   .navtoggle{ display:flex; }
   /* Dimmed backdrop while the menu is open: marks it as a layer and makes
