@@ -14,7 +14,8 @@
   --surface:#0E1422;       /* card */
   --surface-2:#121A2B;     /* raised card / hover */
   --line:rgba(255,255,255,.08);
-  --line-2:rgba(255,255,255,.14);
+  --line-2:rgba(255,255,255,.14);   /* decorative dividers and hover edges only */
+  --edge:rgba(255,255,255,.34);     /* control boundaries — 3.02:1 on --bg, WCAG SC 1.4.11 */
   --ink:#EEF1F8;           /* headings */
   --ink-soft:#AAB2C6;      /* body */
   --ink-faint:#7B85A1;     /* muted / labels */
@@ -41,7 +42,7 @@
 :root[data-theme="light"]{
   color-scheme:light;
   --bg:#F7F6F2; --bg-2:#EFEEE8; --surface:#FFFFFF; --surface-2:#F4F4EF;
-  --line:rgba(11,16,32,.10); --line-2:rgba(11,16,32,.16);
+  --line:rgba(11,16,32,.10); --line-2:rgba(11,16,32,.16); --edge:rgba(11,16,32,.46);
   --ink:#0B1020; --ink-soft:#454B5C; --ink-faint:#5F6476;
   --accent:#315CFF; --accent-ink:#274BD6; --accent-glow:rgba(49,92,255,.25); --accent-wash:rgba(49,92,255,.08);
   --btn-ink:#FFFFFF;
@@ -52,7 +53,7 @@
   :root:not([data-theme]){
     color-scheme:light;
     --bg:#F7F6F2; --bg-2:#EFEEE8; --surface:#FFFFFF; --surface-2:#F4F4EF;
-    --line:rgba(11,16,32,.10); --line-2:rgba(11,16,32,.16);
+    --line:rgba(11,16,32,.10); --line-2:rgba(11,16,32,.16); --edge:rgba(11,16,32,.46);
     --ink:#0B1020; --ink-soft:#454B5C; --ink-faint:#5F6476;
     --accent:#315CFF; --accent-ink:#274BD6; --accent-glow:rgba(49,92,255,.25); --accent-wash:rgba(49,92,255,.08);
     --btn-ink:#FFFFFF;
@@ -99,7 +100,7 @@ h2{ font-size:clamp(1.7rem,3.6vw,2.5rem); margin:0 0 16px; max-width:20ch; }
 .btn svg{ width:16px; height:16px; }
 .btn-primary{ background:var(--accent); color:var(--btn-ink); box-shadow:0 0 0 1px var(--accent), 0 8px 30px -8px var(--accent-glow); }
 .btn-primary:hover{ transform:translateY(-1px); box-shadow:0 0 0 1px var(--accent), 0 12px 36px -8px var(--accent-glow); }
-.btn-ghost{ background:transparent; color:var(--ink); border-color:var(--line-2); }
+.btn-ghost{ background:transparent; color:var(--ink); border-color:var(--edge); }
 .btn-ghost:hover{ border-color:var(--accent); color:var(--accent-ink); }
 .btn-sub{ display:block; margin-top:12px; font-family:var(--mono); font-size:.74rem; color:var(--ink-faint); letter-spacing:.02em; }
 
@@ -139,6 +140,8 @@ nav.top{ position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--
   .nav-phone{ padding:7px 11px; font-size:.74rem; gap:6px; }
   .navlinks{ position:fixed; inset:97px 0 auto 0; background:var(--surface); border-bottom:1px solid var(--line); flex-direction:column; align-items:stretch; gap:0; padding:8px 24px 20px; transform:translateY(-8px); opacity:0; pointer-events:none; transition:.2s; }
   .navlinks.open{ transform:none; opacity:1; pointer-events:auto; }
+  /* 14px vertical clears the 44px tap target in tokens/hagodigital.json on every
+     row. Measured at 360px: navlink 52, theme-toggle 44, nav-cta 50.8. */
   .navlink,.nav-cta,.theme-toggle{ width:100%; text-align:left; padding:14px 4px; border-bottom:1px solid var(--line); border-radius:0; }
   .nav-cta{ background:none; color:var(--accent-ink); }
   .navtoggle{ display:flex; }
@@ -611,12 +614,18 @@ footer{ border-top:1px solid var(--line); padding:84px 0 34px; background:var(--
 }
 
 /* ---- small consistency touches ---- */
-.navlink{ position:relative; padding-bottom:2px; }
-.navlink::after{
-  content:''; position:absolute; left:0; bottom:-2px; width:0; height:1.5px;
-  background:var(--accent); transition:width .25s var(--ease);
+/* Desktop only. This is a hover underline, and hover does not exist on the
+   touch menu. It also has to stay out of the <=820px panel: it sits later in
+   the file at equal specificity, so its padding-bottom silently overrode the
+   panel's 14px and held the nav links at 40px against a 44px tap target. */
+@media(min-width:821px){
+  .navlink{ position:relative; padding-bottom:2px; }
+  .navlink::after{
+    content:''; position:absolute; left:0; bottom:-2px; width:0; height:1.5px;
+    background:var(--accent); transition:width .25s var(--ease);
+  }
+  .navlink:hover::after, .navlink.active::after{ width:100%; }
 }
-.navlink:hover::after, .navlink.active::after{ width:100%; }
 .btn-primary svg{ transition:transform .25s var(--ease); }
 .btn-primary:hover svg{ transform:translateX(3px); }
 

@@ -19,6 +19,9 @@
     themeBtn.addEventListener('click', function () {
       var next = currentTheme() === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
+      // Persist so the choice survives navigation; the <head> script reapplies it
+      // before first paint. Private-mode storage denial must not break the toggle.
+      try { localStorage.setItem('theme', next); } catch (e) {}
       labelTheme();
     });
   }
