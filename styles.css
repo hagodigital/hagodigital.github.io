@@ -470,6 +470,25 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 @media(min-width:960px){ .trades{ grid-template-columns:repeat(4,minmax(0,1fr)); } }
 .who-note{ font-size:.9rem; color:var(--ink-faint); margin:0; }
 
+/* ---- decision sequence band: the payoff of #brand, not a footnote ---- */
+.sequence{ margin-top:34px; padding:26px 30px 24px; border-radius:var(--radius);
+  border:1px solid var(--line-2);
+  background:linear-gradient(180deg, var(--accent-wash), transparent 70%), var(--surface); }
+.sequence-steps{ list-style:none; margin:0 0 14px; padding:0;
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 12px; }
+.sequence-steps li{ font-size:1.06rem; font-weight:700; color:var(--ink);
+  letter-spacing:-.015em; display:flex; align-items:baseline; gap:12px; }
+.sequence-steps li::after{ content:'\2192'; color:var(--accent); font-weight:600; }
+.sequence-steps li:last-child::after{ content:none; }
+.sequence-note{ margin:0; font-size:.92rem; line-height:1.6; color:var(--ink-soft); }
+@media(max-width:560px){
+  .sequence{ padding:22px 22px 20px; }
+  .sequence-steps{ display:grid; gap:7px; margin-bottom:16px; }
+  .sequence-steps li{ font-size:1rem; gap:10px; }
+  /* stacked: a right-pointing arrow reads wrong between rows */
+  .sequence-steps li::after{ content:'\2193'; }
+}
+
 /* ---- comparison block ---- */
 .ba-grid{ gap:22px; align-items:stretch; }
 .ba{ border-radius:var(--radius); padding:30px 28px 32px; background:var(--surface);
