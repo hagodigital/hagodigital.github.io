@@ -276,10 +276,11 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    never meets an invisible-by-default section.
    ============================================================ */
 :root{
-  --rise-t:.62s;      /* enter duration */
-  --rise-y:14px;      /* small enough to read as a fade, not a slide */
-  --rise-x:20px;      /* sideways offset, pillar images only */
-  --rise-step:70ms;   /* gap between staggered siblings */
+  --rise-t:.78s;      /* slow enough that the eye catches the arrival */
+  --rise-y:30px;      /* vertical travel */
+  --rise-x:48px;      /* sideways travel, pillar images only */
+  --rise-scale:.955;  /* images settle in rather than just slide */
+  --rise-step:95ms;   /* gap between staggered siblings */
 }
 
 .js [data-rise]{
@@ -288,9 +289,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
   will-change:opacity,transform;
 }
 /* the pillars alternate text/image, so each image enters from its own side */
-.js [data-rise="left"]{transform:translate3d(calc(var(--rise-x) * -1),0,0);}
-.js [data-rise="right"]{transform:translate3d(var(--rise-x),0,0);}
+.js [data-rise="left"]{transform:translate3d(calc(var(--rise-x) * -1),0,0) scale(var(--rise-scale));}
+.js [data-rise="right"]{transform:translate3d(var(--rise-x),0,0) scale(var(--rise-scale));}
 .js [data-rise].in{opacity:1;transform:none;will-change:auto;}
+
+/* the four process badges pop rather than slide — they are icons, not copy */
+.js .proc[data-stagger] > *{transform:translate3d(0,var(--rise-y),0) scale(.93);}
+.js .proc[data-stagger].in > *{transform:none;}
 
 /* a group whose children arrive in sequence rather than together */
 .js [data-stagger] > *{
@@ -317,7 +322,9 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    part of scroll motion that actually makes people queasy.
    The field is oversized top and bottom so shifting it never exposes an
    edge inside the hero. app.js writes the transform. */
-.hero-streaks{inset:-14% 0;will-change:transform;}
+/* -22% top and bottom: the field travels 0.22x the scroll, so it needs at least
+   that much slack or its top edge rides down into the hero as a visible seam. */
+.hero-streaks{inset:-22% 0;will-change:transform;}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto;}

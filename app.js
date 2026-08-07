@@ -55,7 +55,10 @@ var DESTINATIONS = {
         e.target.classList.add("in");
         io.unobserve(e.target);          // one-shot — no re-hide scrolling back up
       });
-    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+    /* The trigger line sits 18% above the viewport bottom. Fire any earlier and
+       the reveal is finished before the element is anywhere near being read —
+       which is what "I can't see any animation" actually looks like. */
+    }, { rootMargin: "0px 0px -18% 0px", threshold: 0.1 });
     for (i = 0; i < revealed.length; i++) io.observe(revealed[i]);
   }
 
@@ -71,8 +74,8 @@ var DESTINATIONS = {
     var y = window.pageYOffset;
     if (hdr) hdr.setAttribute("data-scrolled", String(y > 24));
     if (!reduced && y < 1000) {
-      if (streaks) streaks.style.transform = "translate3d(0," + (y * 0.13).toFixed(1) + "px,0)";
-      if (mascot)  mascot.style.transform  = "scaleX(-1) translate3d(0," + (y * -0.05).toFixed(1) + "px,0)";
+      if (streaks) streaks.style.transform = "translate3d(0," + (y * 0.22).toFixed(1) + "px,0)";
+      if (mascot)  mascot.style.transform  = "scaleX(-1) translate3d(0," + (y * -0.10).toFixed(1) + "px,0)";
     }
     pending = false;
   }
