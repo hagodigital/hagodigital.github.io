@@ -12,14 +12,26 @@
 
    Colour hierarchy (JP, 2026-08-07):
      Navy  #000A18  foundation      — the stage
-     Blue  #2365DE  primary digital — structure, icons, links on light
-     Lime  #CEFF00  signature       — ACTION. where to look, what to press
+     Blue  #2365DE  primary digital — structure, icons, numerals, links, rules
+     Lime  #CEFF00  signature       — ACTION. what to press. Nothing else.
      Yellow #FFF200 secondary       — AFFIRMATION. true, finished, yours
      Ivory #F8F5E6  light neutral   — the page
      Grey  #696D71  support         — meta, captions, borders
 
-   Lime and yellow have different JOBS, not different amounts. That is
-   what stops two adjacent high-luminance hues fighting each other.
+   TARGET RATIOS, and the rule that keeps them (rebalanced 2026-08-07 after
+   the first pass shipped ~18% lime and ~5% blue — exactly inverted):
+     navy + ivory 55-65 · blue 20-25 · lime 5-10 · yellow 2-5 · grey remainder
+
+   BLUE IS A PRIMARY AND CARRIES THE ACCENT WORK ON BOTH GROUNDS. It is the
+   only accent that can: raw blue is 4.81:1 on ivory and --blue-lift is 7.38:1
+   on navy, so blue has a legible form everywhere. Lime has exactly one — a
+   FILL on navy — so it is spent only on buttons, the hero rule and the focus
+   ring. It is never a text colour, never a border on ivory (1.07:1, which is
+   how the first pass ended up with an invisible marker on the Decision card),
+   and never present on a light section at all.
+
+   Lime and yellow are separated by JOB, not by amount. That is what stops two
+   adjacent high-luminance hues fighting each other.
    ============================================================ */
 
 /* ===== Tokens ============================================== */
@@ -38,6 +50,7 @@
   --navy-lift:#0A1424;      /* card on a navy ground */
   --navy-deep:#00060F;      /* footer, one step below the stage */
   --blue-ink:#1B4EB0;       /* 6.95:1 — blue TEXT on ivory (raw blue is 4.81, too tight for small caps) */
+  --blue-lift:#6E9BFF;      /* 7.38:1 — blue TEXT on navy. Raw blue is 3.77 there and fails. Same hue, lifted. */
   --blue-wash:rgba(35,101,222,.07);
   --blue-glow:rgba(35,101,222,.28);
   --ink-body:#2E3540;       /* 11.3:1 — body copy on ivory */
@@ -84,8 +97,11 @@
   --ink:var(--ivory);
   --body:var(--ivory-dim);
   --muted:var(--ivory-mute);
-  --accent-text:var(--lime);      /* 17:1 — the accent finally becomes legible */
-  --accent-line:var(--lime);
+  /* Blue is the PRIMARY, so it does the accent work on navy too — via the
+     lifted tint, since raw blue fails as text here. Lime is not a text colour
+     on any ground; it is a FILL, and only ever on navy. */
+  --accent-text:var(--blue-lift);
+  --accent-line:var(--blue-lift);
   --rule:rgba(248,245,230,.13);
   --edge:rgba(248,245,230,.40);
   --focus:var(--lime);
@@ -261,11 +277,10 @@ nav.top{
   white-space:nowrap;
   transition:transform .18s var(--ease), box-shadow .28s var(--ease), background .2s var(--ease);
 }
-/* Navy pill, lime on hover: the nav CTA is the one place the signature
-   colour appears on a light ground — as a FILL under navy text, never as text. */
+/* Navy pill, blue on hover. Lime does not appear on a light ground at all. */
 .nav-cta:hover{
-  background:var(--lime); color:var(--navy);
-  transform:translateY(-2px); box-shadow:0 12px 26px -12px rgba(206,255,0,.7);
+  background:var(--blue); color:#FFFFFF;
+  transform:translateY(-2px); box-shadow:0 12px 26px -12px var(--blue-glow);
 }
 .nav-cta:active{ transform:translateY(0) scale(.97); transition-duration:.09s; }
 
@@ -391,8 +406,8 @@ nav.top{
   /* Outline, not fill. A filled shape at low opacity silhouettes DARK against
      the blue glow behind it and reads as a rendering fault; a hairline stroke
      stays lime at any opacity because the colour is in the stroke itself. */
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='96 56 128 172'%3E%3Cpath d='M126 216V164L182 108V84L204 106V130L193 119L145 167V216H126Z' fill='none' stroke='%23CEFF00' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
-  opacity:.45;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='96 56 128 172'%3E%3Cpath d='M126 216V164L182 108V84L204 106V130L193 119L145 167V216H126Z' fill='none' stroke='%236E9BFF' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  opacity:.55;
   animation:mark-float 18s ease-in-out infinite;
 }
 @keyframes mark-float{
@@ -408,6 +423,11 @@ nav.top{
   animation:draw-rule .9s var(--ease) .25s forwards;
 }
 @keyframes draw-rule{ to{ width:104px; } }
+/* The headline is one colour. A whole 68px line in lime made lime the loudest
+   thing on the page and left the CTA competing with it; with the headline all
+   ivory, the lime button is the only hot element in the viewport and the eye
+   goes straight to it. */
+.hero h1 .accent{ color:var(--ink); }
 .hero .sub{ margin:clamp(22px,3vw,30px) 0 0; }
 .hero-cta{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:clamp(28px,4vw,38px); }
 .hero-note{
@@ -439,8 +459,10 @@ nav.top{
   gap:clamp(32px,5vw,72px); align-items:center;
 }
 .decision-grid .sec-head{ margin-bottom:0; }
+/* Blue edge, not lime. Lime against ivory measures 1.07:1 — the marker was
+   nearly invisible on the one card it was supposed to single out. */
 .decision-doc{
-  border:1px solid var(--rule); border-left:4px solid var(--lime);
+  border:1px solid var(--rule); border-left:4px solid var(--blue);
   border-radius:var(--radius); background:var(--surface);
   padding:clamp(24px,2.6vw,36px); box-shadow:var(--shadow);
   transition:transform .32s var(--ease), box-shadow .32s var(--ease);
@@ -501,19 +523,20 @@ nav.top{
 }
 .wcard:hover .wtag{ color:var(--accent-text); }
 
+/* Solid blue at REST, not on hover. This is the largest single block of blue
+   on the light sections and the main reason blue now reads as a primary
+   rather than a trim colour. White on #2365DE is 5.27:1. */
 .wcard .ico{
   width:46px; height:46px; border-radius:13px; flex:none;
   display:flex; align-items:center; justify-content:center;
-  background:var(--blue-wash); border:1px solid var(--rule); margin-bottom:20px;
+  background:var(--blue); border:1px solid var(--blue); margin-bottom:20px;
   transition:background .32s var(--ease), border-color .32s var(--ease), transform .32s var(--ease);
 }
-.wcard .ico svg{ width:21px; height:21px; color:var(--blue-ink); transition:color .32s var(--ease); }
-/* The tile fills on hover — icon flips to white on solid blue, 8.6:1. */
-.wcard:hover .ico{ background:var(--blue); border-color:var(--blue); transform:scale(1.04); }
-.wcard:hover .ico svg{ color:#FFFFFF; }
-.inverse .wcard .ico{ background:rgba(206,255,0,.1); }
-.inverse .wcard .ico svg{ color:var(--lime); }
-.inverse .wcard:hover .ico{ background:var(--lime); border-color:var(--lime); }
+.wcard .ico svg{ width:21px; height:21px; color:#FFFFFF; transition:color .32s var(--ease); }
+.wcard:hover .ico{ background:var(--blue-ink); border-color:var(--blue-ink); transform:scale(1.05); }
+.inverse .wcard .ico{ background:var(--blue); border-color:var(--blue); }
+.inverse .wcard .ico svg{ color:#FFFFFF; }
+.inverse .wcard:hover .ico{ background:var(--blue-lift); border-color:var(--blue-lift); }
 .inverse .wcard:hover .ico svg{ color:var(--navy); }
 
 .wcard h3{ font-size:1.12rem; margin:0 0 10px; letter-spacing:-.022em; }
@@ -596,7 +619,7 @@ footer{
   padding:clamp(64px,8vw,96px) 0 36px;
   /* footer is its own ground — reuse the inverse token set */
   --ink:var(--ivory); --body:var(--ivory-dim); --muted:var(--ivory-mute);
-  --accent-text:var(--lime); --rule:rgba(248,245,230,.12); --focus:var(--lime);
+  --accent-text:var(--blue-lift); --rule:rgba(248,245,230,.12); --focus:var(--lime);
 }
 .foot-top{ display:grid; gap:clamp(40px,5vw,64px); }
 @media(min-width:880px){ .foot-top{ grid-template-columns:1.05fr 1.5fr; } }
@@ -606,7 +629,7 @@ footer{
   letter-spacing:-.035em; color:var(--ivory); margin:0;
 }
 .foot-hago{ font-family:var(--mono); font-size:.75rem; color:var(--ivory-mute); margin:18px 0 0; }
-.foot-hago em{ color:var(--lime); font-style:italic; }
+.foot-hago em{ color:var(--blue-lift); font-style:italic; }
 
 .foot-nav{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:34px 28px; }
 @media(min-width:640px){ .foot-nav{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
@@ -621,7 +644,7 @@ footer{
   transition:color .2s var(--ease), transform .2s var(--ease);
 }
 .foot-nav a:hover{ color:var(--ivory); transform:translateX(4px); }
-.foot-nav .foot-cta{ color:var(--lime); font-weight:650; margin-top:6px; }
+.foot-nav .foot-cta{ color:var(--blue-lift); font-weight:650; margin-top:6px; }
 
 .foot-bot{
   margin-top:clamp(48px,6vw,72px); padding-top:24px;
@@ -636,7 +659,7 @@ footer{
 .about-block b{ color:var(--ink); font-weight:650; }
 .signoff{
   font-family:var(--mono); font-size:.88rem; color:var(--ink);
-  margin-top:28px; padding-left:18px; border-left:3px solid var(--lime);
+  margin-top:28px; padding-left:18px; border-left:3px solid var(--blue);
 }
 .foundstack{ margin:32px 0 8px; }
 .foundstack svg{ width:100%; height:auto; display:block; }
