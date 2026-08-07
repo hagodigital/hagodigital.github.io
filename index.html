@@ -48,6 +48,8 @@
   "founder": {"@type":"Person","name":"JP"}
 }
 </script>
+<!-- Motion is opt-in: with JS off, nothing below is ever hidden. -->
+<script>document.documentElement.className+=" js";</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -130,7 +132,7 @@
   </svg>
 
   <div class="shell hero-grid">
-    <div class="hero-copy">
+    <div class="hero-copy" data-stagger>
       <span class="eyebrow">Digital foundations that drive growth</span>
       <h1>Attract.<br>Convert.<br><span class="lime">Scale.</span></h1>
       <p class="lede">Websites, systems and AI workflows that attract the right people, convert them into customers and scale your business.</p>
@@ -145,7 +147,7 @@
         <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Built for Growth</li>
       </ul>
     </div>
-    <figure class="hero-mascot">
+    <figure class="hero-mascot" data-rise>
       <img src="assets/mascot-perched.webp" width="476" height="876" fetchpriority="high" decoding="async"
            alt="HagoDigital cockatoo mascot with a lightning-bolt crest.">
     </figure>
@@ -154,7 +156,7 @@
 
 <!-- ================= SYSTEM BAND ================= -->
 <section class="band on-navy" id="what">
-  <div class="shell">
+  <div class="shell" data-rise>
     <span class="eyebrow">The HagoDigital system</span>
     <h2 class="h-band">Three pillars. One connected system.</h2>
   </div>
@@ -163,7 +165,7 @@
 <!-- ================= 01 BRAND — asset 08 — TEXT / IMAGE ================= -->
 <section class="pillar on-cream">
   <div class="shell row">
-    <div class="copy">
+    <div class="copy" data-rise>
       <span class="n">01</span>
       <h2 class="h2">Brand Identity</h2>
       <p class="sub">Stand out. Be remembered.</p>
@@ -175,7 +177,7 @@
       </ul>
       <p style="font-size:.86rem;line-height:1.6;color:var(--grey);margin-top:16px">You own the files outright. Nothing is licensed back to you.</p>
     </div>
-    <figure>
+    <figure data-rise="right">
       <img src="assets/brand-identity.webp"
            alt="Brand identity board: a clipboard with logo lockups, a colour palette, type samples, a swatch fan and a page layout.">
     </figure>
@@ -185,11 +187,11 @@
 <!-- ================= 02 WEBSITES — asset 09 — IMAGE / TEXT ================= -->
 <section class="pillar on-navy">
   <div class="shell row">
-    <figure>
+    <figure data-rise="left">
       <img src="assets/websites.webp"
            alt="Illustration of a HagoDigital website open on a laptop, with page layouts and a search graphic around it.">
     </figure>
-    <div class="copy">
+    <div class="copy" data-rise>
       <span class="n">02</span>
       <h2 class="h2" style="color:var(--cream)">Websites That Convert</h2>
       <p class="sub">Beautiful. Fast. Built to perform.</p>
@@ -210,7 +212,7 @@
      presented as results, never actionable. -->
 <section class="pillar on-cream">
   <div class="shell row">
-    <div class="copy">
+    <div class="copy" data-rise>
       <span class="n">03</span>
       <h2 class="h2">Google Presence</h2>
       <p class="sub">Get found. Get chosen.</p>
@@ -222,7 +224,7 @@
       </ul>
       <p style="font-size:.86rem;line-height:1.6;color:var(--grey);margin-top:16px">Set up once and finished. No monthly fee attached.</p>
     </div>
-    <figure>
+    <figure data-rise="right">
       <img src="assets/google-presence.webp"
            alt="Concept illustration of a business appearing across Google search and business profile interfaces.">
       <span class="cap">Concept illustration — interface values are placeholders, not results</span>
@@ -233,12 +235,12 @@
 <!-- ================= 04 AI x HUMAN ================= -->
 <section class="pillar on-navy">
   <div class="shell row">
-    <figure>
+    <figure data-rise="left">
       <img src="assets/ai-human.webp"
            style="width:100%;height:auto;display:block"
            alt="Half a human brain, half a machine gear, joined down the centre and wired into circuit traces.">
     </figure>
-    <div class="copy">
+    <div class="copy" data-rise>
       <span class="n">04</span>
       <h2 class="h2" style="color:var(--cream)">AI &times; Human</h2>
       <p class="sub">Smart tools. Real results.</p>
@@ -255,11 +257,11 @@
 <!-- ================= PROCESS ================= -->
 <section class="on-cream" id="how">
   <div class="shell">
-    <div class="proc-head">
+    <div class="proc-head" data-rise>
       <span class="eyebrow">How it works</span>
       <h2 class="h2" style="margin-top:8px">Simple. Strategic. Effective.</h2>
     </div>
-    <div class="proc">
+    <div class="proc" data-stagger>
       <article class="proc-step">
         <div class="badge"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="11" stroke="#2365DE" stroke-width="2.4"/><circle cx="16" cy="16" r="4.5" stroke="#CEFF00" stroke-width="2.4"/><path d="M26 6l-6.5 6.5" stroke="#CEFF00" stroke-width="2.4" stroke-linecap="round"/></svg></div>
         <h3>1. Discover</h3>
@@ -287,7 +289,7 @@
 <!-- ================= ABOUT + CTA ================= -->
 <section class="on-navy" id="proof">
   <div class="shell about">
-    <div>
+    <div data-rise>
       <span class="eyebrow">About HagoDigital</span>
       <h2 class="h2" style="color:var(--cream);margin-top:8px">One person, start to finish.</h2>
       <p class="lede">I&rsquo;m a digital growth partner for ambitious businesses and founders who want more than just a website. I build the systems and assets that drive real growth &mdash; and where a job needs a trained graphic designer, I bring one in and manage them myself.</p>
@@ -298,12 +300,12 @@
       </div>
     </div>
 
-    <figure class="about-mascot">
+    <figure class="about-mascot" data-rise>
       <img src="assets/mascot-flying.webp"
            alt="HagoDigital cockatoo mascot in flight, wings spread, lightning-bolt crest.">
     </figure>
 
-    <div class="cta-card">
+    <div class="cta-card" data-rise>
       <h2 class="h2">Ready to grow<br>your business?</h2>
       <p class="lede">Let&rsquo;s build your digital foundations and turn your goals into results.</p>
       <a class="btn btn-lime" data-cta="book" href="#">Book Your Free Strategy Call <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>

@@ -23,6 +23,8 @@
 <meta name="twitter:title" content="Page not found | HagoDigital">
 <meta name="twitter:description" content="That page isn't here. Here's where you probably wanted to go.">
 <meta name="twitter:image" content="https://hagodigital.ai/assets/logomark.png">
+<!-- Motion is opt-in: with JS off, nothing below is ever hidden. -->
+<script>document.documentElement.className+=" js";</script>
 </head>
 <body>
 <header class="hdr on-navy">
@@ -64,14 +66,14 @@
 
 <main id="main">
 <section class="pagehero on-navy">
-  <div class="shell">
+  <div class="shell" data-stagger>
     <span class="eyebrow">404</span>
     <h1 class="h1-page">That page isn&rsquo;t here.</h1>
     <p class="lede">It either moved or the link was wrong &mdash; not your fault either way.</p>
   </div>
 </section>
 <section class="on-cream">
-  <div class="shell prose">
+  <div class="shell prose" data-rise>
     <h2 class="h2">Where you probably wanted to go</h2>
     <ul class="checks plain" style="margin-top:20px">
       <li><a href="index.html#what">What I do</a> &mdash; profiles and websites</li>
@@ -83,7 +85,7 @@
 </section>
 
 <section class="on-navy" lang="es">
-  <div class="shell prose">
+  <div class="shell prose" data-rise>
     <h2 class="h2" style="color:var(--cream)">&iquest;Buscabas el sitio en espa&ntilde;ol?</h2>
     <p>Esa p&aacute;gina no est&aacute; aqu&iacute;. O se movi&oacute; o el enlace estaba mal &mdash; no es culpa de tu lado.</p>
     <ul class="checks plain" style="margin-top:20px">

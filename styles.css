@@ -264,9 +264,68 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .ftr-bot .legal a{display:inline-flex;align-items:center;min-height:32px;}
 .ftr-bot .legal a:hover{color:var(--lime);}
 
+/* ============================================================
+   SCROLL MOTION
+   Elements carry data-rise / data-stagger in the markup; app.js adds
+   .in when they enter the viewport, then stops observing — a reveal
+   is one-shot and never re-hides on the way back up.
+
+   The hidden state is gated on html.js, which an inline head script
+   sets. With JavaScript off, none of these rules match: the page
+   renders exactly as it did before, fully visible, and a crawler
+   never meets an invisible-by-default section.
+   ============================================================ */
+:root{
+  --rise-t:.62s;      /* enter duration */
+  --rise-y:14px;      /* small enough to read as a fade, not a slide */
+  --rise-x:20px;      /* sideways offset, pillar images only */
+  --rise-step:70ms;   /* gap between staggered siblings */
+}
+
+.js [data-rise]{
+  opacity:0;transform:translate3d(0,var(--rise-y),0);
+  transition:opacity var(--rise-t) var(--ease),transform var(--rise-t) var(--ease);
+  will-change:opacity,transform;
+}
+/* the pillars alternate text/image, so each image enters from its own side */
+.js [data-rise="left"]{transform:translate3d(calc(var(--rise-x) * -1),0,0);}
+.js [data-rise="right"]{transform:translate3d(var(--rise-x),0,0);}
+.js [data-rise].in{opacity:1;transform:none;will-change:auto;}
+
+/* a group whose children arrive in sequence rather than together */
+.js [data-stagger] > *{
+  opacity:0;transform:translate3d(0,var(--rise-y),0);
+  transition:opacity var(--rise-t) var(--ease),transform var(--rise-t) var(--ease);
+}
+.js [data-stagger].in > *{opacity:1;transform:none;}
+.js [data-stagger].in > :nth-child(2){transition-delay:var(--rise-step);}
+.js [data-stagger].in > :nth-child(3){transition-delay:calc(var(--rise-step) * 2);}
+.js [data-stagger].in > :nth-child(4){transition-delay:calc(var(--rise-step) * 3);}
+.js [data-stagger].in > :nth-child(5){transition-delay:calc(var(--rise-step) * 4);}
+.js [data-stagger].in > :nth-child(6){transition-delay:calc(var(--rise-step) * 5);}
+.js [data-stagger].in > :nth-child(7){transition-delay:calc(var(--rise-step) * 6);}
+.js [data-stagger].in > :nth-child(8){transition-delay:calc(var(--rise-step) * 7);}
+
+/* header condenses once the page has moved */
+.hdr{transition:background .28s var(--ease),box-shadow .28s var(--ease);}
+.hdr-in{transition:padding .28s var(--ease);}
+.hdr[data-scrolled="true"]{background:rgba(0,10,24,.97);box-shadow:0 12px 30px rgba(0,10,24,.42);}
+.hdr[data-scrolled="true"] .hdr-in{padding-block:7px;}
+
+/* Parallax rides the decorative layers only — the streak field and the
+   mascot. Never the copy: parallaxed body text hurts reading and is the
+   part of scroll motion that actually makes people queasy.
+   The field is oversized top and bottom so shifting it never exposes an
+   edge inside the hero. app.js writes the transform. */
+.hero-streaks{inset:-14% 0;will-change:transform;}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto;}
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}
+  /* Reveal state is reset here as well as being skipped in app.js. The CSS
+     rule is the one that matters: it holds even if the script never runs. */
+  .js [data-rise],.js [data-stagger] > *{opacity:1!important;transform:none!important;}
+  .hero-streaks{inset:0;}
 }
 
 /* ============================================================
