@@ -1,66 +1,42 @@
 /* ============================================================
-   HagoDigital — v2 design system (dark-forward dev-premium)
+   HagoDigital — v2 design system (light, dev-premium)
    Proof-of-concept. Token-driven so Dani's brand swaps in cheap.
    ============================================================ */
 
-/* ===== Tokens: DARK is the default (dark-forward) ===== */
+/* ===== Tokens — one theme, light. Dark removed 2026-08-07. ===== */
 :root{
+  color-scheme:light;
   /* brand */
   --navy:#0B1020; --blue:#5B7BFF; --blue-solid:#315CFF; --ivory:#F7F6F2; --gold:#D3A24A;
 
-  /* dark canvas */
-  --bg:#070A12;            /* page */
-  --bg-2:#0B0F1A;          /* alt band */
-  --surface:#0E1422;       /* card */
-  --surface-2:#121A2B;     /* raised card / hover */
-  --line:rgba(255,255,255,.08);
-  --line-2:rgba(255,255,255,.14);   /* decorative dividers and hover edges only */
-  --edge:rgba(255,255,255,.34);     /* control boundaries — 3.02:1 on --bg, WCAG SC 1.4.11 */
-  --ink:#EEF1F8;           /* headings */
-  --ink-soft:#AAB2C6;      /* body */
-  --ink-faint:#7B85A1;     /* muted / labels */
-  --accent:#6E8BFF;        /* electric blue (dark-tuned) */
-  --accent-ink:#A9BCFF;    /* blue text on dark */
-  --accent-glow:rgba(90,123,255,.35);
-  --accent-wash:rgba(90,123,255,.10);
-  --btn-ink:#0A0E18;       /* text on a solid --accent button */
-  --good:#5FCB93;
-  --gold-ink:#E6BE72;
+  /* canvas — light only. Dark theme removed 2026-08-07. */
+  --bg:#F7F6F2;            /* page */
+  --bg-2:#EFEEE8;          /* alt band */
+  --surface:#FFFFFF;       /* card */
+  --surface-2:#F4F4EF;     /* raised card / hover */
+  --line:rgba(11,16,32,.10);
+  --line-2:rgba(11,16,32,.16);   /* decorative dividers and hover edges only */
+  --edge:rgba(11,16,32,.46);     /* control boundaries — WCAG SC 1.4.11 */
+  --ink:#0B1020;           /* headings */
+  --ink-soft:#454B5C;      /* body */
+  --ink-faint:#5F6476;     /* muted / labels */
+  --accent:#315CFF;
+  --accent-ink:#274BD6;    /* blue text on light */
+  --accent-glow:rgba(49,92,255,.25);
+  --accent-wash:rgba(49,92,255,.08);
+  --btn-ink:#FFFFFF;       /* text on a solid --accent button */
+  --good:#1F7A4D;
+  --gold-ink:#8A6516;
 
   --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 
   --radius:16px; --radius-sm:12px;
-  --shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 20px 50px -20px rgba(0,0,0,.7);
+  --shadow:0 1px 2px rgba(11,16,32,.06), 0 18px 40px -24px rgba(11,16,32,.35);
   --maxw:1120px;
 }
 
-/* explicit dark (toggle) */
-:root[data-theme="dark"]{ color-scheme:dark; }
 
-/* light override — only when the user asks (dark-forward) */
-:root[data-theme="light"]{
-  color-scheme:light;
-  --bg:#F7F6F2; --bg-2:#EFEEE8; --surface:#FFFFFF; --surface-2:#F4F4EF;
-  --line:rgba(11,16,32,.10); --line-2:rgba(11,16,32,.16); --edge:rgba(11,16,32,.46);
-  --ink:#0B1020; --ink-soft:#454B5C; --ink-faint:#5F6476;
-  --accent:#315CFF; --accent-ink:#274BD6; --accent-glow:rgba(49,92,255,.25); --accent-wash:rgba(49,92,255,.08);
-  --btn-ink:#FFFFFF;
-  --good:#1F7A4D; --gold-ink:#8A6516;
-  --shadow:0 1px 2px rgba(11,16,32,.06), 0 18px 40px -24px rgba(11,16,32,.35);
-}
-@media (prefers-color-scheme: light){
-  :root:not([data-theme]){
-    color-scheme:light;
-    --bg:#F7F6F2; --bg-2:#EFEEE8; --surface:#FFFFFF; --surface-2:#F4F4EF;
-    --line:rgba(11,16,32,.10); --line-2:rgba(11,16,32,.16); --edge:rgba(11,16,32,.46);
-    --ink:#0B1020; --ink-soft:#454B5C; --ink-faint:#5F6476;
-    --accent:#315CFF; --accent-ink:#274BD6; --accent-glow:rgba(49,92,255,.25); --accent-wash:rgba(49,92,255,.08);
-    --btn-ink:#FFFFFF;
-    --good:#1F7A4D; --gold-ink:#8A6516;
-    --shadow:0 1px 2px rgba(11,16,32,.06), 0 18px 40px -24px rgba(11,16,32,.35);
-  }
-}
 
 /* ===== Reset & base ===== */
 *{ box-sizing:border-box; } html{ scroll-behavior:smooth; }
@@ -110,11 +86,8 @@ h2{ font-size:clamp(1.7rem,3.6vw,2.5rem); margin:0 0 16px; max-width:20ch; }
 /* ===== Nav ===== */
 nav.top{ position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--bg) 82%, transparent); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
 .navwrap{ display:flex; align-items:center; justify-content:space-between; padding:14px 24px; gap:16px; }
-.brandmark{ display:flex; align-items:center; }
+.brandmark{ display:flex; align-items:center; flex:none; }   /* never let a crowded nav crush the logo */
 .logo-img{ height:26px; width:auto; }
-.logo-dark{ display:none; } .logo-light{ display:block; }
-:root[data-theme="light"] .logo-dark{ display:block; } :root[data-theme="light"] .logo-light{ display:none; }
-@media (prefers-color-scheme: light){ :root:not([data-theme]) .logo-dark{ display:block; } :root:not([data-theme]) .logo-light{ display:none; } }
 .navlinks{ display:flex; align-items:center; gap:24px; }
 .navlink{ font-size:.9rem; font-weight:500; color:var(--ink-soft); white-space:nowrap; }
 .navlink:hover{ color:var(--ink); }
@@ -435,8 +408,6 @@ main > section:nth-of-type(even){background:var(--bg-2)}
 :root{
   --ease:cubic-bezier(.16,1,.3,1);
 }
-:root[data-theme="light"]{ }
-@media (prefers-color-scheme: light){ :root:not([data-theme]){ } }
 
 html{ scroll-behavior:smooth; }
 @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
@@ -721,3 +692,21 @@ footer{ border-top:1px solid var(--line); padding:84px 0 34px; background:var(--
 /* Pricing section removed 2026-07-30 (JP) — figures came off the site entirely.
    .price-grid / .pcard / .pfig / .psub / .plist / .pnote deleted with it.
    .wtag is NOT pricing-only — it is still used by the offer grid above. */
+
+/* ===== The Decision — a one-page document, shown as one ===== */
+.decision-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.85fr); gap:clamp(28px,4vw,64px); align-items:center; }
+.decision-grid .sec-head{ margin-bottom:0; }
+.decision-doc{
+  border:1px solid var(--line); border-radius:var(--radius); background:var(--surface);
+  padding:clamp(20px,2.4vw,32px); box-shadow:var(--shadow);
+}
+.decision-doc .doc-tag{
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-faint); display:block; padding-bottom:14px; margin-bottom:6px; border-bottom:1px solid var(--line);
+}
+.decision-doc ol{ list-style:none; margin:0; padding:0; }
+.decision-doc li{ padding:16px 0; border-bottom:1px solid var(--line); }
+.decision-doc li:last-child{ border-bottom:0; padding-bottom:4px; }
+.decision-doc li b{ display:block; font-size:1rem; letter-spacing:-.015em; color:var(--ink); font-weight:650; }
+.decision-doc li span{ display:block; margin-top:5px; font-size:.85rem; color:var(--ink-faint); }
+@media (max-width:820px){ .decision-grid{ grid-template-columns:1fr; gap:28px; } }

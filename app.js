@@ -1,30 +1,5 @@
 (function () {
-  // ---- Theme toggle ----
-  var themeBtn = document.getElementById('themeBtn');
-  var root = document.documentElement;
 
-  function currentTheme() {
-    var stored = root.getAttribute('data-theme');
-    if (stored) return stored;
-    return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-
-  function labelTheme() {
-    if (!themeBtn) return;
-    themeBtn.textContent = currentTheme() === 'dark' ? 'Light' : 'Dark';
-  }
-
-  if (themeBtn) {
-    labelTheme();
-    themeBtn.addEventListener('click', function () {
-      var next = currentTheme() === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      // Persist so the choice survives navigation; the <head> script reapplies it
-      // before first paint. Private-mode storage denial must not break the toggle.
-      try { localStorage.setItem('theme', next); } catch (e) {}
-      labelTheme();
-    });
-  }
 
   // ---- Mobile nav toggle ----
   var navToggle = document.getElementById('navToggle');
