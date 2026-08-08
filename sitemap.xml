@@ -20,6 +20,14 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://hagodigital.ai/branding.html</loc>
+    <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/branding.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/branding.html"/>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://hagodigital.ai/contact.html</loc>
     <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/contact.html"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://hagodigital.ai/es/contact.html"/>

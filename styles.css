@@ -279,6 +279,171 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
   .about-mascot img{width:100%;}
 }
 
+/* ============================================================
+   BRANDING PAGE (branding.html)
+   Built to the supplied render. Three deliberate departures from it,
+   all for the same reason the rest of this stylesheet has --blue-ink:
+
+   1. The render sets lime type on the cream ground (the section-four
+      heading, the card numbers, the tick rings). Lime is 1.07:1 there —
+      not low-contrast, invisible. Lime keeps its role as THE emphasis
+      colour, but on cream that role is carried by --blue-ink and on
+      navy by real lime. Same substitution as .on-cream .checks .ck.
+   2. The render's ten cards sit at five across. Five 1/5 columns give
+      each card ~200px, which wraps a four-word title to three lines.
+      They run at auto-fit with a 200px floor instead, so the row count
+      falls out of the viewport rather than being asserted.
+   3. Card art is inline SVG, not raster. Imagery is ChatGPT's to supply;
+      vector is the one illustrative form that can be authored here.
+   ============================================================ */
+
+/* ---------- hero quote rail ---------- */
+/* Sits under the mascot on desktop, reads as a caption for the art. The
+   render floats it over the artwork's lower right; over a transparent
+   PNG that lands on whatever happens to be behind it at that width, so
+   it is anchored to the column instead. */
+.hero-quote{
+  border-left:3px solid var(--lime);padding-left:var(--s3);
+  font-family:var(--display);font-weight:700;font-size:clamp(1rem,1.5vw,1.22rem);
+  line-height:1.35;color:var(--cream);letter-spacing:-.02em;max-width:22ch;
+  margin-top:var(--s4);margin-bottom:var(--s5);
+}
+.hero-quote em{font-style:normal;color:var(--lime);}
+@media(max-width:900px){.hero-quote{margin-inline:auto;text-align:left;}}
+
+/* ---------- inline benefit row (hero + band) ---------- */
+.minis{display:flex;flex-wrap:wrap;gap:var(--s4) var(--s5);margin-top:var(--s5);}
+/* Inside a pillar the copy column is ~600px, which is a hair under what three
+   flex items need — they broke 2 + 1. A three-track grid keeps the row the
+   render's shape and lets the labels wrap instead of the row. */
+@media(min-width:901px){
+  .pillar .minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4);}
+}
+.mini{display:grid;grid-template-columns:34px 1fr;gap:var(--s2);align-items:center;}
+.mini svg{width:34px;height:34px;}
+.mini b{display:block;font-family:var(--display);font-size:.9rem;font-weight:700;color:var(--cream);}
+.mini span{display:block;font-size:.79rem;line-height:1.4;color:var(--cream-mute);}
+.on-cream .mini b{color:var(--ink);}
+.on-cream .mini span{color:var(--grey);}
+/* The hero row is a divider-separated rail in the render. Three fixed tracks
+   rather than flex-wrap: as a flex row it broke 2 + 1 the moment a label ran
+   long, and the wrapped item carried its left divider onto the new line, which
+   reads as a broken list rather than a rail. Only drawn side by side — stacked,
+   a left border on each is the same defect. */
+@media(min-width:721px){
+  .hero .minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4);}
+  .hero .minis .mini + .mini{border-left:1px solid var(--rule-d);padding-left:var(--s4);}
+}
+
+/* ---------- brand / branding / identity trio ---------- */
+.trio-head{text-align:center;max-width:34ch;margin-inline:auto;}
+.trio-head .h2 span{display:block;color:var(--blue-ink);}
+.trio{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--s4);margin-top:calc(var(--sect) * .55);align-items:start;
+}
+.tcard{text-align:center;position:relative;}
+.tcard .ring{
+  width:74px;height:74px;border-radius:50%;background:var(--navy);
+  display:grid;place-items:center;margin:0 auto var(--s3);
+  border:2px solid var(--lime);
+}
+/* The middle card inverts its ring border to blue so the three read as a
+   sequence rather than three copies of one thing — the render does the
+   same with a filled blue disc. */
+.tcard:nth-child(2) .ring{border-color:var(--blue);}
+.tcard .ring svg{width:34px;height:34px;}
+.tcard h3{font-family:var(--display);font-weight:800;font-size:clamp(1.05rem,1.9vw,1.32rem);
+  letter-spacing:-.02em;}
+.tcard .role{
+  display:block;font-family:var(--body);font-size:.72rem;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--blue-ink);margin-top:6px;
+}
+.tcard .checks{margin-top:var(--s4);text-align:left;}
+.tcard .checks li{font-size:.88rem;}
+/* The "VS" pills bridge the gaps. Absolute against the grid so they sit on
+   the seam without occupying a column of their own. */
+.trio .vs{
+  position:absolute;top:26px;right:calc(var(--s4) / -2);transform:translateX(50%);
+  width:34px;height:34px;border-radius:50%;background:var(--navy);color:var(--cream);
+  display:grid;place-items:center;font-family:var(--display);font-weight:800;
+  font-size:.68rem;letter-spacing:.04em;z-index:2;
+}
+.tcard:last-child .vs{display:none;}
+@media(max-width:860px){
+  .trio{grid-template-columns:1fr;gap:var(--s6);}
+  .trio .vs{top:auto;bottom:calc(var(--s6) / -2);right:50%;transform:translate(50%,50%);}
+  .tcard .checks{max-width:38ch;margin-inline:auto;}
+}
+
+/* ---------- callout bar ---------- */
+.callout{
+  display:grid;grid-template-columns:auto 1fr;gap:var(--s4);align-items:center;
+  margin-top:calc(var(--sect) * .5);background:var(--cream-2);
+  border:1px solid var(--rule-l);border-radius:10px;padding:var(--s4) var(--s5);
+}
+.callout .mark{width:52px;height:52px;border-radius:50%;background:var(--navy);
+  display:grid;place-items:center;flex:none;}
+.callout .mark svg{width:26px;height:26px;}
+.callout p{font-size:.95rem;line-height:1.6;}
+.callout b{color:var(--ink);}
+@media(max-width:620px){.callout{grid-template-columns:1fr;text-align:left;}}
+
+/* ---------- the ten-part system ---------- */
+.sys-head{text-align:center;}
+.sys-head .h2 span{color:var(--blue-ink);}
+.sys{
+  display:grid;gap:var(--s4);margin-top:calc(var(--sect) * .55);
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+}
+/* auto-fit lands on 5 across at the 1280 shell and 1 across on a phone, where ten
+   stacked cards is a very long scroll for very little content. Two fixed tracks
+   below 620 halves it; the floor can't just be lowered instead, because a 160px
+   floor also gives SEVEN columns at full width. */
+@media(max-width:620px){
+  .sys{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s3);}
+  .scard p{font-size:.78rem;}
+}
+.scard{
+  border:1px solid var(--rule-l);border-radius:10px;background:#fff;
+  padding:var(--s3);display:flex;flex-direction:column;
+  transition:border-color .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease);
+}
+.scard:hover{border-color:var(--blue);transform:translateY(-3px);
+  box-shadow:0 14px 30px -18px rgba(0,10,24,.45);}
+/* Fixed-ratio art box so ten different drawings still line their titles up. */
+.scard .art{
+  aspect-ratio:4/3;border-radius:6px;background:var(--navy);overflow:hidden;
+  display:grid;place-items:center;margin-bottom:var(--s3);
+}
+.scard .art svg{width:100%;height:100%;display:block;}
+.scard h3{font-family:var(--body);font-size:.76rem;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--blue-ink);line-height:1.4;}
+.scard p{font-size:.83rem;line-height:1.55;color:var(--grey);margin-top:var(--s1);}
+
+/* ---------- closing bar ---------- */
+.endbar{
+  display:grid;grid-template-columns:auto 1fr auto;gap:var(--s4) var(--s5);align-items:center;
+  margin-top:calc(var(--sect) * .5);background:var(--navy);border-radius:10px;
+  padding:var(--s5);color:var(--cream-dim);
+}
+.endbar .mark{width:56px;height:56px;border-radius:50%;background:var(--lime);
+  display:grid;place-items:center;flex:none;}
+.endbar .mark svg{width:28px;height:28px;}
+.endbar b{display:block;font-family:var(--display);font-weight:800;color:var(--cream);
+  font-size:clamp(1rem,1.7vw,1.2rem);line-height:1.3;letter-spacing:-.02em;}
+.endbar p{font-size:.9rem;margin-top:6px;}
+@media(max-width:880px){
+  .endbar{grid-template-columns:auto 1fr;}
+  .endbar .btn{grid-column:1/-1;justify-self:start;}
+}
+@media(max-width:560px){
+  .endbar{grid-template-columns:1fr;}
+}
+
+/* ---------- device mockup band ---------- */
+.mock{width:100%;height:auto;display:block;}
+
 /* ---------- footer ---------- */
 .ftr{background:var(--navy);border-top:1px solid var(--rule-d);padding-block:var(--s6) var(--s5);}
 .ftr-top{display:flex;flex-wrap:wrap;gap:20px 34px;align-items:center;}
