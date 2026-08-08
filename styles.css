@@ -208,9 +208,14 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .hero-mascot img{--flip:-1;width:min(430px,100%);transform:scaleX(var(--flip));}
 /* Wider artwork than the perched mascot — the bird is only ~55% of the frame,
    the chart takes the rest — so 430px renders the bird noticeably smaller than
-   it sits on the homepage. The width is matched to the BIRD, not the file. */
-.hero-mascot.no-flip img{--flip:1;width:min(580px,100%);}
-@media(max-width:900px){.hero-mascot.no-flip img{width:min(420px,88%);}}
+   it sits on the homepage. The width is matched to the BIRD, not the file.
+   --flip:1 because the mirroring is baked into the FILE, not done here. The bird
+   faces the copy but the bar chart does not mirror with it — flipping the whole
+   frame turned a rising chart into a falling one on a page selling growth. CSS
+   can only mirror all of it or none of it, so the composition was made in the
+   asset instead. Do not "simplify" this back to a CSS flip. */
+.hero-mascot.art-wide img{--flip:1;width:min(580px,100%);}
+@media(max-width:900px){.hero-mascot.art-wide img{width:min(420px,88%);}}
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr;}
   .hero-copy{padding-bottom:0;order:1;}
