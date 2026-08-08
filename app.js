@@ -22,7 +22,15 @@ var DESTINATIONS = {
            a.addEventListener("click", function (e) { e.preventDefault(); }); }
   });
 
-  document.getElementById("yr").textContent = new Date().getFullYear();
+  /* Everything above the SCROLL MOTION block is optional furniture, and every
+     lookup below is guarded for one reason: styles.css hides [data-rise] at
+     opacity:0 the moment html.js is set, and only the motion block un-hides it.
+     An unguarded getElementById on a page that happens to lack #yr or #burger
+     throws here, the motion block never runs, and that page ships with its
+     sections permanently invisible. A missing burger must cost the burger,
+     never the copy. */
+  var yr = document.getElementById("yr");
+  if (yr) yr.textContent = new Date().getFullYear();
 
   var burger = document.getElementById("burger"), nav = document.getElementById("nav");
   function setOpen(open) {
@@ -31,11 +39,13 @@ var DESTINATIONS = {
     burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     document.body.style.overflow = open ? "hidden" : "";
   }
-  burger.addEventListener("click", function () { setOpen(burger.getAttribute("aria-expanded") !== "true"); });
-  nav.addEventListener("click", function (e) { if (e.target.closest("a")) setOpen(false); });
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && burger.getAttribute("aria-expanded") === "true") { setOpen(false); burger.focus(); }
-  });
+  if (burger && nav) {
+    burger.addEventListener("click", function () { setOpen(burger.getAttribute("aria-expanded") !== "true"); });
+    nav.addEventListener("click", function (e) { if (e.target.closest("a")) setOpen(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && burger.getAttribute("aria-expanded") === "true") { setOpen(false); burger.focus(); }
+    });
+  }
 
   /* ============================================================
      SCROLL MOTION
