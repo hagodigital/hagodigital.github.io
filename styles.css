@@ -201,7 +201,16 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .hero .lede{color:var(--cream-dim);max-width:44ch;}
 .hero .ctas{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;margin-top:var(--s5);}
 .hero-mascot{align-self:end;justify-self:center;}
-.hero-mascot img{width:min(430px,100%);transform:scaleX(-1);}
+/* --flip is read by app.js when it writes the parallax transform. It used to be
+   a hardcoded scaleX(-1) in the script, which silently mirrored ANY artwork put
+   in this slot — fine for the perched mascot, wrong for art with a direction in
+   it (the branding bird points at a rising chart; mirrored, the arrow falls). */
+.hero-mascot img{--flip:-1;width:min(430px,100%);transform:scaleX(var(--flip));}
+/* Wider artwork than the perched mascot — the bird is only ~55% of the frame,
+   the chart takes the rest — so 430px renders the bird noticeably smaller than
+   it sits on the homepage. The width is matched to the BIRD, not the file. */
+.hero-mascot.no-flip img{--flip:1;width:min(580px,100%);}
+@media(max-width:900px){.hero-mascot.no-flip img{width:min(420px,88%);}}
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr;}
   .hero-copy{padding-bottom:0;order:1;}

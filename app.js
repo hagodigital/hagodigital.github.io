@@ -73,11 +73,16 @@ var DESTINATIONS = {
   }
 
   /* Parallax + header condense share one passive listener and one frame.
-     Decorative layers only. The mascot keeps its scaleX(-1) flip, which
-     lives in the stylesheet and would otherwise be overwritten here. */
+     Decorative layers only. Writing style.transform here overwrites the
+     stylesheet's flip, so the flip has to be re-applied — but read from the
+     --flip custom property rather than hardcoded, or every hero image in this
+     slot gets mirrored whether or not its artwork has a direction in it. */
   var hdr     = document.querySelector(".hdr");
   var streaks = document.querySelector(".hero-streaks");
   var mascot  = document.querySelector(".hero-mascot img");
+  var flip    = mascot
+    ? (getComputedStyle(mascot).getPropertyValue("--flip").trim() || "-1")
+    : "-1";
   var pending = false;
 
   function frame() {
@@ -85,7 +90,7 @@ var DESTINATIONS = {
     if (hdr) hdr.setAttribute("data-scrolled", String(y > 24));
     if (!reduced && y < 1000) {
       if (streaks) streaks.style.transform = "translate3d(0," + (y * 0.22).toFixed(1) + "px,0)";
-      if (mascot)  mascot.style.transform  = "scaleX(-1) translate3d(0," + (y * -0.10).toFixed(1) + "px,0)";
+      if (mascot)  mascot.style.transform  = "scaleX(" + flip + ") translate3d(0," + (y * -0.10).toFixed(1) + "px,0)";
     }
     pending = false;
   }
