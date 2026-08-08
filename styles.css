@@ -133,13 +133,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .nav a:not(.btn)::after{content:"";position:absolute;left:0;right:100%;bottom:10px;height:2px;
   background:var(--lime);transition:right .22s var(--ease);}
 .nav a:not(.btn):hover::after{right:0;}
-.hdr .btn{padding:11px 18px;min-height:44px;font-size:.86rem;}
+.hdr .btn{padding:11px 18px;min-height:44px;font-size:.86rem;white-space:nowrap;}
 /* The phone number that used to sit here is gone by decision, not oversight —
    the number is no longer published anywhere on the site. WhatsApp carries that
    job now, from the contact and thanks pages. */
 /* The nav carries its own CTA for the mobile panel; on desktop the standalone
    .hdr-cta is the one shown, so hide the in-nav duplicate above the breakpoint. */
-@media(min-width:961px){.nav .btn{display:none;}}
+@media(min-width:1101px){.nav .btn{display:none;}}
 .burger{display:none;width:44px;height:44px;border:1px solid var(--edge-d);border-radius:6px;
   background:none;cursor:pointer;padding:0;place-items:center;}
 .burger span{display:block;width:17px;height:2px;background:var(--cream);margin:3px auto;
@@ -152,7 +152,12 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(14px) rotate(45deg);}
 .burger[aria-expanded="true"] span:nth-child(2){opacity:0;}
 .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-14px) rotate(-45deg);}
-@media(max-width:960px){
+/* 1100px, not 960: the header has to fit logo + four nav labels + the language
+   pill + a CTA now reading "Book a Free Strategy Call". English survives to about
+   960; Spanish does not — "Quien esta detras" and "Agenda una llamada gratis" wrap
+   the nav AND the button into two lines each below 1100. The burger is the honest
+   answer for that band rather than a squeezed row that only one language fits. */
+@media(max-width:1100px){
   /* backdrop-filter makes an element the containing block for any fixed-position
      descendant. The nav panel sits inside the header, so with the blur on, its
      inset:0 resolved to the ~70px header box instead of the viewport — the menu
