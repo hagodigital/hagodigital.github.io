@@ -123,7 +123,10 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
   margin-inline:auto;padding:12px var(--pad);}
 .brand{display:flex;align-items:center;min-height:44px;flex:none;}
 .brand svg{height:24px;width:auto;}
-.nav{margin-left:auto;display:flex;align-items:center;gap:30px;}
+/* auto on BOTH sides so the links sit centred between the logo and the CTA. The
+   phone number used to occupy the right-hand side and hold this balance; without
+   it a single margin-left:auto shunts the whole nav against the button. */
+.nav{margin-left:auto;margin-right:auto;display:flex;align-items:center;gap:30px;}
 .nav a:not(.btn){font-size:.9rem;font-weight:500;color:var(--cream-dim);min-height:44px;
   display:inline-flex;align-items:center;gap:6px;position:relative;transition:color .2s var(--ease);}
 .nav a:not(.btn):hover{color:var(--cream);}
@@ -131,12 +134,9 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
   background:var(--lime);transition:right .22s var(--ease);}
 .nav a:not(.btn):hover::after{right:0;}
 .hdr .btn{padding:11px 18px;min-height:44px;font-size:.86rem;}
-/* phone sits outside the collapsing panel so it survives the mobile menu */
-.nav-phone{display:inline-flex;align-items:center;min-height:44px;margin-left:auto;
-  font-size:.9rem;font-weight:600;color:var(--cream);text-decoration:none;
-  font-variant-numeric:tabular-nums;}
-.nav-phone:hover{color:var(--lime);}
-@media(max-width:900px){.nav-phone{margin-left:auto;font-size:.86rem;}}
+/* The phone number that used to sit here is gone by decision, not oversight —
+   the number is no longer published anywhere on the site. WhatsApp carries that
+   job now, from the contact and thanks pages. */
 /* The nav carries its own CTA for the mobile panel; on desktop the standalone
    .hdr-cta is the one shown, so hide the in-nav duplicate above the breakpoint. */
 @media(min-width:961px){.nav .btn{display:none;}}
@@ -162,10 +162,9 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
   .hdr{backdrop-filter:none;}
   .burger{display:grid;margin-left:auto;}
   /* The panel is a CHILD of the header, so it paints over the header's own bar —
-     including the burger, leaving no visible way to close it. Lifting the three
-     persistent controls above the panel restores the close affordance and keeps
-     the phone number reachable with the menu open, which is what it is for. */
-  .brand,.nav-phone,.burger{position:relative;z-index:100;}
+     including the burger, leaving no visible way to close it. Lifting the two
+     persistent controls above the panel restores the close affordance. */
+  .brand,.burger{position:relative;z-index:100;}
   .nav{position:fixed;inset:0;background:var(--navy);flex-direction:column;justify-content:center;
     gap:14px;transform:translateX(100%);visibility:hidden;
     transition:transform .28s var(--ease),visibility 0s linear .28s;z-index:99;margin:0;}
@@ -393,7 +392,9 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 
 /* contact channels */
 .chans{display:grid;gap:14px;margin-top:26px;}
-@media(min-width:640px){.chans{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}}
+/* auto-fit, not a hardcoded 3: the Call channel is gone and a fixed third column
+   would leave a dead gap on the right of every contact block. */
+@media(min-width:640px){.chans{grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:18px;}}
 .chan{border:1px solid var(--rule-l);border-radius:12px;padding:20px 22px;background:#fff;}
 .on-navy .chan{background:var(--navy-3);border-color:var(--rule-d);}
 .chan h3{font-family:var(--display);font-size:.78rem;font-weight:700;letter-spacing:.12em;
