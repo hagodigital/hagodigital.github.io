@@ -199,7 +199,26 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .hero h1{margin-top:var(--s3);}
 .hero h1 .lime{color:var(--lime);}
 .hero .lede{color:var(--cream-dim);max-width:44ch;}
-.hero .ctas{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;margin-top:var(--s5);}
+/* Not scoped to .hero any more — the contact page's page-hero needs the same
+   primary-button-plus-text-link row. Every .ctas on the site is a hero row. */
+.ctas{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;margin-top:var(--s5);}
+/* Branding only. The hero artwork points up and to the right — both the wing
+   and the arrow on the bar chart — so with copy on the left it gestures away
+   from its own headline. Putting the art column first aims all of it at the
+   words instead, and keeps the bars climbing left to right, which mirroring
+   the file cannot do. DOM order stays copy-first for reading order; only the
+   painted order changes. */
+.hero-grid.art-left{grid-template-columns:minmax(0,.82fr) minmax(0,1fr);}
+.hero-grid.art-left .hero-copy{order:2;}
+.hero-grid.art-left .hero-mascot{order:1;}
+/* Restated at .art-left specificity, not left to the plain .hero-grid rule
+   further down: a two-class selector outranks it and the columns stayed side
+   by side on a phone, which put the bird through the CTA. */
+@media(max-width:900px){
+  .hero-grid.art-left{grid-template-columns:1fr;}
+  .hero-grid.art-left .hero-copy{order:1;}
+  .hero-grid.art-left .hero-mascot{order:2;}
+}
 .hero-mascot{align-self:end;justify-self:center;}
 /* --flip is read by app.js when it writes the parallax transform. It used to be
    a hardcoded scaleX(-1) in the script, which silently mirrored ANY artwork put
@@ -209,11 +228,14 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 /* Wider artwork than the perched mascot — the bird is only ~55% of the frame,
    the chart takes the rest — so 430px renders the bird noticeably smaller than
    it sits on the homepage. The width is matched to the BIRD, not the file.
-   --flip:1 because the mirroring is baked into the FILE, not done here. The bird
-   faces the copy but the bar chart does not mirror with it — flipping the whole
-   frame turned a rising chart into a falling one on a page selling growth. CSS
-   can only mirror all of it or none of it, so the composition was made in the
-   asset instead. Do not "simplify" this back to a CSS flip. */
+   --flip:1 because the mirroring is baked into the FILE, not done here. Inside
+   the artwork the wing and the chart both aim up and to the RIGHT while the
+   bird's head faces LEFT, so a mirror can never turn the gesture without also
+   turning the face — the two point opposite ways by construction. Mirroring to
+   aim the finger at the headline was tried 2026-08-09 and made it worse: the
+   arrow flipped with it and the bars read as falling. The column order was
+   swapped instead (see .hero-grid.art-left) so the headline sits on the side
+   the artwork already points at. Do not "simplify" this to a CSS flip. */
 .hero-mascot.art-wide img{--flip:1;width:min(580px,100%);}
 @media(max-width:900px){.hero-mascot.art-wide img{width:min(420px,88%);}}
 @media(max-width:900px){
@@ -339,15 +361,6 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .mini span{display:block;font-size:.79rem;line-height:1.4;color:var(--cream-mute);}
 .on-cream .mini b{color:var(--ink);}
 .on-cream .mini span{color:var(--grey);}
-/* The hero row is a divider-separated rail in the render. Three fixed tracks
-   rather than flex-wrap: as a flex row it broke 2 + 1 the moment a label ran
-   long, and the wrapped item carried its left divider onto the new line, which
-   reads as a broken list rather than a rail. Only drawn side by side — stacked,
-   a left border on each is the same defect. */
-@media(min-width:721px){
-  .hero .minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4);}
-  .hero .minis .mini + .mini{border-left:1px solid var(--rule-d);padding-left:var(--s4);}
-}
 
 /* ---------- brand / branding / identity trio ---------- */
 .trio-head{text-align:center;max-width:34ch;margin-inline:auto;}
@@ -375,18 +388,11 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 }
 .tcard .checks{margin-top:var(--s4);text-align:left;}
 .tcard .checks li{font-size:.88rem;}
-/* The "VS" pills bridge the gaps. Absolute against the grid so they sit on
-   the seam without occupying a column of their own. */
-.trio .vs{
-  position:absolute;top:26px;right:calc(var(--s4) / -2);transform:translateX(50%);
-  width:34px;height:34px;border-radius:50%;background:var(--navy);color:var(--cream);
-  display:grid;place-items:center;font-family:var(--display);font-weight:800;
-  font-size:.68rem;letter-spacing:.04em;z-index:2;
-}
-.tcard:last-child .vs{display:none;}
+/* The render put "VS" pills on the seams between the three cards. Cut
+   2026-08-09 — the section's point is that these are three different things
+   in one sequence, not three rivals, and the pills argued the opposite. */
 @media(max-width:860px){
   .trio{grid-template-columns:1fr;gap:var(--s6);}
-  .trio .vs{top:auto;bottom:calc(var(--s6) / -2);right:50%;transform:translate(50%,50%);}
   .tcard .checks{max-width:38ch;margin-inline:auto;}
 }
 
@@ -447,9 +453,27 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .endbar b{display:block;font-family:var(--display);font-weight:800;color:var(--cream);
   font-size:clamp(1rem,1.7vw,1.2rem);line-height:1.3;letter-spacing:-.02em;}
 .endbar p{font-size:.9rem;margin-top:6px;}
+/* The three benefits moved out of the hero and close the page here. They span
+   the whole bar on their own row rather than sharing the middle column, which
+   at 1fr is far too narrow for three two-line items. */
+.endbenefits{
+  grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--s4);margin-top:0;padding-top:var(--s4);border-top:1px solid var(--rule-d);
+}
+/* .endbar sits on a navy panel inside an .on-cream section, so the cream
+   variant's blue disc would apply. Restate the navy pairing. */
+.endbar .endbenefits .ck circle{fill:var(--lime);}
+.endbar .endbenefits .ck path{stroke:var(--navy);}
+.endbenefits strong{display:block;font-family:var(--display);font-size:.9rem;
+  font-weight:700;color:var(--cream);}
+.endbenefits li > span > span{display:block;font-size:.79rem;line-height:1.4;
+  color:var(--cream-mute);}
 @media(max-width:880px){
   .endbar{grid-template-columns:auto 1fr;}
   .endbar .btn{grid-column:1/-1;justify-self:start;}
+}
+@media(max-width:620px){
+  .endbenefits{grid-template-columns:1fr;gap:var(--s3);}
 }
 @media(max-width:560px){
   .endbar{grid-template-columns:1fr;}

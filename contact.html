@@ -64,28 +64,40 @@
 </header>
 
 <main id="main">
+
+<!-- ORDER OF THIS PAGE (rebuilt 2026-08-09). It has one job: put a call in the
+     diary. It used to open on "Two ways to reach me" — WhatsApp and an email
+     address — so a page titled "Book a call" offered two ways NOT to book
+     before it offered the booking link, which lived only in the header and the
+     final section. The email card is gone: the form below is the same act with
+     more useful answers. WhatsApp stayed but moved up beside the button, which
+     is what it actually is — the way to reach me now, rather than a peer of
+     booking. Sections now run: book · why it's worth booking · the fallback if
+     you're not ready · where I work · book again, alternating grounds. -->
 <section class="pagehero on-navy">
   <div class="shell" data-stagger>
     <span class="eyebrow">Contact</span>
     <h1 class="h1-page">Book a call.</h1>
     <p class="lede">Half an hour. We talk about your business, honestly, and figure out if this is a fit &mdash; for you and for me. No pitch deck, no pressure.</p>
+    <div class="ctas">
+      <a class="btn btn-lime" href="https://calendar.app.google/d1jgYiEUs3yoh3Wr6" target="_blank" rel="noopener">Book a call <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="tlink" href="https://wa.me/61432244202" target="_blank" rel="noopener">Or message me on WhatsApp <svg class="ar" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <p class="notecap">Pick a time that suits you and it goes straight into my diary. WhatsApp if you&rsquo;d rather get an answer before you commit to one.</p>
   </div>
 </section>
+
 <section class="on-cream">
-  <div class="shell" data-rise>
-    <h2 class="h2">Two ways to reach me</h2>
-    <div class="chans">
-      <div class="chan"><h3>WhatsApp</h3><a href="https://wa.me/61432244202" target="_blank" rel="noopener">Send a message</a></div>
-      <div class="chan"><h3>Email</h3><a href="mailto:jp@hagodigital.ai?subject=Fit%20Call%20request">jp@hagodigital.ai</a></div>
-    </div>
-    <p class="notecap">You&rsquo;ll get an instant confirmation so you know it landed &mdash; then a real reply, written by someone who has already looked at your business.</p>
+  <div class="shell prose" data-rise>
+    <h2 class="h2">What happens on the call</h2>
+    <p>We&rsquo;ll talk about where your business is right now, what&rsquo;s working and what isn&rsquo;t, and whether what I do &mdash; getting you found on Google, and chosen once you&rsquo;re found &mdash; actually fits what you need. If it&rsquo;s not a fit, I&rsquo;ll say so.</p>
   </div>
 </section>
 
 <section class="on-navy" id="enquire">
   <div class="shell formwrap" data-rise>
     <h2 class="h2" style="color:var(--cream)">Or tell me what&rsquo;s going on</h2>
-    <p class="lede">Fill this in and I&rsquo;ll come to the call already knowing something useful about your business, instead of spending the first ten minutes catching up.</p>
+    <p class="lede">Not ready to put a time in the diary? Send this instead. I&rsquo;ll read it properly and come back to you &mdash; and if we do end up on a call, I&rsquo;ll already know something useful about your business rather than spending the first ten minutes catching up.</p>
 
     <form class="leadform" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="96e08144-d329-4fc8-ac25-4dcb30b21a0b">
@@ -114,16 +126,16 @@
         <span class="hint" id="f-message-hint">What you do, and what&rsquo;s not working right now. A couple of sentences is plenty.</span></div>
 
       <button class="btn btn-lime" type="submit">Send enquiry</button>
-      <p class="hint">Goes straight to my inbox. No newsletter, no automated sequence, and your details aren&rsquo;t shared with anyone.</p>
+      <!-- This line was the caption under the old channel cards. It describes
+           what happens after you send something, so it belongs to the form. -->
+      <p class="hint">You&rsquo;ll get an instant confirmation so you know it landed &mdash; then a real reply, written by someone who has already looked at your business. No newsletter, no automated sequence, and your details aren&rsquo;t shared with anyone.</p>
     </form>
   </div>
 </section>
 
 <section class="on-cream">
   <div class="shell prose" data-rise>
-    <h2 class="h2">What happens on the call</h2>
-    <p>We&rsquo;ll talk about where your business is right now, what&rsquo;s working and what isn&rsquo;t, and whether what I do &mdash; getting you found on Google, and chosen once you&rsquo;re found &mdash; actually fits what you need. If it&rsquo;s not a fit, I&rsquo;ll say so.</p>
-    <h2 class="h2" style="margin-top:32px">Where I work</h2>
+    <h2 class="h2">Where I work</h2>
     <p>Based in Sydney, working with businesses across Greater Sydney &mdash; Vaucluse, Eastern Suburbs, Bondi Beach, Bondi Junction, Rose Bay, Double Bay and Sydney CBD.</p>
   </div>
 </section>
@@ -131,8 +143,11 @@
   <div class="shell endcta" data-rise>
     <h2 class="h2" style="color:var(--cream)">Book a call</h2>
     <p class="lede">Half an hour. No pitch deck &mdash; just whether it&rsquo;s a fit.</p>
-    <a class="btn btn-lime" href="https://calendar.app.google/d1jgYiEUs3yoh3Wr6" target="_blank" rel="noopener">Book a Call</a>
-    <p class="endmeta"><a href="mailto:jp@hagodigital.ai">jp@hagodigital.ai</a> &middot; <a href="https://wa.me/61432244202" target="_blank" rel="noopener">WhatsApp</a> &middot; Sydney &mdash; working anywhere</p>
+    <a class="btn btn-lime" href="https://calendar.app.google/d1jgYiEUs3yoh3Wr6" target="_blank" rel="noopener">Book a call <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <!-- Email dropped here for the same reason it was dropped above: it is a
+         fourth route on a page that should offer one. It is still in the
+         footer of every page. -->
+    <p class="endmeta"><a href="https://wa.me/61432244202" target="_blank" rel="noopener">WhatsApp</a> &middot; Sydney &mdash; working anywhere</p>
   </div>
 </section>
 

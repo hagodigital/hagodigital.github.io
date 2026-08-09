@@ -94,26 +94,15 @@
          Don't reinstate either without asking. -->
   </svg>
 
-  <div class="shell hero-grid">
+  <div class="shell hero-grid art-left">
     <div class="hero-copy" data-stagger>
       <span class="eyebrow">Our signature service</span>
       <h1>Brands that <span class="lime">stick.</span><br>Businesses that grow.</h1>
       <p class="lede">More than logos. I build brands that connect, stand out and get remembered.</p>
 
-      <div class="minis">
-        <div class="mini">
-          <svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="12" stroke="#CEFF00" stroke-width="2.2"/><circle cx="17" cy="13.5" r="3.6" stroke="#2365DE" stroke-width="2.2"/><path d="M10.5 24c1.6-3.2 4-4.8 6.5-4.8s4.9 1.6 6.5 4.8" stroke="#2365DE" stroke-width="2.2" stroke-linecap="round"/></svg>
-          <span><b>Be recognisable</b><span>Instantly.</span></span>
-        </div>
-        <div class="mini">
-          <svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="M17 26s-8-4.6-8-10.4A4.6 4.6 0 0 1 17 12a4.6 4.6 0 0 1 8 3.6C25 21.4 17 26 17 26Z" stroke="#CEFF00" stroke-width="2.2" stroke-linejoin="round"/></svg>
-          <span><b>Earn trust</b><span>For good.</span></span>
-        </div>
-        <div class="mini">
-          <svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="12" stroke="#CEFF00" stroke-width="2.2"/><path d="M18.5 9l-6 9.5h4.5l-1.5 6.5 6-9.5h-4.5l1.5-6.5Z" fill="#2365DE"/></svg>
-          <span><b>Make people remember</b><span>Your business.</span></span>
-        </div>
-      </div>
+      <!-- The three benefits that used to sit here (recognisable / trusted /
+           remembered) now close the page in the endbar instead, so the hero
+           makes one claim and the page finishes on the payoff. -->
 
       <div class="ctas">
         <a class="btn btn-lime" data-cta="book" href="#">Start your brand <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -121,9 +110,10 @@
       </div>
     </div>
 
-    <!-- Flipped 2026-08-08 at JP's direction so the bird faces the copy, like
-         the homepage mascot. The flip is baked into the asset, not applied in
-         CSS, because the bar chart had to stay unmirrored — see styles.css. -->
+    <!-- The artwork stays exactly as supplied. The COLUMN moved instead
+         (.art-left, 2026-08-09) so the wing and the rising chart point at the
+         headline rather than off the far edge. Mirroring was the obvious fix
+         and is the wrong one — it turns the arrow over too. See styles.css. -->
     <figure class="hero-mascot art-wide" data-rise>
       <img src="assets/mascot-pointing.webp" width="900" height="1178" fetchpriority="high" decoding="async"
            alt="HagoDigital cockatoo mascot with a lightning-bolt crest, pointing up at a rising bar chart.">
@@ -152,7 +142,6 @@
           <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Built by experiences, conversations and outcomes.</li>
           <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>What people say about you when you&rsquo;re not in the room.</li>
         </ul>
-        <span class="vs" aria-hidden="true">VS</span>
       </article>
 
       <article class="tcard">
@@ -164,7 +153,6 @@
           <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>How you communicate, show up and deliver on the promise.</li>
           <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Ongoing, not a one-off.</li>
         </ul>
-        <span class="vs" aria-hidden="true">VS</span>
       </article>
 
       <article class="tcard">
@@ -176,7 +164,6 @@
           <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Logo, colour, typography, imagery and patterns.</li>
           <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>What customers see, hear and recognise instantly.</li>
         </ul>
-        <span class="vs" aria-hidden="true">VS</span>
       </article>
     </div>
 
@@ -296,6 +283,13 @@
         <p>I make the kind of work people remember &mdash; and remembering is what makes them choose you. Everything built here feeds straight into your website, so the brand and the site are one decision, not two.</p>
       </div>
       <a class="btn btn-lime" data-cta="book" href="#">Let&rsquo;s build your brand <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <!-- Labels are <strong>, not <b>: .endbar b is the headline rule and would
+           otherwise blow these up to display type. -->
+      <ul class="checks endbenefits">
+        <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong>Be recognisable</strong><span>Instantly.</span></span></li>
+        <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong>Earn trust</strong><span>For good.</span></span></li>
+        <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong>Make people remember</strong><span>Your business.</span></span></li>
+      </ul>
     </div>
   </div>
 </section>
