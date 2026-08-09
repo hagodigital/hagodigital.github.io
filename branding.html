@@ -110,14 +110,22 @@
       </div>
     </div>
 
-    <!-- Bird on the right, facing the copy. Two fixes for the wing pointing
-         back at itself were tried and reverted on 2026-08-09 — a CSS mirror
-         and a column swap — because the gesture is drawn returning to the
-         bird's own head and travels with any transform. It needs a redraw,
-         not markup. Reasoning and the pixel check are in styles.css. -->
+    <!-- New artwork 2026-08-09. The old file drew the wing returning to the
+         bird's own head; this one points out and away, at a chart climbing
+         toward the headline. Bird already faces left IN THE FILE, so --flip
+         stays 1 — a CSS mirror would turn the arrow over with it.
+         This one is a FRAMED PANEL, not a cutout, and that is deliberate. The
+         file draws the bird's outlines in the same values as its own black
+         background — measured, 20 against 9 — so keying the plate takes the
+         linework and the pointing hand with it, and its ambient glow runs to
+         all four edges, so there is no margin to fade into the section either.
+         Cutting it out and baking it to navy were both tried and both left a
+         visible rectangle. A rounded panel states the edge instead of failing
+         to hide it. Replace this with a transparent-background export and the
+         panel treatment in styles.css comes straight back off. -->
     <figure class="hero-mascot art-wide" data-rise>
-      <img src="assets/mascot-pointing.webp" width="900" height="1178" fetchpriority="high" decoding="async"
-           alt="HagoDigital cockatoo mascot with a lightning-bolt crest, pointing up at a rising bar chart.">
+      <img src="assets/mascot-chart.webp" width="1160" height="773" fetchpriority="high" decoding="async"
+           alt="HagoDigital cockatoo mascot with a lightning-bolt crest, pointing out at a bar chart climbing toward the headline.">
       <!-- The pull-quote that sat here said "I make people remember your
            business" — the same words now carried by the third benefit in the
            copy column, so it was saying it twice in one hero. -->
