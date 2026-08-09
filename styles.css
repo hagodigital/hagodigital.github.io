@@ -431,6 +431,11 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
   display:grid;place-items:center;margin-bottom:var(--s3);
 }
 .scard .art svg{width:100%;height:100%;display:block;}
+/* Seven of the ten are supplied artwork now, three are still drawn SVGs. Both
+   fill the same box, so the row keeps its alignment either way. cover, not
+   contain: the exports are already 4:3, and cover means a future one at the
+   wrong ratio crops instead of letterboxing a navy band into the card. */
+.scard .art img{width:100%;height:100%;object-fit:cover;display:block;}
 .scard h3{font-family:var(--body);font-size:.76rem;font-weight:600;letter-spacing:.11em;
   text-transform:uppercase;color:var(--blue-ink);line-height:1.4;}
 .scard p{font-size:.83rem;line-height:1.55;color:var(--grey);margin-top:var(--s1);}
