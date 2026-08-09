@@ -94,7 +94,7 @@
          Don't reinstate either without asking. -->
   </svg>
 
-  <div class="shell hero-grid art-left">
+  <div class="shell hero-grid">
     <div class="hero-copy" data-stagger>
       <span class="eyebrow">Our signature service</span>
       <h1>Brands that <span class="lime">stick.</span><br>Businesses that grow.</h1>
@@ -110,10 +110,11 @@
       </div>
     </div>
 
-    <!-- The artwork stays exactly as supplied. The COLUMN moved instead
-         (.art-left, 2026-08-09) so the wing and the rising chart point at the
-         headline rather than off the far edge. Mirroring was the obvious fix
-         and is the wrong one — it turns the arrow over too. See styles.css. -->
+    <!-- Bird on the right, facing the copy. Two fixes for the wing pointing
+         back at itself were tried and reverted on 2026-08-09 — a CSS mirror
+         and a column swap — because the gesture is drawn returning to the
+         bird's own head and travels with any transform. It needs a redraw,
+         not markup. Reasoning and the pixel check are in styles.css. -->
     <figure class="hero-mascot art-wide" data-rise>
       <img src="assets/mascot-pointing.webp" width="900" height="1178" fetchpriority="high" decoding="async"
            alt="HagoDigital cockatoo mascot with a lightning-bolt crest, pointing up at a rising bar chart.">
