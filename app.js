@@ -5,6 +5,13 @@
    Anything left null stays inert rather than pointing somewhere invented.
    ============================================================ */
 var DESTINATIONS = {
+  /* start -> the chooser; book -> the calendar itself.
+     Every English CTA points at "start", because nobody should reach the calendar
+     without first being offered the brief (2026-08-11). "book" is still live and
+     still needed: the Spanish pages use it, because no Spanish brief exists yet
+     and sending a Spanish reader to an English form is worse than sending them
+     straight to the diary. start.html's own second door uses it too. */
+  start:     "start.html",
   book:      "https://calendar.app.google/d1jgYiEUs3yoh3Wr6",
   message:   "contact.html",
   instagram: null,
@@ -17,7 +24,11 @@ var DESTINATIONS = {
 (function () {
   document.querySelectorAll("[data-cta]").forEach(function (a) {
     var url = DESTINATIONS[a.getAttribute("data-cta")];
-    if (url) { a.setAttribute("href", url); a.setAttribute("target", "_blank"); a.setAttribute("rel", "noopener"); }
+    /* _blank only for somewhere else. It was unconditional, which threw a new tab
+       for contact.html — our own page — and would now do the same for start.html,
+       stranding the visitor on a dead-end tab with no way back into the site. */
+    if (url) { a.setAttribute("href", url);
+               if (/^https?:/.test(url)) { a.setAttribute("target", "_blank"); a.setAttribute("rel", "noopener"); } }
     else { a.setAttribute("aria-disabled", "true");
            a.addEventListener("click", function (e) { e.preventDefault(); }); }
   });
