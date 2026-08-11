@@ -28,48 +28,39 @@
 </style>
 <main>
   <span class="k">Sent</span>
-  <h1>Got it — thank you.</h1>
-  <p>Your answers are with me. I read them properly before we talk, so a call is spent on
-     the things you flagged rather than on the ones you have already answered.</p>
+  <h1>Got it — now book the call.</h1>
+  <p>Your answers are with me and I read them properly before we talk. The call is the next
+     step either way — how much you filled in changes what we spend it on, not whether we
+     have it.</p>
   <div id="next"></div>
 </main>
 <script>
-/* The form carries its own verdict here on the redirect: how many things were ticked
-   "ask me on the call", and how many sections came back blank. A static page cannot
-   see the submission, so it has to be told. Booking is offered either way - a client
-   who wants to talk should never have to ask twice - but it is only URGED when the
-   form actually left something open. */
+/* The call ALWAYS happens - the form prepares it, it never replaces it (2026-08-11,
+   reversing the conditional-call design of 2026-08-10). So the counts carried on the
+   redirect do not decide WHETHER to book, only what the call will be spent on: what
+   was left open gets done together, and a form that came back full buys a call spent
+   on direction instead of dictation. One button either way, same prominence. */
 (function(){
   var BOOK = "https://calendar.app.google/d1jgYiEUs3yoh3Wr6";
   var p = new URLSearchParams(location.search);
   var ask = parseInt(p.get("ask") || "0", 10) || 0;
   var blank = parseInt(p.get("blank") || "0", 10) || 0;
-  var open = ask + blank;
   var thing = function(n, one, many){ return n + " " + (n === 1 ? one : many); };
+  var open = [];
+  if (ask) open.push("flagged " + thing(ask, "question", "questions") + " for the call");
+  if (blank) open.push("left " + thing(blank, "section", "sections") + " blank");
 
-  var lead;
-  if (ask && blank) {
-    lead = "You ticked <b>&ldquo;ask me on the call&rdquo;</b> on " + thing(ask, "question", "questions") +
-           ", and " + thing(blank, "section", "sections") + " came back blank. Those are the agenda — " +
-           "nothing else.";
-  } else if (ask) {
-    lead = "You ticked <b>&ldquo;ask me on the call&rdquo;</b> on " + thing(ask, "question", "questions") +
-           ". That is the agenda — nothing else.";
-  } else if (blank) {
-    lead = thing(blank, "section", "sections") + " came back blank. Worth ten minutes to fill in, " +
-           "and nothing more.";
-  } else {
-    lead = "Nothing was left open, so there may be no need to talk at all. " +
-           "I will come back to you with the brief to check.";
-  }
+  var lead = open.length
+    ? "You " + open.join(" and ") + ". We do " + (ask + blank === 1 ? "it" : "those") +
+      " together — no homework, and nothing you have to go away and work out on your own."
+    : "You answered the lot, which means the call is not spent taking dictation. " +
+      "I come with proposals and we decide between them.";
 
-  var cta = open
-    ? '<p><a class="btn" href="' + BOOK + '" target="_blank" rel="noopener">Book the call</a></p>' +
-      '<p class="quiet">Pick any slot. If none of them suit, reply to my email and we will find one.</p>'
-    : '<p><a class="btn" href="' + BOOK + '" target="_blank" rel="noopener">Book a call anyway</a></p>' +
-      '<p class="quiet">Only if you want one. Otherwise there is nothing else to do — you can close this tab.</p>';
-
-  document.getElementById("next").innerHTML = "<p>" + lead + "</p>" + cta;
+  document.getElementById("next").innerHTML =
+    "<p>" + lead + "</p>" +
+    '<p><a class="btn" href="' + BOOK + '" target="_blank" rel="noopener">Book the call</a></p>' +
+    '<p class="quiet">Pick whichever slot suits. If none of them do, reply to my email and ' +
+    'we will find one.</p>';
 })();
 </script>
 
