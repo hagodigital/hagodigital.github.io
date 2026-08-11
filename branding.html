@@ -110,22 +110,20 @@
       </div>
     </div>
 
-    <!-- New artwork 2026-08-09. The old file drew the wing returning to the
-         bird's own head; this one points out and away, at a chart climbing
-         toward the headline. Bird already faces left IN THE FILE, so --flip
-         stays 1 — a CSS mirror would turn the arrow over with it.
-         This one is a FRAMED PANEL, not a cutout, and that is deliberate. The
-         file draws the bird's outlines in the same values as its own black
-         background — measured, 20 against 9 — so keying the plate takes the
-         linework and the pointing hand with it, and its ambient glow runs to
-         all four edges, so there is no margin to fade into the section either.
-         Cutting it out and baking it to navy were both tried and both left a
-         visible rectangle. A rounded panel states the edge instead of failing
-         to hide it. Replace this with a transparent-background export and the
-         panel treatment in styles.css comes straight back off. -->
+    <!-- Artwork 2026-08-11, and the panel treatment is finally gone with it. The
+         two earlier files could not be keyed: their linework sat at the same value
+         as their own plate. This one's plate is a flat (0,10,34) against outlines
+         of pure black, so it keys by flood fill from the corners and the bird sits
+         on the section with nothing framing it.
+         Cropped to its content bbox before export. Uncropped, a third of the frame
+         is empty plate and the CSS height sizes that emptiness instead of the bird.
+         --flip stays 1. The bird already faces left IN THE FILE and points at the
+         chart; a CSS mirror moves the chart to the other side and turns its arrow
+         over with it. See the note on --bird-h in styles.css for why the height is
+         driven off the bird rather than off this image. -->
     <figure class="hero-mascot art-wide" data-rise>
-      <img src="assets/mascot-chart.webp" width="900" height="900" fetchpriority="high" decoding="async"
-           alt="HagoDigital cockatoo mascot with a lightning-bolt crest, pointing out at a bar chart climbing toward the headline.">
+      <img src="assets/mascot-chart.webp" width="1000" height="725" fetchpriority="high" decoding="async"
+           alt="HagoDigital cockatoo mascot with a lightning-bolt crest, pointing at a bar chart with a lightning-bolt trend line.">
       <!-- The pull-quote that sat here said "I make people remember your
            business" — the same words now carried by the third benefit in the
            copy column, so it was saying it twice in one hero. -->

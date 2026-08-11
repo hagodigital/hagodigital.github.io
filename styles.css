@@ -215,8 +215,16 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    have left one of them half the height of the other, which is the state this
    replaces. Width follows from the aspect ratio. Desktop only: below 900px the
    layout stacks and the width rules further down take back over. */
-:root{--hero-art-h:clamp(430px,44vw,560px);}
-.hero-mascot img{--flip:-1;height:var(--hero-art-h);width:auto;max-width:100%;
+/* ONE BIRD HEIGHT ACROSS BOTH HEROES (2026-08-11). The token is the height of the
+   BIRD, not of the image — the two files frame it completely differently and
+   matching image heights is what made the branding bird look two-thirds the size
+   of the homepage one. Measured: the homepage bird fills its frame edge to edge,
+   so its rendered height IS this token; the branding bird stands beside a chart
+   and occupies 97.66% of a frame 1.379x as wide as it is tall, so that image is
+   scaled by the reciprocal below. Change the artwork and re-measure both numbers,
+   or the two stop matching with nothing to show for it. */
+:root{--bird-h:clamp(300px,30vw,430px);}
+.hero-mascot img{--flip:-1;height:var(--bird-h);width:auto;max-width:100%;
   transform:scaleX(var(--flip));}
 /* THE PANEL IS GONE (2026-08-11), and this is the export that earned it. The
    previous artwork drew its linework at the same value as its own plate and its
@@ -229,11 +237,16 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    turn the chart's arrow over and sell a falling line on a page about growth,
    which is the entire reason this token exists. Do not "simplify" it away. */
 .hero-mascot.art-wide{align-self:center;}
-/* Square art needs a wider column than the 3:2 panel did, or the height token
-   above gets clamped by max-width and the two heroes stop matching — which is
-   the whole point of it. Scoped with :has() so the homepage grid is untouched. */
-.hero-grid:has(.art-wide){grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);}
-.hero-mascot.art-wide img{--flip:1;height:var(--hero-art-h);width:auto;max-width:100%;}
+/* This artwork is 1.379x as wide as it is tall, so the figure column has to be
+   wider than the homepage's or max-width clamps the image and the bird comes out
+   short — which is the one thing the token exists to prevent. 1.2fr leaves 505px
+   of copy column, enough for the h1 to break where it does now.
+   Scoped with :has() so the homepage grid is untouched. */
+.hero-grid:has(.art-wide){grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);}
+/* 1 / 0.9766 — the bird is 97.66% of this image's height, so the image is scaled
+   up by the reciprocal to land the BIRD on --bird-h. */
+.hero-mascot.art-wide img{--flip:1;height:calc(var(--bird-h) / 0.9766);
+  width:auto;max-width:100%;}
 /* .hero carries no bottom padding — deliberate, so a cutout mascot can stand on
    the section edge. Stacked, the panel is the last thing in the hero and would
    butt straight into the cream, so it pays for that padding itself. */
