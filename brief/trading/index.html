@@ -142,6 +142,21 @@ h1:focus-visible{outline:2px solid var(--blue);outline-offset:6px;border-radius:
   text-transform:uppercase;color:var(--grey);margin-bottom:var(--s2)}
 .eg p + p{margin-top:var(--s2)}
 .eg em{font-style:normal;color:var(--navy);font-weight:600}
+/* The welcome screen's three facts, set the way the site sets a list of them:
+   one lime tick per row, same 20px disc and same geometry as .checks on
+   hagodigital.ai, rather than a labelled grey box.
+   ITS OWN CLASS, NOT A RESTYLED .eg. .eg is the worked-example box and appears
+   sixteen more times through the form, where a tick would read as "this is the
+   right answer" against examples that exist to be ignored. */
+.facts{list-style:none;margin:0 0 var(--s4);padding:0;display:grid;gap:var(--s2)}
+.facts li{display:grid;grid-template-columns:20px 1fr;gap:12px;align-items:start;font-size:.95rem}
+.facts .ck{width:20px;height:20px;flex:none;margin-top:2px}
+.facts .ck circle{fill:var(--blue)}
+.facts .ck path{stroke:#fff}
+.facts b,.facts em{font-style:normal;color:var(--navy);font-weight:600}
+[data-ground="navy"] .facts .ck circle{fill:var(--lime)}
+[data-ground="navy"] .facts .ck path{stroke:var(--navy)}
+[data-ground="navy"] .facts b,[data-ground="navy"] .facts em{color:var(--cream)}
 .hint{background:var(--cream-2);border:1px solid var(--rule);border-left:4px solid var(--navy);
   border-radius:10px;padding:var(--s3) var(--s4);margin-bottom:var(--s4);font-size:.93rem}
 .hint b{color:var(--navy)}
@@ -332,12 +347,17 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 
   
 
-  <div class="eg">
-    <span class="lbl">Three things worth knowing</span>
-    <p><em>It saves as you go.</em> Close the tab and come back on the same device — your answers will still be here.</p>
-    <p><em>Nothing is final.</em> We'll go through anything that looks thin when we talk.</p>
-    <p><em>At the end you get a summary to copy</em> and send back however you like.</p>
-  </div>
+  <ul class="facts">
+    <!-- The text of each row is wrapped in ONE span on purpose. .facts li is a
+         two-column grid, so every direct child becomes a grid item — leaving the
+         <em> loose makes it a third item and the sentence wraps a word per line. -->
+    <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><em>It saves as you go.</em> Close the tab and come back on the same device — your answers will still be here.</span></li>
+    <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><em>Nothing is final.</em> We'll go through anything that looks thin when we talk.</span></li>
+    <!-- The sentence below is matched verbatim by build.py's send/copy swap for the
+         two client builds. Change the wording here and the build fails loudly by
+         design — it used to fail silently and shipped the wrong promise. -->
+    <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><em>At the end you send it straight to me</em> with one tap. You can still copy or download it for yourself.</span></li>
+  </ul>
 
   
 </section>
