@@ -1784,6 +1784,18 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
       }
       el("post-msg").value = el("out").value;
       el("post-biz").value = (state.bz_name || "").trim() || "(name not given)";
+
+      /* The call is conditional, so the finish screen has to be too. Three things
+         earn one: a tick, a blank, or an answer too thin to use. Only the first two
+         are countable here - thinness is a judgement JP makes reading the brief - so
+         a clean form still offers the booking link, just without urging it.
+         Carried on the redirect rather than posted, because the thanks page is a
+         static file that never sees the submission. */
+      var asks = document.querySelectorAll('input[name$="_unsure"]:checked').length;
+      var blanks = (el("out").value.match(/\(left blank\)/g) || []).length;
+      var r = f.querySelector('[name="redirect"]');
+      r.value = r.value.split("?")[0] + "?ask=" + asks + "&blank=" + blanks;
+
       sendBtn.disabled = true;
       sendBtn.textContent = "Sending…";
       say("Sending your answers.");

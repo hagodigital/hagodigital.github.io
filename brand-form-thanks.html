@@ -20,15 +20,58 @@
     color:var(--cream);font-size:clamp(1.9rem,5vw,2.7rem);margin:16px 0 20px;text-wrap:balance}
   p{margin:0 0 14px;max-width:52ch}
   b{color:var(--cream);font-weight:600}
+  .btn{display:inline-flex;align-items:center;gap:9px;margin-top:12px;padding:14px 22px;
+    border-radius:6px;background:var(--lime);color:var(--navy);text-decoration:none;
+    font-weight:600;font-size:1rem}
+  .btn:focus-visible{outline:3px solid #6E9BFF;outline-offset:3px}
+  .quiet{color:var(--grey);font-size:.95rem;margin-top:18px}
 </style>
 <main>
   <span class="k">Sent</span>
   <h1>Got it — thank you.</h1>
-  <p>Your answers are with me. I read them properly before we talk, so the call is spent on
+  <p>Your answers are with me. I read them properly before we talk, so a call is spent on
      the things you flagged rather than on the ones you have already answered.</p>
-  <p>If you ticked <b>&ldquo;ask me on the call&rdquo;</b> anywhere, those are now the agenda.</p>
-  <p>Nothing else to do. You can close this tab.</p>
+  <div id="next"></div>
 </main>
+<script>
+/* The form carries its own verdict here on the redirect: how many things were ticked
+   "ask me on the call", and how many sections came back blank. A static page cannot
+   see the submission, so it has to be told. Booking is offered either way - a client
+   who wants to talk should never have to ask twice - but it is only URGED when the
+   form actually left something open. */
+(function(){
+  var BOOK = "https://calendar.app.google/d1jgYiEUs3yoh3Wr6";
+  var p = new URLSearchParams(location.search);
+  var ask = parseInt(p.get("ask") || "0", 10) || 0;
+  var blank = parseInt(p.get("blank") || "0", 10) || 0;
+  var open = ask + blank;
+  var thing = function(n, one, many){ return n + " " + (n === 1 ? one : many); };
+
+  var lead;
+  if (ask && blank) {
+    lead = "You ticked <b>&ldquo;ask me on the call&rdquo;</b> on " + thing(ask, "question", "questions") +
+           ", and " + thing(blank, "section", "sections") + " came back blank. Those are the agenda — " +
+           "nothing else.";
+  } else if (ask) {
+    lead = "You ticked <b>&ldquo;ask me on the call&rdquo;</b> on " + thing(ask, "question", "questions") +
+           ". That is the agenda — nothing else.";
+  } else if (blank) {
+    lead = thing(blank, "section", "sections") + " came back blank. Worth ten minutes to fill in, " +
+           "and nothing more.";
+  } else {
+    lead = "Nothing was left open, so there may be no need to talk at all. " +
+           "I will come back to you with the brief to check.";
+  }
+
+  var cta = open
+    ? '<p><a class="btn" href="' + BOOK + '" target="_blank" rel="noopener">Book the call</a></p>' +
+      '<p class="quiet">Pick any slot. If none of them suit, reply to my email and we will find one.</p>'
+    : '<p><a class="btn" href="' + BOOK + '" target="_blank" rel="noopener">Book a call anyway</a></p>' +
+      '<p class="quiet">Only if you want one. Otherwise there is nothing else to do — you can close this tab.</p>';
+
+  document.getElementById("next").innerHTML = "<p>" + lead + "</p>" + cta;
+})();
+</script>
 
 </body>
 </html>
