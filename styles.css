@@ -207,36 +207,47 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    a hardcoded scaleX(-1) in the script, which silently mirrored ANY artwork put
    in this slot — fine for the perched mascot, wrong for art with a direction in
    it (the branding bird points at a rising chart; mirrored, the arrow falls). */
-.hero-mascot img{--flip:-1;width:min(430px,100%);transform:scaleX(var(--flip));}
-/* PANEL, not a cutout. This artwork cannot be lifted off its plate — its
-   linework matches its own background in value and its glow reaches all four
-   edges — so the frame is stated rather than hidden: same 10px radius and
-   hairline as the cards further down the page, so it reads as a deliberate
-   plate. The moment a transparent-background export exists, delete the radius,
-   the border and the shadow and let the bird sit on the section.
+/* ONE HEIGHT FOR BOTH HERO MASCOTS (2026-08-11). They are on different pages and
+   are never seen side by side, so this is about the two heroes feeling like the
+   same product, not about pixel alignment. Sized by HEIGHT rather than width
+   because the two files have nothing in common on that axis — the homepage bird
+   is 476x876 portrait, the branding bird is square — and matching widths would
+   have left one of them half the height of the other, which is the state this
+   replaces. Width follows from the aspect ratio. Desktop only: below 900px the
+   layout stacks and the width rules further down take back over. */
+:root{--hero-art-h:clamp(430px,44vw,560px);}
+.hero-mascot img{--flip:-1;height:var(--hero-art-h);width:auto;max-width:100%;
+  transform:scaleX(var(--flip));}
+/* THE PANEL IS GONE (2026-08-11), and this is the export that earned it. The
+   previous artwork drew its linework at the same value as its own plate and its
+   glow ran to all four edges, so it could not be keyed and shipped framed
+   instead. The replacement measures: plate a flat (0,8,26) against the section's
+   #000A18, brightest border pixel 27 against a corner of 26 — no glow, and a
+   ground two units off the one behind it. Nothing to hide, so nothing states an
+   edge. The radius, hairline and shadow are deleted rather than commented out.
    --flip:1 — this artwork already faces left in the FILE. A CSS mirror would
    turn the chart's arrow over and sell a falling line on a page about growth,
    which is the entire reason this token exists. Do not "simplify" it away. */
-/* A cutout could stand on the section edge; a panel butted against it reads as
-   a crop. Centred in the row instead, which also balances a 3:2 frame against
-   a much taller copy column. */
 .hero-mascot.art-wide{align-self:center;}
-.hero-mascot.art-wide img{
-  --flip:1;width:min(620px,100%);border-radius:10px;
-  border:1px solid var(--rule-d);box-shadow:0 22px 50px -28px rgba(0,0,0,.9);
-}
+/* Square art needs a wider column than the 3:2 panel did, or the height token
+   above gets clamped by max-width and the two heroes stop matching — which is
+   the whole point of it. Scoped with :has() so the homepage grid is untouched. */
+.hero-grid:has(.art-wide){grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);}
+.hero-mascot.art-wide img{--flip:1;height:var(--hero-art-h);width:auto;max-width:100%;}
 /* .hero carries no bottom padding — deliberate, so a cutout mascot can stand on
    the section edge. Stacked, the panel is the last thing in the hero and would
    butt straight into the cream, so it pays for that padding itself. */
 @media(max-width:900px){
   .hero-mascot.art-wide{margin-bottom:calc(var(--sect) * .8);}
-  .hero-mascot.art-wide img{width:min(480px,100%);}
+  /* Stacked, the shared height token stops being useful — the two pages are
+     never compared on a phone — so both heroes go back to width-driven sizing. */
+  .hero-mascot.art-wide img{height:auto;width:min(480px,100%);}
 }
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr;}
   .hero-copy{padding-bottom:0;order:1;}
   .hero-mascot{order:2;justify-self:center;}
-  .hero-mascot img{width:min(300px,72%);}
+  .hero-mascot img{height:auto;width:min(300px,72%);}
 }
 
 /* ---------- system band ---------- */
@@ -432,9 +443,15 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 }
 .scard:hover{border-color:var(--blue);transform:translateY(-3px);
   box-shadow:0 14px 30px -18px rgba(0,10,24,.45);}
-/* Fixed-ratio art box so ten different drawings still line their titles up. */
+/* Fixed-ratio art box so ten different drawings still line their titles up.
+   SQUARE, not 4:3 (2026-08-11). Four of the eight supplied tiles are 1:1 and in a
+   4:3 box they were height-bound — rendering three-quarters the width of the rest
+   and reading as a different, smaller set. A square box lets those four fill it
+   edge to edge, and costs the wide ones nothing: at 1.5:1 and 1.85:1 they are
+   width-bound either way, so they render at exactly the width they did before and
+   simply gain navy above and below, which is invisible against their own ground. */
 .scard .art{
-  aspect-ratio:4/3;border-radius:6px;background:var(--navy);overflow:hidden;
+  aspect-ratio:1/1;border-radius:6px;background:var(--navy);overflow:hidden;
   display:grid;place-items:center;margin-bottom:var(--s3);
 }
 .scard .art svg{width:100%;height:100%;display:block;}
