@@ -235,8 +235,23 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    and occupies 97.66% of a frame 1.379x as wide as it is tall, so that image is
    scaled by the reciprocal below. Change the artwork and re-measure both numbers,
    or the two stop matching with nothing to show for it. */
-:root{--bird-h:clamp(300px,30vw,430px);}
-.hero-mascot img{--flip:-1;height:var(--bird-h);width:auto;max-width:100%;
+/* --bird-h now drives the HOMEPAGE HEROES ONLY, both languages. It used to be a
+   shared height with branding.html; that page went width-driven on 2026-08-12 and
+   overrides height at every width, so this token no longer reaches it. Raising it
+   here does not touch the services page.
+   620px against the old 430 (2026-08-12, JP asked for massive). The bird is width-
+   free to grow: its column measures 501px and at this height the image is only
+   ~338px wide, so height is the only constraint and the figure never clamps.
+   The hero grows UPWARD as this rises — the feet stay pinned to the button by
+   --hero-floor below — so the ceiling on this number is how much navy you want
+   above the copy, not the column. */
+:root{--bird-h:clamp(300px,44vw,620px);}
+/* --flip is 1 because THIS artwork already faces left in the file, into the copy.
+   It was -1 for the previous perched bird, which faced right and needed mirroring;
+   swapping the file without swapping this token turns the bird to face off the
+   page, which is the whole reason the flip is a token and not a hardcoded
+   scaleX(-1) in app.js. Check the new file's direction before changing the art. */
+.hero-mascot img{--flip:1;height:var(--bird-h);width:auto;max-width:100%;
   transform:scaleX(var(--flip));}
 /* THE PANEL IS GONE (2026-08-11), and this is the export that earned it. The
    previous artwork drew its linework at the same value as its own plate and its
