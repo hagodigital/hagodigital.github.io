@@ -209,19 +209,23 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    primary-button-plus-text-link row. Every .ctas on the site is a hero row. */
 .ctas{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;margin-top:var(--s5);}
 .hero-mascot{align-self:end;justify-self:center;}
-/* Feet level with the button (2026-08-11). Scoped off .art-wide: the branding
-   hero centres its figure instead and would be shunted up by this.
+/* Feet level with the button (2026-08-11). BOTH heroes since 2026-08-12 — the
+   branding hero used to centre its figure because it was a bird standing beside a
+   framed chart and there were no feet to land; its artwork is now a bare bird like
+   the homepage's, so it stands on the same floor.
    --bird-tail is how far the artwork continues BELOW the feet, as a fraction of
    the image height. Until 2026-08-12 this was 0 and unnamed: the old perched bird
    was cropped to its alpha bbox and its claws were its lowest pixel, so the image
-   bottom WAS the feet and a plain margin did the job. The replacement's tail
-   sweeps 22px past the claws — measured on the file, 22/1326 — so the same margin
-   left the feet floating ~10px high at 620px, and it got quietly worse the bigger
-   the bird was set. Measure this on every new file: it is not a property of the
-   layout, it is a property of the drawing, and at 0 the rule behaves exactly as
-   it did before. */
-:root{--bird-tail:.0166;}
-.hero-mascot:not(.art-wide){
+   bottom WAS the feet and a plain margin did the job. Measure this on every new
+   file: it is not a property of the layout, it is a property of the drawing, and
+   at 0 the rule behaves exactly as it did before.
+   Measured on the current files (alpha >= 64, claws isolated by x-window, because
+   both drawings put a wing or tail tip lower than the feet and a plain getbbox
+   would read that as the floor):
+     mascot-perched  725x1327, claws end y=1305, 21px of tail below -> .0158
+     mascot-chart    907x1105, claws ARE the lowest pixel            -> 0 */
+:root{--bird-tail:.0158;}
+.hero-mascot{
   margin-bottom:calc(var(--hero-floor) - var(--bird-h) * var(--bird-tail));}
 /* --flip is read by app.js when it writes the parallax transform. It used to be
    a hardcoded scaleX(-1) in the script, which silently mirrored ANY artwork put
@@ -261,8 +265,12 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    is pushing the CTA into. 76vh keeps roughly 24px of clearance under the button
    at 720, 768 and 780 innerHeight; on anything tall enough it is inert and the
    620px ceiling is what binds. Re-derive it if the hero's padding, the nav height
-   or --bird-tail moves — it is a computed number, not a taste one. */
-:root{--bird-h:clamp(300px,min(44vw,76vh),620px);}
+   or --bird-tail moves — it is a computed number, not a taste one.
+   760px against 620 (2026-08-12, JP asked for really big on the new artwork). The
+   aspect is unchanged at 0.546, so the column still does not bind: 760px of height
+   is 415px of width against a 501px column. 52vw is the same fold arithmetic one
+   step wider; 76vh is untouched because the guard has to keep guarding. */
+:root{--bird-h:clamp(300px,min(52vw,76vh),760px);}
 /* --flip is 1 because THIS artwork already faces left in the file, into the copy.
    It was -1 for the previous perched bird, which faced right and needed mirroring;
    swapping the file without swapping this token turns the bird to face off the
@@ -280,15 +288,20 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    --flip:1 — this artwork already faces left in the FILE. A CSS mirror would
    turn the chart's arrow over and sell a falling line on a page about growth,
    which is the entire reason this token exists. Do not "simplify" it away. */
-.hero-mascot.art-wide{align-self:center;}
-/* This artwork is 1.379x as wide as it is tall, so the figure column has to be
-   wider than the homepage's or max-width clamps the image and the bird comes out
-   short — which is the one thing the token exists to prevent.
-   Scoped with :has() so the homepage grid is untouched. */
-.hero-grid:has(.art-wide){grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);}
-/* 1 / 0.9766 — the bird is 97.66% of this image's height, so the image is scaled
-   up by the reciprocal to land the BIRD on --bird-h. */
-.hero-mascot.art-wide img{--flip:1;height:calc(var(--bird-h) / 0.9766);
+/* Stands on the floor like the homepage bird (2026-08-12). It was align-self:center
+   while the artwork was a bird beside a framed chart — a figure with no feet at its
+   own bottom edge. The replacement is a bare pointing bird whose claws ARE its
+   lowest pixel, so --bird-tail is 0 here and the margin is the floor exactly. */
+.hero-mascot.art-wide{align-self:end;--bird-tail:0;margin-bottom:var(--hero-floor);}
+/* The old artwork was 1.379x as wide as it is tall and needed a wider figure column
+   than the homepage's. The replacement is PORTRAIT — 907x1105, 0.821 — so the column
+   goes back to the homepage's ratio. Scoped with :has() so the homepage is untouched
+   either way. */
+.hero-grid:has(.art-wide){grid-template-columns:minmax(0,1fr) minmax(0,.82fr);}
+/* No reciprocal any more: the bird fills this frame edge to edge (bbox is the whole
+   image), so its rendered height IS --bird-h. The old 1/0.9766 belonged to the
+   framed-chart file. */
+.hero-mascot.art-wide img{--flip:1;height:var(--bird-h);
   width:auto;max-width:100%;}
 
 /* THE SERVICES BIRD IS BIGGER THAN THE HOMEPAGE ONE (2026-08-12, JP's call), so
@@ -311,7 +324,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    copy block entirely on a very wide monitor. Below ~1500px the column is the
    narrower of the two and the ceiling is inert. Widen the copy and the bird
    shrinks; there is no third place for the space to come from. */
-:root{--bird-h-wide:clamp(300px,42vw,620px);}
+:root{--bird-h-wide:clamp(300px,46vw,760px);}
 @media(min-width:901px){
   .hero-grid:has(.art-wide){
     --hero-copy-w:clamp(380px,32vw,460px);
@@ -322,12 +335,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
     grid-template-columns:minmax(0,var(--hero-copy-w)) minmax(0,1fr);
   }
   /* Width-driven, not height-driven, because the column is what binds at every
-     desktop width. 1.4124 = (1 / 0.9766) * (1000 / 725) — the image aspect times
-     the same bird-to-frame reciprocal used above — so --bird-h-wide stays a
-     statement about the BIRD even though it is spent as a max-width. New artwork
-     changes both constants; re-measure, don't carry these over. */
+     desktop width. 0.8208 = 907 / 1105, the image aspect, with no bird-to-frame
+     reciprocal because the bird fills the frame — so --bird-h-wide stays a
+     statement about the BIRD's height even though it is spent as a max-width. It
+     was 1.4124 for the landscape framed-chart file. New artwork changes this
+     constant; re-measure, don't carry it over. */
   .hero-mascot.art-wide img{height:auto;width:100%;
-    max-width:calc(var(--bird-h-wide) * 1.4124);}
+    max-width:calc(var(--bird-h-wide) * 0.8208);}
 }
 /* .hero carries no bottom padding — deliberate, so a cutout mascot can stand on
    the section edge. Stacked, the panel is the last thing in the hero and would
