@@ -201,7 +201,15 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    tidied — restoring the section rhythm here costs ~47px of mascot. */
 .hero{position:relative;overflow:hidden;background:var(--navy);padding-block:clamp(24px,2.6vw,36px) 0;}
 .hero-streaks{position:absolute;inset:0;pointer-events:none;opacity:.85;}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.82fr);
+/* ONE HERO GRID FOR BOTH PAGES (2026-08-12). The branding hero used to run its own
+   columns, its own padding and its own size token, which is how the two birds ended
+   up different sizes in different places on two pages that are meant to read as one
+   product. There is now nothing page-specific left: same columns, same token, same
+   floor. The figure column is 1.36fr rather than .82fr because it has to fit the
+   WIDER of the two drawings at full height — the pointing bird is 0.821 aspect
+   against the perched bird's 0.546 — and a column that fits only one of them is
+   exactly what made them stop matching. */
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.36fr);
   gap:clamp(24px,4vw,56px);align-items:end;position:relative;z-index:2;}
 /* One floor for both hero columns. The grid is align-items:end, so this is the
    gap between the LAST LINE OF COPY and the bottom of the row — and giving the
@@ -280,7 +288,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    aspect is unchanged at 0.546, so the column still does not bind: 760px of height
    is 415px of width against a 501px column. 52vw is the same fold arithmetic one
    step wider; 76vh is untouched because the guard has to keep guarding. */
-:root{--bird-h:clamp(300px,min(60vw,calc((100vh - 131.5px) / 0.9842)),980px);}
+:root{--bird-h:clamp(300px,min(60vw,calc((100vh - 143.5px) / 0.9842)),980px);}
 /* --flip is 1 because THIS artwork already faces left in the file, into the copy.
    It was -1 for the previous perched bird, which faced right and needed mirroring;
    swapping the file without swapping this token turns the bird to face off the
@@ -298,75 +306,27 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    --flip:1 — this artwork already faces left in the FILE. A CSS mirror would
    turn the chart's arrow over and sell a falling line on a page about growth,
    which is the entire reason this token exists. Do not "simplify" it away. */
-/* Stands on the floor like the homepage bird (2026-08-12). It was align-self:center
-   while the artwork was a bird beside a framed chart — a figure with no feet at its
-   own bottom edge. The replacement is a bare pointing bird whose claws ARE its
-   lowest pixel, so --bird-tail is 0 here and the margin is the floor exactly. */
-.hero-mascot.art-wide{align-self:end;--bird-tail:0;margin-bottom:var(--hero-floor);}
-/* The old artwork was 1.379x as wide as it is tall and needed a wider figure column
-   than the homepage's. The replacement is PORTRAIT — 907x1105, 0.821 — so the column
-   goes back to the homepage's ratio. Scoped with :has() so the homepage is untouched
-   either way. */
-.hero-grid:has(.art-wide){grid-template-columns:minmax(0,1fr) minmax(0,.82fr);}
-/* THE TWO BIRDS ARE NORMALISED ON THE GEOMETRIC MEAN of their visible bbox, which
-   is the same rule the ten system cards use and for the same reason: matching one
-   edge matches a tall narrow drawing to a wide flat one on whichever axis they
-   happen to be long in, and they come out looking nothing alike. The perched bird
-   is 724x1325 (aspect .546); the pointing bird is 905x1102 (aspect .821) because a
-   raised wing buys it width. Equal geometric mean means
-     h_branding = h_home * sqrt(.546 / .821) = h_home * 0.8156
-   so ONE token still sizes both and they read as the same bird at the same distance.
-   Re-derive this constant from the two aspects whenever either file changes. */
-.hero-mascot.art-wide img{--flip:1;height:calc(var(--bird-h) * 0.8156);
-  width:auto;max-width:100%;}
+/* ONE declaration, and it is the whole of what makes the branding hero different from
+   the homepage one: this drawing's claws ARE its lowest pixel, so nothing continues
+   below the feet. Everything else — height, column, floor, flip, centring — comes from
+   the shared rules above, which is the point. The geometric-mean normalisation that
+   used to live here is GONE (2026-08-12): equal mass meant unequal height, and two
+   birds of unequal height on two pages that are meant to read as one product is the
+   thing being fixed. Same token, same height, same place. */
+.hero-mascot.art-wide{--bird-tail:0;}
 
-/* THE SERVICES BIRD IS BIGGER THAN THE HOMEPAGE ONE (2026-08-12, JP's call), so
-   --bird-h parity stops at this page — see the note on that token above for what
-   it was buying. This page has one image and it has to carry the hero on its own.
-
-   The size comes from FLOOR SPACE, not from a bigger number. Measured before the
-   change: the figure column was 606.5px and the image rendered 606.5x440.3 — it
-   was already pinned by max-width, so raising --bird-h moved nothing. .shell's
-   1280px cap was the binding constraint, so this grid opts out of it and pays its
-   own padding instead: the copy column keeps the exact left edge it had (136px at
-   1440, the same 136 every other .shell on the page starts at) while the figure
-   runs on toward the section's right edge. Nothing crosses the viewport, so
-   nothing is clipped — the whole reason this is done with padding rather than the
-   obvious negative margin off 100vw, which overshoots by the scrollbar width on a
-   real browser and quietly shaves the chart.
-
-   Two knobs, in this order: --hero-copy-w gives the bird room by taking it from
-   the copy, and --bird-h-wide is the ceiling that stops the bird outgrowing the
-   copy block entirely on a very wide monitor. Below ~1500px the column is the
-   narrower of the two and the ceiling is inert. Widen the copy and the bird
-   shrinks; there is no third place for the space to come from. */
-:root{--bird-h-wide:clamp(300px,46vw,760px);}
-@media(min-width:901px){
-  .hero-grid:has(.art-wide){
-    --hero-copy-w:clamp(380px,32vw,460px);
-    max-width:none;
-    padding-left:max(var(--pad),calc((100% - var(--max)) / 2 + var(--pad)));
-    padding-right:calc(var(--pad) * .5);
-    gap:clamp(24px,3vw,40px);
-    grid-template-columns:minmax(0,var(--hero-copy-w)) minmax(0,1fr);
-  }
-  /* HEIGHT-DRIVEN AGAIN (2026-08-12). It went width-driven while the artwork was a
-     landscape framed chart that the column genuinely bound; the replacement is
-     portrait and the column does not bind, and letting the COLUMN decide the size
-     is what made the two birds visibly different — the homepage's was sized by a
-     token and this one by whatever width happened to be left over. --bird-h-wide is
-     kept only as the ceiling that stops the figure outgrowing the copy block on a
-     very wide monitor; the height above is what actually sizes it. */
-  .hero-mascot.art-wide img{max-width:min(100%, calc(var(--bird-h-wide) * 0.8208));}
-}
+/* The branding hero's private layout — its own copy-width token, its own padding
+   escape from .shell's 1280px cap, its own width-driven size ceiling — is DELETED
+   (2026-08-12). It existed because that page once carried a landscape framed chart
+   that genuinely needed more room than a portrait mascot, and it long outlived the
+   artwork. Every one of those knobs was a way for the two heroes to drift apart, and
+   they did. If a future hero needs different room, widen the SHARED grid so both
+   pages move together, or the drift comes straight back. */
 /* .hero carries no bottom padding — deliberate, so a cutout mascot can stand on
    the section edge. Stacked, the panel is the last thing in the hero and would
    butt straight into the cream, so it pays for that padding itself. */
 @media(max-width:900px){
   .hero-mascot.art-wide{margin-bottom:calc(var(--sect) * .8);}
-  /* Stacked, the shared height token stops being useful — the two pages are
-     never compared on a phone — so both heroes go back to width-driven sizing. */
-  .hero-mascot.art-wide img{height:auto;width:min(480px,100%);}
 }
 @media(max-width:900px){
   /* :has(.art-wide) has to be repeated here, not just .hero-grid. The desktop
@@ -379,7 +339,12 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
   .hero-grid,.hero-grid:has(.art-wide){grid-template-columns:1fr;}
   .hero-copy{padding-bottom:0;order:1;}
   .hero-mascot{order:2;justify-self:center;}
-  .hero-mascot img{height:auto;width:min(300px,72%);}
+  /* Stacked, both heroes are sized by HEIGHT for the same reason they are on
+     desktop: width-driven sizing gave the wider drawing a taller bird (480px wide
+     against 300px, so 585px tall against 549px) and the two pages stopped matching
+     on phones the moment they started matching on desktop. One height, both pages;
+     max-width keeps the wider one inside a 390px screen. */
+  .hero-mascot img{height:clamp(420px,74vw,560px);width:auto;max-width:92%;}
 }
 
 /* ---------- system band ---------- */

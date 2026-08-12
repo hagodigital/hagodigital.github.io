@@ -70,18 +70,28 @@
   `swap.py` now grows the keyed region inward through anything **light AND neutral** (`≥170`, spread `≤14`),
   which the ring satisfies and the drawing's ivory does not; it removed 3,256px and 5,643px from the two
   files. **Zoom the silhouette on the preview, not just the plate corners.**
-  **The two birds are normalised on the GEOMETRIC MEAN of their bbox**, the same rule the ten system cards
-  use: aspects `.546` and `.821` differ enough that matching heights made one look a third bigger than the
-  other. `h_branding = h_home * sqrt(.546/.821) = h_home * 0.8156`. Re-derive from both aspects on any new
-  file. The branding hero is **height-driven again** — it went width-driven while the artwork was a landscape
-  chart the column genuinely bound, and letting the column size a portrait bird is what let the two drift.
+  **THE TWO HEROES ARE ONE HERO.** Same grid, same `--bird-h`, same `--hero-floor`, same padding — the only
+  page-specific declaration left anywhere is `.hero-mascot.art-wide{--bird-tail:0}`, because that drawing's
+  claws are its lowest pixel and the perched one's are not. Everything else that used to be private to
+  `branding.html` — its own copy-width token, its own escape from `.shell`'s 1280px cap, its own width-driven
+  size ceiling, a geometric-mean factor of `0.8156` — is **deleted**. Each of those was a way for the two to
+  drift, and each of them did. **A geometric-mean match is the wrong tool here**: equal mass across a `.546`
+  and a `.821` aspect means unequal HEIGHT, and unequal height is what reads as "different sizes" on two
+  pages meant to feel like one product. Measured identical at 1920/1440/1280/1024 and stacked: same height
+  to 0.1px, same centre x to 0.1px, feet `+0.0` on both.
+  The figure column is **`1.36fr`, not `.82fr`** — it has to fit the WIDER drawing at full height, and a
+  column that fits only one of them is exactly how they stopped matching. If a future hero needs more room,
+  widen the SHARED grid so both pages move together.
   **`--bird-h` is now the HOMEPAGE only** (both languages) and reads
-  `clamp(300px,min(60vw,calc((100vh - 131.5px) / 0.9842)),980px)` — the middle leg is a **fold guard**, not
+  `clamp(300px,min(60vw,calc((100vh - 143.5px) / 0.9842)),980px)` — and it now drives **both** heroes and
+  both languages. The middle leg is a **fold guard**, not
   styling: the CTA's bottom is `nav + hero pad-top + --bird-h * (1 - --bird-tail)`, so a width-only size
   pushes the button off a 768px laptop while measuring fine on a 900px one. **It was the fitted constant
-  `76vh` and is now the arithmetic**, solved for a fixed 24px of clearance from a measured
-  `107.5px` of nav-plus-hero-padding. `verify.py` prints `fold+N` and fails under 16px, so the guard is
-  checked rather than trusted: measured exactly `+24` at 720/768/900.
+  `76vh` and is now the arithmetic**, solved from a measured `107.5px` of nav-plus-hero-padding. The
+  clearance in it is **36px, not 24** — the branding hero's copy block is taller than the homepage's, so on
+  that page the COPY sets the row height and the button sits 12px lower than the bird alone would put it.
+  Size the guard for the taller of the two. `verify.py` prints `fold+N` and fails under 16px, so it is
+  checked rather than trusted: `+36` homepage, `+24` branding at 900 innerHeight.
   **The hero's own top padding is part of this number**, and it is the only place left to find bird: the
   feet are pinned to the CTA and the CTA has to clear the fold, so `100vh - nav - hero pad - 24` IS the
   ceiling. `.hero` therefore pays `clamp(24px,2.6vw,36px)` instead of the sitewide `--sect * .8` (83px at
