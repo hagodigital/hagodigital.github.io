@@ -278,6 +278,10 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 /* ---------- system band ---------- */
 .band{background:var(--navy-2);text-align:center;padding-block:calc(var(--sect) * .5);}
 .band .eyebrow{margin-bottom:var(--s1);}
+/* branding.html's band breaks its heading over two lines. --blue-lift, not the
+   --blue-ink used for the same job on cream: that one is mixed FOR cream and
+   fails against navy-2. */
+.band .h-band span{display:block;color:var(--blue-lift);}
 
 /* ---------- pillars ---------- */
 .pillar .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
@@ -400,12 +404,16 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .on-cream .mini span{color:var(--grey);}
 
 /* ---------- brand / branding / identity trio ---------- */
-.trio-head{text-align:center;max-width:34ch;margin-inline:auto;}
-.trio-head .h2 span{display:block;color:var(--blue-ink);}
+/* .trio-head is gone — that heading is a .band section of its own now, so the
+   rules that centred it inside the cream section have nothing left to style. */
 .trio{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:var(--s4);margin-top:calc(var(--sect) * .55);align-items:start;
 }
+/* ...but that top margin existed to clear the heading it no longer follows. As
+   the section's first child it would stack on top of the section's own padding
+   and open a gap half again as deep as every other section's. */
+.shell > .trio:first-child{margin-top:0;}
 .tcard{text-align:center;position:relative;}
 .tcard .ring{
   width:74px;height:74px;border-radius:50%;background:var(--navy);
@@ -434,16 +442,22 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 }
 
 /* ---------- callout bar ---------- */
+/* Same panel as .endbar (2026-08-11): navy ground, lime disc, cream emphasis,
+   --s5 all round, 56px mark. The two are the closing note of their sections and
+   were reading as different components — one a bordered cream card, the other a
+   navy slab. Box, colour and padding are matched deliberately; only the type size
+   differs, and for a reason: .endbar's paragraph sits UNDER a display headline at
+   .9rem, while this one carries its panel alone and holds .95rem. */
 .callout{
   display:grid;grid-template-columns:auto 1fr;gap:var(--s4);align-items:center;
-  margin-top:calc(var(--sect) * .5);background:var(--cream-2);
-  border:1px solid var(--rule-l);border-radius:10px;padding:var(--s4) var(--s5);
+  margin-top:calc(var(--sect) * .5);background:var(--navy);border-radius:10px;
+  padding:var(--s5);color:var(--cream-dim);
 }
-.callout .mark{width:52px;height:52px;border-radius:50%;background:var(--navy);
+.callout .mark{width:56px;height:56px;border-radius:50%;background:var(--lime);
   display:grid;place-items:center;flex:none;}
-.callout .mark svg{width:26px;height:26px;}
+.callout .mark svg{width:28px;height:28px;}
 .callout p{font-size:.95rem;line-height:1.6;}
-.callout b{color:var(--ink);}
+.callout b{color:var(--cream);}
 @media(max-width:620px){.callout{grid-template-columns:1fr;text-align:left;}}
 
 /* ---------- the ten-part system ---------- */
