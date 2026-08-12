@@ -252,8 +252,17 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    ~338px wide, so height is the only constraint and the figure never clamps.
    The hero grows UPWARD as this rises — the feet stay pinned to the button by
    --hero-floor below — so the ceiling on this number is how much navy you want
-   above the copy, not the column. */
-:root{--bird-h:clamp(300px,44vw,620px);}
+   above the copy, not the column.
+   The 76vh leg is a FOLD guard, added 2026-08-12, and it is the reason there are
+   two limits here. The button's bottom lands at
+     nav(71.7) + hero pad-top(--sect * .8) + --bird-h * (1 - --bird-tail)
+   which is 764.6px at 1440 — fine on a 900px screen and past the fold on a 768px
+   laptop, where a bird sized purely off WIDTH knows nothing about the height it
+   is pushing the CTA into. 76vh keeps roughly 24px of clearance under the button
+   at 720, 768 and 780 innerHeight; on anything tall enough it is inert and the
+   620px ceiling is what binds. Re-derive it if the hero's padding, the nav height
+   or --bird-tail moves — it is a computed number, not a taste one. */
+:root{--bird-h:clamp(300px,min(44vw,76vh),620px);}
 /* --flip is 1 because THIS artwork already faces left in the file, into the copy.
    It was -1 for the previous perched bird, which faced right and needed mirroring;
    swapping the file without swapping this token turns the bird to face off the
