@@ -195,7 +195,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .hero-streaks{position:absolute;inset:0;pointer-events:none;opacity:.85;}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.82fr);
   gap:clamp(24px,4vw,56px);align-items:end;position:relative;z-index:2;}
-.hero-copy{padding-bottom:clamp(48px,6vw,88px);}
+/* One floor for both hero columns. The grid is align-items:end, so this is the
+   gap between the LAST LINE OF COPY and the bottom of the row — and giving the
+   bird the same value is what lands its feet level with the button rather than
+   on the section edge. They have to move together; hardcode either one and the
+   next change to the other breaks the alignment with nothing to show for it. */
+:root{--hero-floor:clamp(48px,6vw,88px);}
+.hero-copy{padding-bottom:var(--hero-floor);}
 .hero h1{margin-top:var(--s3);}
 .hero h1 .lime{color:var(--lime);}
 .hero .lede{color:var(--cream-dim);max-width:44ch;}
@@ -203,6 +209,12 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    primary-button-plus-text-link row. Every .ctas on the site is a hero row. */
 .ctas{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;margin-top:var(--s5);}
 .hero-mascot{align-self:end;justify-self:center;}
+/* Feet level with the button (2026-08-11). Scoped off .art-wide: the branding
+   hero centres its figure instead and would be shunted up by this. The perched
+   bird is cropped to its own alpha bbox, so the image's bottom edge IS the feet
+   — that is the only reason a plain margin can do this. Re-crop the artwork with
+   any padding under it and this silently stops being true. */
+.hero-mascot:not(.art-wide){margin-bottom:var(--hero-floor);}
 /* --flip is read by app.js when it writes the parallax transform. It used to be
    a hardcoded scaleX(-1) in the script, which silently mirrored ANY artwork put
    in this slot — fine for the perched mascot, wrong for art with a direction in
