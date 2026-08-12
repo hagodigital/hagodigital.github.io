@@ -58,9 +58,12 @@
   holds a chart**; it is `905×1102` portrait where it used to be `1000×725` landscape, and the name is the
   only thing left of the old file. The perched file is `724×1325`. **The plate on that batch keys at
   `--tol 7`, not the measured 11** — the drawing's own ivory is inside 11 of the near-white plate and a
-  default run holes the body and crest. Take enclosed pockets on the branding file (one 10,465px pocket
-  between the legs) and **none** on the perched one — at `--pocket-min 1` the same file came back ragged,
-  because at tol 7 the drawing's own white highlights are enclosed plate-coloured regions too.
+  default run holes the body and crest. **Both files have exactly one enclosed pocket worth taking — the gap
+  between the legs** (10,465px on the branding file, 6,897px on the perched one) — and the floor has to be
+  set to catch it and nothing else: `--pocket-min 3000`. At `--pocket-min 1` the perched file came back
+  ragged, because at tol 7 the drawing's own white highlights are enclosed plate-coloured regions too; at
+  the default 1500 it is fine, and at no floor at all the bird ships with a **white patch between its legs**,
+  which is what reached the live site. Between-the-legs is the one pocket to look for on a standing figure.
   **The dotted white fringe was the third defect off this generator and it reached the live site**: every
   outline is wrapped in a light ring that survives the plate tolerance by a pixel or two, so the silhouette
   ships edged in white dashes. It measured 370px on a 725×1327 file — a statistic that reads as clean.
@@ -73,13 +76,18 @@
   file. The branding hero is **height-driven again** — it went width-driven while the artwork was a landscape
   chart the column genuinely bound, and letting the column size a portrait bird is what let the two drift.
   **`--bird-h` is now the HOMEPAGE only** (both languages) and reads
-  `clamp(300px,min(52vw,calc((100vh - 178.5px) / 0.9842)),880px)` — the middle leg is a **fold guard**, not
+  `clamp(300px,min(60vw,calc((100vh - 131.5px) / 0.9842)),980px)` — the middle leg is a **fold guard**, not
   styling: the CTA's bottom is `nav + hero pad-top + --bird-h * (1 - --bird-tail)`, so a width-only size
   pushes the button off a 768px laptop while measuring fine on a 900px one. **It was the fitted constant
   `76vh` and is now the arithmetic**, solved for a fixed 24px of clearance from a measured
-  `154.5px` of nav-plus-hero-padding — worth ~50px more bird at 900 innerHeight for the same guarantee.
-  `verify.py` prints `fold+N` and fails under 16px, so the guard is checked rather than trusted: measured
-  exactly `+24` at 720/768/900, and inert above ~1030 where the 52vw leg binds instead. `branding.html` went width-driven the same day and reads `--bird-h-wide` as a max-width, so the
+  `107.5px` of nav-plus-hero-padding. `verify.py` prints `fold+N` and fails under 16px, so the guard is
+  checked rather than trusted: measured exactly `+24` at 720/768/900.
+  **The hero's own top padding is part of this number**, and it is the only place left to find bird: the
+  feet are pinned to the CTA and the CTA has to clear the fold, so `100vh - nav - hero pad - 24` IS the
+  ceiling. `.hero` therefore pays `clamp(24px,2.6vw,36px)` instead of the sitewide `--sect * .8` (83px at
+  1440). **Restoring the section rhythm there costs ~47px of mascot** — it looks like an inconsistency and
+  it is a deliberate trade. Homepage bird measures **781px tall at 900 innerHeight**, against 430 before
+  2026-08-12 and 684 earlier the same day. `branding.html` went width-driven the same day and reads `--bird-h-wide` as a max-width, so the
   two heroes no longer share a height and raising one does not touch the other. **`--flip` is `1` on both** —
   each current file already faces left. **New artwork invalidates every one of these numbers silently —
   re-measure, don't assume**, and that includes which way the bird faces.

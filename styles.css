@@ -191,7 +191,15 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 }
 
 /* ---------- hero ---------- */
-.hero{position:relative;overflow:hidden;background:var(--navy);padding-block:calc(var(--sect) * .8) 0;}
+/* The hero's TOP PADDING is bird height (2026-08-12). Every pixel above the artwork
+   is a pixel the bird cannot have: the feet are pinned to the CTA and the CTA has to
+   stay above the fold, so the bird's ceiling is
+     100vh - nav - THIS - clearance
+   and nothing else. It was `--sect * .8` (83px at 1440), the same rhythm as every
+   other section, which is the right default for a section whose job is text and the
+   wrong one for the section whose job is a 780px bird. Trimmed deliberately, not
+   tidied — restoring the section rhythm here costs ~47px of mascot. */
+.hero{position:relative;overflow:hidden;background:var(--navy);padding-block:clamp(24px,2.6vw,36px) 0;}
 .hero-streaks{position:absolute;inset:0;pointer-events:none;opacity:.85;}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.82fr);
   gap:clamp(24px,4vw,56px);align-items:end;position:relative;z-index:2;}
@@ -272,7 +280,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    aspect is unchanged at 0.546, so the column still does not bind: 760px of height
    is 415px of width against a 501px column. 52vw is the same fold arithmetic one
    step wider; 76vh is untouched because the guard has to keep guarding. */
-:root{--bird-h:clamp(300px,min(52vw,calc((100vh - 178.5px) / 0.9842)),880px);}
+:root{--bird-h:clamp(300px,min(60vw,calc((100vh - 131.5px) / 0.9842)),980px);}
 /* --flip is 1 because THIS artwork already faces left in the file, into the copy.
    It was -1 for the previous perched bird, which faced right and needed mirroring;
    swapping the file without swapping this token turns the bird to face off the
