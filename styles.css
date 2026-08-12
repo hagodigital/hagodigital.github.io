@@ -257,20 +257,22 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    The hero grows UPWARD as this rises — the feet stay pinned to the button by
    --hero-floor below — so the ceiling on this number is how much navy you want
    above the copy, not the column.
-   The 76vh leg is a FOLD guard, added 2026-08-12, and it is the reason there are
-   two limits here. The button's bottom lands at
+   The middle leg is a FOLD guard, added 2026-08-12, and it is the reason there are
+   three limits here. The button's bottom lands at
      nav(71.7) + hero pad-top(--sect * .8) + --bird-h * (1 - --bird-tail)
-   which is 764.6px at 1440 — fine on a 900px screen and past the fold on a 768px
-   laptop, where a bird sized purely off WIDTH knows nothing about the height it
-   is pushing the CTA into. 76vh keeps roughly 24px of clearance under the button
-   at 720, 768 and 780 innerHeight; on anything tall enough it is inert and the
-   620px ceiling is what binds. Re-derive it if the hero's padding, the nav height
-   or --bird-tail moves — it is a computed number, not a taste one.
+   and a bird sized purely off WIDTH knows nothing about the height it is pushing
+   the CTA into. It was `76vh`, a fitted constant; it is now the arithmetic itself,
+   solved for a fixed 24px of clearance:
+     h = (100vh - 154.5px[nav + hero pad] - 24px[clearance]) / 0.9842[1 - tail]
+   which is worth ~50px of bird at 900 innerHeight and ~15px at 768 over the fitted
+   version, for the same guarantee. MEASURED, not asserted: `verify.py` prints
+   `fold+N` and fails under 16px. Re-derive the 154.5 if the nav height or the
+   hero's top padding moves — it is a computed number, not a taste one.
    760px against 620 (2026-08-12, JP asked for really big on the new artwork). The
    aspect is unchanged at 0.546, so the column still does not bind: 760px of height
    is 415px of width against a 501px column. 52vw is the same fold arithmetic one
    step wider; 76vh is untouched because the guard has to keep guarding. */
-:root{--bird-h:clamp(300px,min(52vw,76vh),760px);}
+:root{--bird-h:clamp(300px,min(52vw,calc((100vh - 178.5px) / 0.9842)),880px);}
 /* --flip is 1 because THIS artwork already faces left in the file, into the copy.
    It was -1 for the previous perched bird, which faced right and needed mirroring;
    swapping the file without swapping this token turns the bird to face off the
@@ -298,10 +300,16 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    goes back to the homepage's ratio. Scoped with :has() so the homepage is untouched
    either way. */
 .hero-grid:has(.art-wide){grid-template-columns:minmax(0,1fr) minmax(0,.82fr);}
-/* No reciprocal any more: the bird fills this frame edge to edge (bbox is the whole
-   image), so its rendered height IS --bird-h. The old 1/0.9766 belonged to the
-   framed-chart file. */
-.hero-mascot.art-wide img{--flip:1;height:var(--bird-h);
+/* THE TWO BIRDS ARE NORMALISED ON THE GEOMETRIC MEAN of their visible bbox, which
+   is the same rule the ten system cards use and for the same reason: matching one
+   edge matches a tall narrow drawing to a wide flat one on whichever axis they
+   happen to be long in, and they come out looking nothing alike. The perched bird
+   is 724x1325 (aspect .546); the pointing bird is 905x1102 (aspect .821) because a
+   raised wing buys it width. Equal geometric mean means
+     h_branding = h_home * sqrt(.546 / .821) = h_home * 0.8156
+   so ONE token still sizes both and they read as the same bird at the same distance.
+   Re-derive this constant from the two aspects whenever either file changes. */
+.hero-mascot.art-wide img{--flip:1;height:calc(var(--bird-h) * 0.8156);
   width:auto;max-width:100%;}
 
 /* THE SERVICES BIRD IS BIGGER THAN THE HOMEPAGE ONE (2026-08-12, JP's call), so
@@ -334,14 +342,14 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
     gap:clamp(24px,3vw,40px);
     grid-template-columns:minmax(0,var(--hero-copy-w)) minmax(0,1fr);
   }
-  /* Width-driven, not height-driven, because the column is what binds at every
-     desktop width. 0.8208 = 907 / 1105, the image aspect, with no bird-to-frame
-     reciprocal because the bird fills the frame — so --bird-h-wide stays a
-     statement about the BIRD's height even though it is spent as a max-width. It
-     was 1.4124 for the landscape framed-chart file. New artwork changes this
-     constant; re-measure, don't carry it over. */
-  .hero-mascot.art-wide img{height:auto;width:100%;
-    max-width:calc(var(--bird-h-wide) * 0.8208);}
+  /* HEIGHT-DRIVEN AGAIN (2026-08-12). It went width-driven while the artwork was a
+     landscape framed chart that the column genuinely bound; the replacement is
+     portrait and the column does not bind, and letting the COLUMN decide the size
+     is what made the two birds visibly different — the homepage's was sized by a
+     token and this one by whatever width happened to be left over. --bird-h-wide is
+     kept only as the ceiling that stops the figure outgrowing the copy block on a
+     very wide monitor; the height above is what actually sizes it. */
+  .hero-mascot.art-wide img{max-width:min(100%, calc(var(--bird-h-wide) * 0.8208));}
 }
 /* .hero carries no bottom padding — deliberate, so a cutout mascot can stand on
    the section edge. Stacked, the panel is the last thing in the hero and would
