@@ -101,32 +101,10 @@
         <stop offset="1" stop-color="#2365DE" stop-opacity="0"/>
       </radialGradient>
     </defs>
+    <!-- Streak field removed to match the English hero (2026-08-11). The glow
+         stays: it is the only ground the bird has. The element keeps its class
+         because app.js reads .hero-streaks for the parallax layer. -->
     <rect width="1200" height="620" fill="url(#hg)"/>
-    <g stroke-linecap="round">
-      <g stroke="#2365DE" stroke-width="3" opacity=".85">
-        <path d="M690 40 L640 150"/><path d="M900 20 L860 110"/><path d="M1080 90 L1035 185"/>
-        <path d="M760 200 L724 278"/><path d="M1010 250 L975 322"/><path d="M640 330 L610 396"/>
-        <path d="M1160 30 L1122 108"/><path d="M580 120 L548 190"/><path d="M866 300 L836 366"/>
-        <path d="M1096 400 L1066 460"/><path d="M700 470 L674 526"/><path d="M980 120 L950 182"/>
-      </g>
-      <g stroke="#CEFF00" stroke-width="3" opacity=".9">
-        <path d="M820 60 L784 138"/><path d="M1120 160 L1085 232"/><path d="M700 250 L672 312"/>
-        <path d="M960 380 L934 438"/><path d="M600 40 L572 100"/><path d="M1180 340 L1152 396"/>
-        <path d="M846 470 L822 522"/>
-      </g>
-      <g fill="#2365DE" opacity=".8">
-        <circle cx="655" cy="255" r="7"/><circle cx="1128" cy="118" r="9"/><circle cx="905" cy="452" r="6"/>
-      </g>
-      <g fill="#CEFF00" opacity=".85">
-        <circle cx="742" cy="405" r="5"/><circle cx="1058" cy="330" r="4"/>
-      </g>
-      <g fill="none" stroke="#2365DE" stroke-width="2.5" opacity=".7">
-        <circle cx="618" cy="452" r="10"/>
-      </g>
-      <g fill="#696D71" opacity=".55">
-        <circle cx="812" cy="176" r="9"/><circle cx="1150" cy="286" r="7"/>
-      </g>
-    </g>
   </svg>
 
   <div class="shell hero-grid">
@@ -137,12 +115,11 @@
       <div class="ctas">
         <a class="btn btn-lime" data-cta="book" href="#">Agenda una llamada gratis <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
-      <p style="font-size:.86rem;line-height:1.6;color:var(--cream-mute);margin-top:16px">Media hora &middot; Sin presentaci&oacute;n de ventas &middot; Una respuesta directa</p>
-      <ul class="checks">
-        <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Estrat&eacute;gico y pr&aacute;ctico</li>
-        <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Entrega r&aacute;pida y sin rodeos</li>
-        <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Hecho para crecer</li>
-      </ul>
+      <!-- Matches the English hero (2026-08-11): it ends on the button. The
+           reassurance line and the three ticks are gone, the ticks moved down to
+           the About block. Nothing below .ctas is what lets the bird's feet land
+           level with the button — see --hero-floor in styles.css, which both
+           languages share, so this needed no CSS of its own. -->
     </div>
     <figure class="hero-mascot" data-rise>
       <img src="../assets/mascot-perched.webp" width="470" height="787" fetchpriority="high" decoding="async"
@@ -294,9 +271,15 @@
       <h2 class="h2" style="color:var(--cream);margin-top:8px">Una sola persona, de principio a fin.</h2>
       <p class="lede">Soy el socio digital de negocios y profesionales que quieren algo m&aacute;s que una p&aacute;gina web. Construyo los sistemas y los activos que hacen crecer de verdad &mdash; y cuando un trabajo necesita un dise&ntilde;ador gr&aacute;fico titulado, lo traigo y lo dirijo yo.</p>
       <div class="vals" data-stagger>
-        <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="12" stroke="#CEFF00" stroke-width="2.2"/><circle cx="17" cy="17" r="5" stroke="#2365DE" stroke-width="2.2"/></svg><span><b>Estrat&eacute;gico</b><span>Pienso por delante y planifico bien.</span></span></div>
-        <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="12" stroke="#CEFF00" stroke-width="2.2"/><path d="M11 17.5l4 4 8-8.5" stroke="#2365DE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Pr&aacute;ctico</b><span>Mantengo todo simple, claro y accionable.</span></span></div>
-        <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="M6 25l6-6 4 4 9-10" stroke="#CEFF00" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 13h5v5" stroke="#2365DE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Resultados</b><span>Me enfoco en lo que de verdad cambia el resultado.</span></span></div>
+        <!-- These three came down out of the hero (2026-08-11) and replace the
+             Estratégico / Práctico / Resultados trio that stood here — same move
+             as the English page. Label only: no supporting line was written for
+             them in either language, and writing one here would be inventing
+             Spanish copy rather than transcreating supplied copy. The wording is
+             the hero's own Spanish, not a translation of the English labels. -->
+        <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="12" stroke="#CEFF00" stroke-width="2.2"/><circle cx="17" cy="17" r="5" stroke="#2365DE" stroke-width="2.2"/></svg><span><b>Estrat&eacute;gico y pr&aacute;ctico</b></span></div>
+        <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="12" stroke="#CEFF00" stroke-width="2.2"/><path d="M11 17.5l4 4 8-8.5" stroke="#2365DE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Entrega r&aacute;pida y sin rodeos</b></span></div>
+        <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="M6 25l6-6 4 4 9-10" stroke="#CEFF00" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 13h5v5" stroke="#2365DE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Hecho para crecer</b></span></div>
       </div>
     </div>
 
