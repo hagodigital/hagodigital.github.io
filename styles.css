@@ -251,14 +251,52 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .hero-mascot.art-wide{align-self:center;}
 /* This artwork is 1.379x as wide as it is tall, so the figure column has to be
    wider than the homepage's or max-width clamps the image and the bird comes out
-   short — which is the one thing the token exists to prevent. 1.2fr leaves 505px
-   of copy column, enough for the h1 to break where it does now.
+   short — which is the one thing the token exists to prevent.
    Scoped with :has() so the homepage grid is untouched. */
 .hero-grid:has(.art-wide){grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);}
 /* 1 / 0.9766 — the bird is 97.66% of this image's height, so the image is scaled
    up by the reciprocal to land the BIRD on --bird-h. */
 .hero-mascot.art-wide img{--flip:1;height:calc(var(--bird-h) / 0.9766);
   width:auto;max-width:100%;}
+
+/* THE SERVICES BIRD IS BIGGER THAN THE HOMEPAGE ONE (2026-08-12, JP's call), so
+   --bird-h parity stops at this page — see the note on that token above for what
+   it was buying. This page has one image and it has to carry the hero on its own.
+
+   The size comes from FLOOR SPACE, not from a bigger number. Measured before the
+   change: the figure column was 606.5px and the image rendered 606.5x440.3 — it
+   was already pinned by max-width, so raising --bird-h moved nothing. .shell's
+   1280px cap was the binding constraint, so this grid opts out of it and pays its
+   own padding instead: the copy column keeps the exact left edge it had (136px at
+   1440, the same 136 every other .shell on the page starts at) while the figure
+   runs on toward the section's right edge. Nothing crosses the viewport, so
+   nothing is clipped — the whole reason this is done with padding rather than the
+   obvious negative margin off 100vw, which overshoots by the scrollbar width on a
+   real browser and quietly shaves the chart.
+
+   Two knobs, in this order: --hero-copy-w gives the bird room by taking it from
+   the copy, and --bird-h-wide is the ceiling that stops the bird outgrowing the
+   copy block entirely on a very wide monitor. Below ~1500px the column is the
+   narrower of the two and the ceiling is inert. Widen the copy and the bird
+   shrinks; there is no third place for the space to come from. */
+:root{--bird-h-wide:clamp(300px,42vw,620px);}
+@media(min-width:901px){
+  .hero-grid:has(.art-wide){
+    --hero-copy-w:clamp(380px,32vw,460px);
+    max-width:none;
+    padding-left:max(var(--pad),calc((100% - var(--max)) / 2 + var(--pad)));
+    padding-right:calc(var(--pad) * .5);
+    gap:clamp(24px,3vw,40px);
+    grid-template-columns:minmax(0,var(--hero-copy-w)) minmax(0,1fr);
+  }
+  /* Width-driven, not height-driven, because the column is what binds at every
+     desktop width. 1.4124 = (1 / 0.9766) * (1000 / 725) — the image aspect times
+     the same bird-to-frame reciprocal used above — so --bird-h-wide stays a
+     statement about the BIRD even though it is spent as a max-width. New artwork
+     changes both constants; re-measure, don't carry these over. */
+  .hero-mascot.art-wide img{height:auto;width:100%;
+    max-width:calc(var(--bird-h-wide) * 1.4124);}
+}
 /* .hero carries no bottom padding — deliberate, so a cutout mascot can stand on
    the section edge. Stacked, the panel is the last thing in the hero and would
    butt straight into the cream, so it pays for that padding itself. */
@@ -269,7 +307,14 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
   .hero-mascot.art-wide img{height:auto;width:min(480px,100%);}
 }
 @media(max-width:900px){
-  .hero-grid{grid-template-columns:1fr;}
+  /* :has(.art-wide) has to be repeated here, not just .hero-grid. The desktop
+     rule above is (0,2,0) and this one was (0,1,0), and a media query adds no
+     specificity — so the branding hero went on holding two columns all the way
+     down, 148px of copy beside a 178px bird at 390px, while the .art-wide mobile
+     rules right above sat unused. Found by measurement 2026-08-12; it had been
+     live since the page shipped. Any future .hero-grid variant selector needs
+     adding here too. */
+  .hero-grid,.hero-grid:has(.art-wide){grid-template-columns:1fr;}
   .hero-copy{padding-bottom:0;order:1;}
   .hero-mascot{order:2;justify-self:center;}
   .hero-mascot img{height:auto;width:min(300px,72%);}
