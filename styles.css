@@ -210,11 +210,19 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .ctas{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;margin-top:var(--s5);}
 .hero-mascot{align-self:end;justify-self:center;}
 /* Feet level with the button (2026-08-11). Scoped off .art-wide: the branding
-   hero centres its figure instead and would be shunted up by this. The perched
-   bird is cropped to its own alpha bbox, so the image's bottom edge IS the feet
-   — that is the only reason a plain margin can do this. Re-crop the artwork with
-   any padding under it and this silently stops being true. */
-.hero-mascot:not(.art-wide){margin-bottom:var(--hero-floor);}
+   hero centres its figure instead and would be shunted up by this.
+   --bird-tail is how far the artwork continues BELOW the feet, as a fraction of
+   the image height. Until 2026-08-12 this was 0 and unnamed: the old perched bird
+   was cropped to its alpha bbox and its claws were its lowest pixel, so the image
+   bottom WAS the feet and a plain margin did the job. The replacement's tail
+   sweeps 22px past the claws — measured on the file, 22/1326 — so the same margin
+   left the feet floating ~10px high at 620px, and it got quietly worse the bigger
+   the bird was set. Measure this on every new file: it is not a property of the
+   layout, it is a property of the drawing, and at 0 the rule behaves exactly as
+   it did before. */
+:root{--bird-tail:.0166;}
+.hero-mascot:not(.art-wide){
+  margin-bottom:calc(var(--hero-floor) - var(--bird-h) * var(--bird-tail));}
 /* --flip is read by app.js when it writes the parallax transform. It used to be
    a hardcoded scaleX(-1) in the script, which silently mirrored ANY artwork put
    in this slot — fine for the perched mascot, wrong for art with a direction in
