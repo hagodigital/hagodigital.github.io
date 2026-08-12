@@ -209,7 +209,7 @@
            panel would be drawing a box around nothing. Taller than the export it
            replaces (1.30 against 1.71) because the new composition stacks the cup,
            cap and shirt above the devices instead of lining them all up. -->
-      <img src="assets/brand-applied.webp" width="1200" height="925" loading="lazy" decoding="async"
+      <img src="assets/brand-applied.webp" width="1200" height="927" loading="lazy" decoding="async"
            alt="The HagoDigital identity applied across a coffee cup, a cap, a t-shirt, a laptop website and a phone screen.">
     </figure>
   </div>
@@ -237,7 +237,15 @@
              the key tests bright AND neutral: the ivory tile is (248,245,230), an
              18-point spread, and it is that spread rather than any brightness
              threshold that keeps the fill off the artwork. Two of the eight came
-             with real alpha already and are passed straight through. -->
+             with real alpha already and are passed straight through.
+             A plate test alone was not enough. The generator wraps every outline
+             in a noisy ring dipping to ~193, which both survives the test AND
+             fragments the plate into islands the border fill cannot reach — that
+             shipped once as an 8px white border round the applied-identity art.
+             So the claimed region is grown inward through anything still light and
+             neutral (>=170, spread <=14). It stops itself: an outline pixel is too
+             dark and a coloured one is not neutral, so it cannot enter the drawing,
+             and the ivory's 18-point spread keeps it out of the tiles. -->
         <div class="art"><img src="assets/sys-voice.webp" width="640" height="640" loading="lazy" decoding="async" alt="A studio microphone with a lime band across its body and a blue bar at the base."></div>
         <h3>1. Brand voice</h3>
         <p>The words that sound like you. Tone, personality and key messages &mdash; clear, consistent and unmistakably yours.</p>
