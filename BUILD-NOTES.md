@@ -78,7 +78,13 @@
   drift, and each of them did. **A geometric-mean match is the wrong tool here**: equal mass across a `.546`
   and a `.821` aspect means unequal HEIGHT, and unequal height is what reads as "different sizes" on two
   pages meant to feel like one product. Measured identical at 1920/1440/1280/1024 and stacked: same height
-  to 0.1px, same centre x to 0.1px, feet `+0.0` on both.
+  to 0.1px, same LEFT EDGE to 0.1px, feet `+0.0` on both.
+  **The figure is `justify-self:start`, not `center`** (2026-08-12). The column has to fit the wider drawing,
+  so centring parked the narrower one 110px out into open navy — 167px from the copy on the homepage against
+  61px on branding, and the homepage bird read as drifting away from the words. Aligned to the column's start
+  both birds begin at the same x and sit 56px from the copy. **With two silhouettes of different natural
+  widths, a shared left edge is a stronger reading of "same position" than a shared centre** — centring makes
+  the *gap* differ, which is the thing the eye actually reads. Stacked, it goes back to centred.
   The figure column is **`1.36fr`, not `.82fr`** — it has to fit the WIDER drawing at full height, and a
   column that fits only one of them is exactly how they stopped matching. If a future hero needs more room,
   widen the SHARED grid so both pages move together.

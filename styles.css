@@ -224,7 +224,14 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 /* Not scoped to .hero any more — the contact page's page-hero needs the same
    primary-button-plus-text-link row. Every .ctas on the site is a hero row. */
 .ctas{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;margin-top:var(--s5);}
-.hero-mascot{align-self:end;justify-self:center;}
+/* LEFT edge, not centre (2026-08-12). The figure column has to be wide enough for the
+   WIDER of the two drawings, so centring parked the narrower one 110px out into open
+   navy — 167px from the copy on the homepage against 61px on branding, which read as
+   the bird drifting away from the words it belongs to. Aligned to the column's start,
+   both birds begin at the same x and sit the same distance from the copy, which is a
+   stronger reading of "same position" than a shared centre when the two silhouettes
+   are different widths by nature. */
+.hero-mascot{align-self:end;justify-self:start;}
 /* Feet level with the button (2026-08-11). BOTH heroes since 2026-08-12 — the
    branding hero used to centre its figure because it was a bird standing beside a
    framed chart and there were no feet to land; its artwork is now a bare bird like
