@@ -145,6 +145,20 @@
   a token. The artwork that carried the falling bars is gone; the branding hero is now a bare bird pointing
   up and left, so there is no chart to read as decline and no flip that trades the reading for the bird's
   direction. Do not reintroduce a chart into this slot without re-reading that argument.
+  **Six more assets were replaced 2026-08-12** — `websites`, `google-presence`, `ai-human` on the homepage,
+  and system cards `sys-voice`, `sys-palette`, `sys-guides` on branding. Two things about that batch are worth
+  keeping. **The pillar illustrations have large ivory areas of their own that no colour test can separate
+  from the plate** — the laptop body is `(246,246,245)`, a spread of 1 and seven units off a `(253,253,253)`
+  plate — so what saves them is CONNECTIVITY, not tolerance: run `--pocket-min` effectively infinite and let
+  the border-connected fill do the work. A default run keyed the laptop body, both browser panels and the
+  letter H straight out of the drawing. **And the system cards sit on NAVY, not cream**: `sys-voice` was
+  previewed on `--ground cream`, looked perfect, and shipped a holed microphone on a navy card. **The preview
+  ground has to be the ground the asset actually lands on**, which for the ten cards means `--ground navy`
+  even though the section around them is cream.
+  **`swap.py --card 640` normalises a card in the asset**, on the geometric mean of the bbox (target 480,
+  measured across the seven cards already in place), centred on a transparent square. Growing the outline
+  ring is WRONG for these — the tile face is light and neutral, so the grow eats it and the card loses the
+  tile the other seven have. Pass `--grow-min 999` to turn it off on anything with a flat light panel in it.
   **Supplied artwork is cut off its plate, never pasted as a rectangle.** Never a global colour key —
   the bird's wings, beak and feet are all dark navy and a global key holes
   them. **The framed-panel exception is retired (2026-08-11)**: the branding hero's third file keys
