@@ -25,6 +25,21 @@
   direct to the calendar**, because no Spanish brief exists. Equal weight between the two doors is
   load-bearing, not styling — the moment door B reads as the lesser option the page costs enquiries
   instead of improving them.
+  **Two more service pages shipped 2026-08-13** — `websites.html` and `google-presence.html`, taking the
+  site to **thirteen pages** and `check-motion.sh` to thirteen. Both are built on the **start.html
+  pattern** (`pagehero` → `band` → three numbered `.pillar` rows alternating cream/navy, figure side
+  flipping each row → `endbar`), **not** the `.hero` mascot layout — joining that grid means touching
+  `--bird-h`/`--bird-tail`/`--hero-floor`, which are shared across both languages and both existing
+  heroes. Pillar 01 on each **reuses the homepage's own illustration** for that service
+  (`websites.webp`, `google-presence.webp`), bare on cream; pillars 02 and 03 are **drawn SVG with
+  solid fills**, the start.html treatment. Entry is via new `.tlink`s on **homepage pillars 02 and 03**
+  plus the footer nav — **the header nav was deliberately left alone**, since it already collapses at
+  1100px because Spanish doesn't fit and two more items would push it. No ES versions, so both lang
+  toggles point at `/es/` like branding's. **Three claim-control paragraphs are load-bearing and carry
+  `CLAIM CONTROL` comments**: the SEO boundary line quoted verbatim from `business-model.md`, the
+  refusal to promise a GBP verification date (`website-rules.md` — Google owns that timing), and the
+  reviews section promising the *mechanism* only, never an outcome. Do not soften any of the three;
+  each replaced wording JP asked for that the rules forbid.
   `branding.html` (2026-08-08) is the one deep service page: brand vs branding vs brand identity,
   then the ten-part system. It is in the header and footer nav of the **English pages only** — no
   transcreated ES version exists, so its ES toggle points at `/es/`, not a `/es/branding.html`.
