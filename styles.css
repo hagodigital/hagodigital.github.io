@@ -784,6 +784,49 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .leadform .btn{justify-self:start;}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;}
 
+/* Qualifying form (2026-08-13). The enquiry form became a three-part brief, so it
+   needed grouping, selects and choice lists the short form never had. Same tokens
+   throughout — navy-3 ground, rule-d border, lime focus ring, 9px like the inputs
+   above rather than the 6px buttons use. */
+.fsec{border:0;padding:0;margin:0;display:grid;gap:var(--s3);}
+.fsec + .fsec{margin-top:var(--s5);padding-top:var(--s5);border-top:1px solid var(--rule-d);}
+.fsec legend{padding:0;font-family:var(--display);font-weight:800;font-size:1.05rem;
+  color:var(--lime);letter-spacing:.02em;}
+.fsec .hint{margin-top:-4px;}
+
+.field select{width:100%;font:inherit;font-size:1rem;color:var(--cream);
+  background:var(--navy-3);border:1px solid var(--rule-d);border-radius:9px;
+  padding:13px 14px;min-height:48px;appearance:none;
+  /* the caret is inline so no request is made for it, and it is drawn in cream
+     because a UA-default arrow renders near-black on this ground and vanishes */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 9' fill='none'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%23F8F5E6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;background-size:13px;
+  padding-right:40px;}
+.field select:focus-visible{outline:3px solid var(--lime);outline-offset:2px;border-color:var(--lime);}
+
+.choices{display:grid;gap:10px;}
+@media(min-width:640px){.choices{grid-template-columns:1fr 1fr;}}
+.choice{display:flex;align-items:center;gap:11px;cursor:pointer;
+  background:var(--navy-3);border:1px solid var(--rule-d);border-radius:9px;
+  padding:13px 14px;min-height:48px;font-size:.95rem;color:var(--cream);}
+.choice input{appearance:none;flex:0 0 20px;width:20px;height:20px;margin:0;
+  border:2px solid var(--cream-mute);border-radius:5px;background:transparent;
+  display:grid;place-content:center;cursor:pointer;}
+.choice input[type=radio]{border-radius:50%;}
+.choice input::after{content:"";width:10px;height:10px;transform:scale(0);
+  background:var(--navy);clip-path:polygon(14% 44%,0 59%,39% 100%,100% 22%,84% 7%,39% 68%);}
+.choice input[type=radio]::after{clip-path:none;border-radius:50%;width:8px;height:8px;}
+.choice input:checked{background:var(--lime);border-color:var(--lime);}
+.choice input:checked::after{transform:scale(1);}
+.choice:has(input:checked){border-color:var(--lime);}
+.choice input:focus-visible{outline:3px solid var(--lime);outline-offset:2px;}
+
+/* 1-5 readiness row: same control, laid out as a single strip */
+.scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;}
+.scale .choice{flex-direction:column;gap:7px;justify-content:center;text-align:center;
+  padding:11px 6px;font-size:.9rem;}
+.scale-ends{display:flex;justify-content:space-between;gap:12px;}
+
 /* closing CTA on subpages */
 .endcta{text-align:center;max-width:62ch;}
 .endcta .lede{margin-inline:auto;}

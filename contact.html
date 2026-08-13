@@ -96,8 +96,20 @@
 
 <section class="on-navy" id="enquire">
   <div class="shell formwrap" data-rise>
-    <h2 class="h2" style="color:var(--cream)">Or tell me what&rsquo;s going on</h2>
-    <p class="lede">Not ready to put a time in the diary? Send this instead. I&rsquo;ll read it properly and come back to you &mdash; and if we do end up on a call, I&rsquo;ll already know something useful about your business rather than spending the first ten minutes catching up.</p>
+    <h2 class="h2" style="color:var(--cream)">Tell me about the project</h2>
+    <!-- Rebuilt 2026-08-13 into a three-part qualifying brief, at JP's direction,
+         on the structure at saraservan.com/contact. It replaces a four-field
+         "what's going on" form. The point is that the call is now EARNED: this
+         gets read first, and a fit books a call from there.
+         Two things deliberately NOT copied from that reference:
+         1. "I'll be in touch within 2-3 business days" — website-rules.md bans
+            response-time commitments outright. One person cannot underwrite one.
+         2. Named prices. business-model.md holds "no published prices"; these are
+            self-selected RANGES on a private form, which is a different act from
+            a price list. The bands bracket the sourced figures in
+            research/pricing-market-research.html ($500 GBP / $1,800 site /
+            $2,200 both) without publishing any of them. -->
+    <p class="lede">The more you put here, the better the call is. I read every enquiry myself, and if it looks like a fit I&rsquo;ll come back to you to book a time &mdash; already knowing something useful about your business instead of spending the first ten minutes catching up.</p>
 
     <form class="leadform" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="96e08144-d329-4fc8-ac25-4dcb30b21a0b">
@@ -106,28 +118,95 @@
       <input type="hidden" name="redirect" value="https://hagodigital.ai/thanks.html">
       <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-      <div class="frow">
-        <div class="field"><label for="f-name">Your name</label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required></div>
-        <div class="field"><label for="f-business">Business name</label>
-          <input id="f-business" name="business" type="text" autocomplete="organization" required></div>
-      </div>
-      <div class="frow">
-        <div class="field"><label for="f-email">Email</label>
-          <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
-        <div class="field"><label for="f-phone">Phone <span class="opt">(optional)</span></label>
-          <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"></div>
-      </div>
-      <div class="field"><label for="f-link">Website or Google Business Profile <span class="opt">(optional)</span></label>
-        <input id="f-link" name="link" type="text" inputmode="url" aria-describedby="f-link-hint">
-        <span class="hint" id="f-link-hint">If you don&rsquo;t have either yet, that&rsquo;s useful to know too &mdash; just leave it blank.</span></div>
-      <div class="field"><label for="f-message">What&rsquo;s going on?</label>
-        <textarea id="f-message" name="message" required aria-describedby="f-message-hint"></textarea>
-        <span class="hint" id="f-message-hint">What you do, and what&rsquo;s not working right now. A couple of sentences is plenty.</span></div>
+      <fieldset class="fsec">
+        <legend>1 &middot; About you</legend>
+        <div class="frow">
+          <div class="field"><label for="f-name">Your name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="f-business">Business name</label>
+            <input id="f-business" name="business" type="text" autocomplete="organization" required></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
+          <div class="field"><label for="f-where">Where are you based</label>
+            <input id="f-where" name="location" type="text" autocomplete="address-level2" required></div>
+        </div>
+        <div class="field"><label for="f-link">Website or social media <span class="opt">(optional)</span></label>
+          <input id="f-link" name="link" type="text" inputmode="url" aria-describedby="f-link-hint">
+          <span class="hint" id="f-link-hint">If you don&rsquo;t have either yet, that&rsquo;s useful to know too &mdash; just leave it blank.</span></div>
+      </fieldset>
+
+      <fieldset class="fsec">
+        <legend>2 &middot; The project</legend>
+        <div class="field">
+          <label for="f-int-brand">What are you interested in?</label>
+          <span class="hint">Tick as many as apply.</span>
+          <div class="choices">
+            <label class="choice" for="f-int-brand"><input id="f-int-brand" type="checkbox" name="interest_branding" value="Branding">Branding</label>
+            <label class="choice" for="f-int-web"><input id="f-int-web" type="checkbox" name="interest_website" value="Website">Website</label>
+            <label class="choice" for="f-int-gbp"><input id="f-int-gbp" type="checkbox" name="interest_gbp" value="Google Business Profile">Google Business Profile</label>
+            <label class="choice" for="f-int-unsure"><input id="f-int-unsure" type="checkbox" name="interest_unsure" value="Not sure yet">Not sure yet &mdash; help me decide</label>
+          </div>
+        </div>
+        <div class="field"><label for="f-describe">Describe your business</label>
+          <textarea id="f-describe" name="describe" required aria-describedby="f-describe-hint"></textarea>
+          <span class="hint" id="f-describe-hint">What you sell, and who usually buys it.</span></div>
+        <div class="field"><label for="f-why-now">Why are you looking at this right now?</label>
+          <textarea id="f-why-now" name="why_now" required aria-describedby="f-whynow-hint"></textarea>
+          <span class="hint" id="f-whynow-hint">What changed, or what stopped working.</span></div>
+        <div class="field"><label for="f-goals">What do you want this project to achieve?</label>
+          <textarea id="f-goals" name="goals" required></textarea></div>
+      </fieldset>
+
+      <fieldset class="fsec">
+        <legend>3 &middot; Budget and timing</legend>
+        <div class="field"><label for="f-budget">What&rsquo;s your investment range for this project?</label>
+          <select id="f-budget" name="budget" required>
+            <option value="">Choose one</option>
+            <option>Under $1,000</option>
+            <option>$1,000 &ndash; $2,500</option>
+            <option>$2,500 &ndash; $5,000</option>
+            <option>$5,000 and above</option>
+            <option>Not sure yet &mdash; I&rsquo;d like guidance</option>
+          </select>
+          <span class="hint">Australian dollars. A range is fine &mdash; it just tells me what&rsquo;s realistic to propose.</span></div>
+        <div class="frow">
+          <div class="field"><label for="f-start">When are you hoping to start?</label>
+            <select id="f-start" name="start_when" required>
+              <option value="">Choose one</option>
+              <option>As soon as possible</option>
+              <option>Within the next month</option>
+              <option>In one to three months</option>
+              <option>Just planning ahead for now</option>
+            </select></div>
+          <div class="field"><label for="f-launch">Ideal launch date <span class="opt">(optional)</span></label>
+            <input id="f-launch" name="launch_date" type="text" aria-describedby="f-launch-hint">
+            <span class="hint" id="f-launch-hint">A month is plenty. If something real is driving it &mdash; a season, an opening &mdash; say so.</span></div>
+        </div>
+        <div class="field">
+          <label for="f-ready-1">How ready are you to invest in this?</label>
+          <div class="scale-ends hint"><span>1 &mdash; just exploring</span><span>5 &mdash; ready now</span></div>
+          <div class="scale">
+            <label class="choice" for="f-ready-1"><input id="f-ready-1" type="radio" name="readiness" value="1" required>1</label>
+            <label class="choice" for="f-ready-2"><input id="f-ready-2" type="radio" name="readiness" value="2">2</label>
+            <label class="choice" for="f-ready-3"><input id="f-ready-3" type="radio" name="readiness" value="3">3</label>
+            <label class="choice" for="f-ready-4"><input id="f-ready-4" type="radio" name="readiness" value="4">4</label>
+            <label class="choice" for="f-ready-5"><input id="f-ready-5" type="radio" name="readiness" value="5">5</label>
+          </div>
+        </div>
+        <div class="field"><label for="f-proceed">How would you like to proceed?</label>
+          <select id="f-proceed" name="proceed" required>
+            <option value="">Choose one</option>
+            <option>Book a call and talk it through</option>
+            <option>Send me something in writing first</option>
+            <option>Just gathering information for now</option>
+          </select></div>
+        <div class="field"><label for="f-anything">Anything else I should know before I read this? <span class="opt">(optional)</span></label>
+          <textarea id="f-anything" name="anything_else"></textarea></div>
+      </fieldset>
 
       <button class="btn btn-lime" type="submit">Send enquiry</button>
-      <!-- This line was the caption under the old channel cards. It describes
-           what happens after you send something, so it belongs to the form. -->
       <p class="hint">You&rsquo;ll get an instant confirmation so you know it landed &mdash; then a real reply, written by someone who has already looked at your business. No newsletter, no automated sequence, and your details aren&rsquo;t shared with anyone.</p>
     </form>
   </div>
