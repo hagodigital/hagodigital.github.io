@@ -5,15 +5,21 @@
    Anything left null stays inert rather than pointing somewhere invented.
    ============================================================ */
 var DESTINATIONS = {
-  /* start -> the chooser; book -> the calendar itself.
-     Every English CTA points at "start", because nobody should reach the calendar
-     without first being offered the brief (2026-08-11). "book" is still live and
-     still needed: the Spanish pages use it, because no Spanish brief exists yet
-     and sending a Spanish reader to an English form is worse than sending them
-     straight to the diary. start.html's own second door uses it too. */
-  start:     "start.html",
+  /* start -> the enquiry page; book -> the calendar itself.
+     2026-08-14 REPLACES 2026-08-11. The brief is no longer a public door: it
+     goes out password-protected, AFTER the discovery call. That
+     left start.html as a chooser with one real door, so it is retired and every
+     English CTA now lands on contact.html, which offers both routes on one page
+     — the qualifying form, and the calendar for anyone who would rather just
+     book. "book" is unchanged and still needed: the Spanish pages use it
+     directly, because no Spanish brief or Spanish enquiry flow exists yet.
+     To make the calendar the primary door again, point "start" at "book"'s URL —
+     that one line is the whole switch. */
+  start:     "contact.html",
   book:      "https://calendar.app.google/d1jgYiEUs3yoh3Wr6",
-  message:   "contact.html",
+  /* Deep-links past the hero to the form itself, so the secondary CTA is not a
+     duplicate of the primary one now that both live on contact.html. */
+  message:   "contact.html#enquire",
   instagram: null,
   linkedin:  null,
   email:     "mailto:jp@hagodigital.ai",
@@ -25,8 +31,9 @@ var DESTINATIONS = {
   document.querySelectorAll("[data-cta]").forEach(function (a) {
     var url = DESTINATIONS[a.getAttribute("data-cta")];
     /* _blank only for somewhere else. It was unconditional, which threw a new tab
-       for contact.html — our own page — and would now do the same for start.html,
-       stranding the visitor on a dead-end tab with no way back into the site. */
+       for contact.html — our own page — stranding the visitor on a dead-end tab
+       with no way back into the site. The test is the scheme, not the name, so it
+       keeps working as destinations change. */
     if (url) { a.setAttribute("href", url);
                if (/^https?:/.test(url)) { a.setAttribute("target", "_blank"); a.setAttribute("rel", "noopener"); } }
     else { a.setAttribute("aria-disabled", "true");

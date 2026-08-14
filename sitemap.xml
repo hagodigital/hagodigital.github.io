@@ -49,19 +49,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- start.html is the destination of every English CTA, so it is indexable and
-       carries no ES alternate: no Spanish brief exists, and the Spanish CTAs still
-       go straight to the calendar. The two forms it links to are deliberately NOT
-       here — they are noindex, and listing them would invite exactly the crawl the
-       noindex exists to prevent. -->
-  <url>
-    <loc>https://hagodigital.ai/start.html</loc>
-    <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/start.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/start.html"/>
-    <lastmod>2026-08-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
+  <!-- start.html removed 2026-08-14 with the page itself. It was the chooser
+       between the public brief and the calendar; the brief is now private and
+       post-call, so contact.html is the destination of every English CTA and
+       carries the 0.9 priority start.html used to hold. The two brief forms were
+       never listed here and still are not — they are noindex, and listing them
+       would invite exactly the crawl the noindex exists to prevent. -->
   <url>
     <loc>https://hagodigital.ai/contact.html</loc>
     <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/contact.html"/>
@@ -69,7 +62,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/contact.html"/>
     <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://hagodigital.ai/es/</loc>

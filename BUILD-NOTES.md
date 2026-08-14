@@ -10,29 +10,29 @@
   languages target **different segments on purpose** (English trades, Spanish high-ticket
   professions) — see `decision-log.md`, don't sync the lists. Spanish is **transcreated**, never
   word-swapped: the ES About hero is "Hago. En presente, primera persona.", not a translation.
-  **Rebuilt 2026-08-07 on the "Attract. Convert. Scale." design.** Eleven pages — EN
-  `index/about/branding/contact/start/thanks/404`, ES `index/about/contact/thanks` — plus `what-we-do.html`
+  **Rebuilt 2026-08-07 on the "Attract. Convert. Scale." design.** Ten pages — EN
+  `index/about/branding/contact/thanks/404`, ES `index/about/contact/thanks` — plus `what-we-do.html`
   and `how-we-work.html`, which are `noindex` redirect stubs pointing at `#what` and `#how`.
-  **`start.html` (2026-08-11) is where every English CTA now goes**, not the calendar. Two equal
-  doors — the brand brief then book, or book now — and the label is **"Start with a free call"** on
-  all nineteen of them. Built on the **homepage pillar pattern**, not its own layout: `pagehero` →
-  `band` → numbered `.pillar` rows alternating cream/navy, each with `.n`/`.h2`/`.sub`/`.lede`/
-  `.checks`/`.ctas`. Its two figures are **drawn SVG with solid fills** — the only page besides
-  `branding.html` with drawn art, and solid on purpose, since the system cards that read lighter than
-  their neighbours are exactly the ones drawn as outlines. Figure 01 carries its own navy panel on
-  the cream ground, figure 02 sits bare on navy — **matching the homepage, which does the same thing
-  with `.framed` asset 08 and bare asset 09**. Don't "fix" that into a matched pair. `app.js` carries both `start` and `book` destinations: **Spanish still goes
-  direct to the calendar**, because no Spanish brief exists. Equal weight between the two doors is
-  load-bearing, not styling — the moment door B reads as the lesser option the page costs enquiries
-  instead of improving them.
+  **`contact.html` is where every English CTA goes (2026-08-14)**, under the label **"Start with a
+  free call"** on all nineteen of them. It carries **both doors on one page**: the calendar on every
+  button, and the qualifying form below it. Its own header CTA points at the **calendar**, not at
+  itself — a header button that reloads the page you are already on is a dead control.
+  **`start.html` is retired.** It existed (2026-08-11 → 2026-08-14) to choose between the public
+  brand brief and the calendar; the brief is now private, password-protected and sent **after** the call, so
+  door A had nothing behind it and a chooser with one door is just the calendar with extra steps.
+  `app.js` still carries both `start` and `book`: `start` → `contact.html`, `book` → the calendar
+  direct, which is what **every Spanish CTA uses**, because no Spanish enquiry flow or brief exists.
+  Making the calendar primary again is one line — point `start` at `book`'s URL.
   **Two more service pages shipped 2026-08-13** — `websites.html` and `google-presence.html`, taking the
-  site to **thirteen pages** and `check-motion.sh` to thirteen. Both are built on the **start.html
-  pattern** (`pagehero` → `band` → three numbered `.pillar` rows alternating cream/navy, figure side
-  flipping each row → `endbar`), **not** the `.hero` mascot layout — joining that grid means touching
+  site to **twelve pages** and `check-motion.sh` to twelve (thirteen and thirteen until `start.html`
+  was retired on 2026-08-14). Both are built on the **pillar pattern** (`pagehero` → `band` → three
+  numbered `.pillar` rows alternating cream/navy, figure side flipping each row → `endbar`) — which
+  `start.html` also used, so `websites.html` is now the reference copy of it — **not** the `.hero`
+  mascot layout — joining that grid means touching
   `--bird-h`/`--bird-tail`/`--hero-floor`, which are shared across both languages and both existing
   heroes. Pillar 01 on each **reuses the homepage's own illustration** for that service
   (`websites.webp`, `google-presence.webp`), bare on cream; pillars 02 and 03 are **drawn SVG with
-  solid fills**, the start.html treatment. Entry is via new `.tlink`s on **homepage pillars 02 and 03**
+  solid fills**, the same treatment `start.html` used. Entry is via new `.tlink`s on **homepage pillars 02 and 03**
   plus the footer nav — **the header nav was deliberately left alone**, since it already collapses at
   1100px because Spanish doesn't fit and two more items would push it. No ES versions, so both lang
   toggles point at `/es/` like branding's. **Three claim-control paragraphs are load-bearing and carry

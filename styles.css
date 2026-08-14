@@ -370,8 +370,10 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .on-navy .pillar .n,.pillar.on-navy .n{color:var(--blue-lift);}
 .pillar h2{margin-top:var(--s1);}
 .pillar figure img{width:100%;}
-/* start.html's two figures are drawn SVG rather than supplied artwork, so they
-   need the same "fill the column" rule the raster ones get. They carry their own
+/* The pillar figures on websites.html and google-presence.html are drawn SVG
+   rather than supplied artwork, so they need the same "fill the column" rule the
+   raster ones get. (start.html established this and was retired 2026-08-14; the
+   rule is still load-bearing for the two service pages.) They carry their own
    navy panel inside the viewBox — same device as .scard .art — which is what lets
    one sit on cream and the other on navy and still read as a matched pair.
    Solid fills, not linework: the three system cards that are still line drawings
