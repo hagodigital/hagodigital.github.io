@@ -116,7 +116,11 @@
       <input type="hidden" name="subject" value="New enquiry from hagodigital.ai">
       <input type="hidden" name="from_name" value="hagodigital.ai">
       <input type="hidden" name="redirect" value="https://hagodigital.ai/thanks.html">
-      <input type="checkbox" name="botcheck" class="hp" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <!-- Honeypot REMOVED 2026-08-13. Every one of six blocked submissions
+           carried it, Web3Forms documents a ticked botcheck as THE spam
+           condition, and their own docs mark the technique deprecated. A
+           field that cannot be present cannot be ticked. Re-add only with
+           evidence of real spam, and test one submission end to end first. -->
 
       <fieldset class="fsec">
         <legend>1 &middot; About you</legend>
