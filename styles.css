@@ -782,7 +782,15 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .field input::placeholder,.field textarea::placeholder{color:var(--cream-mute);}
 .hint{font-size:.82rem;line-height:1.55;color:var(--cream-mute);}
 .leadform .btn{justify-self:start;}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;}
+/* Web3Forms honeypot. MUST be display:none, not merely off-screen (2026-08-13).
+   It was `position:absolute;left:-9999px;opacity:0`, which leaves the checkbox
+   rendered and interactive — a password manager, an autofill pass or a browser
+   AI assistant can tick it, and a ticked `botcheck` is THE documented condition
+   for Web3Forms marking a submission as spam. Spam-marked submissions are
+   accepted and never emailed, with no error anywhere: three of them had
+   accumulated before anyone looked at the dashboard.
+   Their documented snippet is `style="display: none;"` — match it exactly. */
+.hp{display:none;}
 
 /* Qualifying form (2026-08-13). The enquiry form became a three-part brief, so it
    needed grouping, selects and choice lists the short form never had. Same tokens
