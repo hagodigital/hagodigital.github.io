@@ -35,11 +35,6 @@
   <div id="next"></div>
 </main>
 <script>
-/* The call ALWAYS happens - the form prepares it, it never replaces it (2026-08-11,
-   reversing the conditional-call design of 2026-08-10). So the counts carried on the
-   redirect do not decide WHETHER to book, only what the call will be spent on: what
-   was left open gets done together, and a form that came back full buys a call spent
-   on direction instead of dictation. One button either way, same prominence. */
 (function(){
   var BOOK = "https://calendar.app.google/d1jgYiEUs3yoh3Wr6";
   var p = new URLSearchParams(location.search);
