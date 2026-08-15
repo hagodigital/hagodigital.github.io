@@ -22,6 +22,7 @@
   <url>
     <loc>https://hagodigital.ai/branding.html</loc>
     <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/branding.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hagodigital.ai/es/branding.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/branding.html"/>
     <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
@@ -29,21 +30,28 @@
   </url>
   <url>
     <loc>https://hagodigital.ai/es/branding.html</loc>
-    <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/es/branding.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/es/branding.html"/>
+    <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/branding.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hagodigital.ai/es/branding.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/branding.html"/>
     <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- The other two deep service pages, 2026-08-13. Peers of branding.html, so
-       same priority. No ES alternate on any of the three: no transcreated Spanish
-       service pages exist and their lang toggles point at /es/. Add the alternate
-       here the day one ships, or the hreflang set lies about what's available.
+       same priority. All three now carry an ES alternate and have a Spanish twin
+       listed below (2026-08-15) — the note that used to sit here said there were
+       none, which stopped being true the day they shipped.
+       EVERY entry states all three alternates and BOTH directions point at the
+       SAME pair: en-AU and x-default at the English URL, es at the Spanish one.
+       A Spanish entry that names itself as its own en-AU alternate tells a
+       crawler the two URLs are one page — which is what a naive clone of the
+       English entry produces, and it was live for one deploy on 2026-08-15.
        This sitemap is hand-maintained — a new page is NOT picked up automatically,
        which is how these two shipped live and unlisted for one deploy. -->
   <url>
     <loc>https://hagodigital.ai/websites.html</loc>
     <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/websites.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hagodigital.ai/es/websites.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/websites.html"/>
     <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
@@ -51,8 +59,9 @@
   </url>
   <url>
     <loc>https://hagodigital.ai/es/websites.html</loc>
-    <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/es/websites.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/es/websites.html"/>
+    <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/websites.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hagodigital.ai/es/websites.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/websites.html"/>
     <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -60,6 +69,7 @@
   <url>
     <loc>https://hagodigital.ai/google-presence.html</loc>
     <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/google-presence.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hagodigital.ai/es/google-presence.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/google-presence.html"/>
     <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
@@ -67,8 +77,9 @@
   </url>
   <url>
     <loc>https://hagodigital.ai/es/google-presence.html</loc>
-    <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/es/google-presence.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/es/google-presence.html"/>
+    <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/google-presence.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hagodigital.ai/es/google-presence.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/google-presence.html"/>
     <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
