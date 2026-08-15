@@ -256,79 +256,7 @@
 <!-- ================= THE TEN-PART SYSTEM ================= -->
 <section class="on-cream" id="system">
   <div class="shell">
-    <!-- WHERE IT STARTS (2026-08-14). The three foundations were only ever stated
-         as items 2, 3 and 4 of a ten-item grid, which reads as "three of ten"
-         rather than "the three everything else is built on". This names them
-         first, in the reader's words, then the ten-part grid expands them.
-         It sits INSIDE the existing cream section rather than in one of its own:
-         the page alternates cream and navy grounds, the section above is navy and
-         the grid below is cream, so a new section either way would put two of the
-         same ground next to each other. Reuses .trio/.tcard from the "Brand /
-         Branding / Brand identity" section — same device, same page, no new CSS. -->
     <div class="sys-head" data-rise>
-      <span class="eyebrow">Where it starts</span>
-      <h2 class="h2" style="margin-top:8px">Three things come first. <span>Everything else is built on them.</span></h2>
-      <p class="lede">Before the guidelines, the templates and the file pack, your brand needs a way to be read, a way to be recognised and a way to be felt. Get these three right and the rest has something to sit on.</p>
-    </div>
-
-    <div class="trio" data-stagger>
-      <article class="tcard">
-        <div class="ring"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="M7 25l6.5-16 6.5 16" stroke="#CEFF00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.8 19.6h7.4" stroke="#CEFF00" stroke-width="2.2" stroke-linecap="round"/><path d="M27 14v11" stroke="#2365DE" stroke-width="2.2" stroke-linecap="round"/><path d="M27 17.6c-3 0-4.6 1.4-4.6 3.4S24 25 27 24.4" stroke="#2365DE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>Your lettering</h3>
-        <span class="role">How you read</span>
-        <!-- Each <li> must contain EXACTLY TWO children: the tick svg and one
-             wrapper. `.checks li` is `grid-template-columns:20px 1fr`, so a bare
-             <b> next to a bare text node makes three children, the text falls
-             into an implicit third column with no width, and it renders one word
-             per line. Caught in the 2026-08-14 render, not in the markup. Every
-             emphasised item on this page keeps its text inside one <span>. -->
-        <ul class="checks">
-          <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Brand typeface</b> &mdash; the one family every word you publish is set in.</span></li>
-          <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Display font</b> &mdash; the face that carries the big titles and headlines.</span></li>
-          <!-- CLAIM CONTROL (2026-08-14). This line is the one on the page that
-               promises MORE than the rules currently allow, and it is flagged
-               rather than softened because JP supplied the wording.
-               1. business-model.md:13 holds WORDMARK-ONLY. Hand-drawn letterforms
-                  are a step past a wordmark, so this either needs that rule
-                  changed or needs pulling — it is decision-log open question 6.
-               2. The designer IP assignment is UNSIGNED. "You own the files
-                  outright" is live elsewhere on this site; drawn letters with no
-                  assignment are the exact case that claim cannot cover.
-               The other two lines in this card are safe: choosing a typeface and a
-               display face is selection, not authorship, and the logo card says
-               "logotype, or wordmark", which is the rule as written. -->
-          <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Custom lettering</b> &mdash; letters drawn by hand, for one brand only.</span></li>
-        </ul>
-      </article>
-
-      <article class="tcard">
-        <div class="ring"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="7" y="7" width="20" height="20" rx="5" stroke="#2365DE" stroke-width="2.2"/><path d="M18.4 11.5 13 18.6h4.2L15.6 23.5l5.6-7.4h-4.3l1.5-4.6Z" fill="#CEFF00"/></svg></div>
-        <h3>Your logo</h3>
-        <span class="role">How you&rsquo;re recognised</span>
-        <ul class="checks">
-          <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Logotype, or wordmark</b> &mdash; your name itself, drawn as the mark.</span></li>
-          <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>The variations and lockups for every place it has to sit.</li>
-          <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>The one thing people spot before they have read a word.</li>
-        </ul>
-      </article>
-
-      <article class="tcard">
-        <div class="ring"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="13.5" cy="13.5" r="6.5" stroke="#CEFF00" stroke-width="2.2"/><circle cx="20.5" cy="20.5" r="6.5" stroke="#2365DE" stroke-width="2.2"/></svg></div>
-        <h3>Your colours</h3>
-        <span class="role">How you feel</span>
-        <ul class="checks">
-          <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>A short palette that becomes yours on sight.</li>
-          <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Where each colour goes, so nothing is guessed later.</li>
-          <li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.2l2.6 2.6L14 7.4" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>The reason people know it&rsquo;s you before they see the name.</li>
-        </ul>
-      </article>
-    </div>
-
-    <!-- Same rhythm the .trio and .sys grids use to clear a heading, so the two
-         halves of this section are separated by the page's own section spacing
-         rather than an arbitrary gap. --s4 (24px) was tried first and read as one
-         continuous block. -->
-    <div class="sys-head" data-rise style="margin-top:calc(var(--sect) * .55)">
       <span class="eyebrow">The complete package</span>
       <h2 class="h2" style="margin-top:8px">A complete brand system. <span>Built to be remembered.</span></h2>
     </div>
