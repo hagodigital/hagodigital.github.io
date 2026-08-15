@@ -517,28 +517,75 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
   .tcard .checks{max-width:38ch;margin-inline:auto;}
 }
 
-/* ---------- callout bar ---------- */
-/* Same panel as .endbar (2026-08-11): navy ground, lime disc, cream emphasis,
-   --s5 all round, 56px mark. The two are the closing note of their sections and
-   were reading as different components — one a bordered cream card, the other a
-   navy slab. Box, colour and padding are matched deliberately; only the type size
-   differs, and for a reason: .endbar's paragraph sits UNDER a display headline at
-   .9rem, while this one carries its panel alone and holds .95rem. */
-.callout{
-  display:grid;grid-template-columns:auto 1fr;gap:var(--s4);align-items:center;
-  margin-top:calc(var(--sect) * .5);background:var(--navy);border-radius:10px;
-  padding:var(--s5);color:var(--cream-dim);
+/* ---------- .strip — the half-shade transition band ----------
+   THE RULE: a strip carries the half-shade of the ground it leads INTO, not of
+   the section it sits in. It is a transition, so it takes its colour from the
+   destination. Both current uses lead into navy, so both are --navy-2:
+     · #difference (cream) ends on a strip, then #service is navy
+     · .close (navy) ends on a strip, then the footer is navy
+   Full-bleed — it sits OUTSIDE .shell and its section pays no bottom padding,
+   so it runs edge to edge and flush into whatever follows.
+   --cream-2 is here for the mirror case and is currently unused; a strip only
+   takes it when the next section is cream. */
+/* Padding is section-scale, not --s5. At --s5 the strip read as a thin bar
+   stuck to the bottom of the section rather than a beat of its own; a band
+   needs the air a section gets. */
+.strip{padding-block:calc(var(--sect) * .55);background:var(--navy-2);}
+.strip.to-cream{background:var(--cream-2);}
+.has-strip{padding-bottom:0;}
+
+/* ---------- section payoff ----------
+   Was .callout until 2026-08-14: a navy panel with a lime disc, floating at the
+   foot of the CREAM #difference section and directly above the NAVY #service
+   pillar. So a navy box on cream, touching navy — the last panel on the site
+   opting out of the ground alternation, and the same defect .endbar had.
+
+   It is not an aside. It is the conclusion of the three cards above it, and it
+   is the hinge into the service section, so it is now the full-width strip
+   rather than a box on the cream. The emphasis the lime disc was carrying is
+   carried by colour on the <b> instead. */
+/* PULL QUOTE, NOT A PARAGRAPH — settled 2026-08-15 after JP compared three
+   builds. It went through two wrong versions first and both failures are worth
+   keeping, because they are the same failure from opposite ends:
+     1. Manrope 700 at 24px across 52ch — display type stretched over a
+        182-character sentence, which reads as a slab. Display faces are cut
+        for short lines.
+     2. Instrument Sans 400 at 18px across 62ch — correct for the length, but
+        it turned the section's conclusion into another paragraph. Removing the
+        panel and then setting the type quietly left the section with no
+        structure at all, which is what "worse than the boxes" meant.
+   The measure is the variable that reconciles them: display type is fine at
+   this length IF the line is short. At 30ch the sentence breaks into a stack
+   of statement lines instead of a slab of prose, and the type can carry the
+   structure the panel used to.
+   The 56px lime rule above it is an editorial divider, not decoration — it is
+   what tells the eye a conclusion has started without drawing a box round it.
+   Lime is the site's existing statement accent (the hero emphasis), not a new
+   colour. */
+.payoff{text-align:center;}
+.strip.payoff{padding-block:calc(var(--sect) * .62);}
+.payoff::before{
+  content:"";display:block;width:56px;height:3px;
+  background:var(--lime);margin:0 auto var(--s4);
 }
-.callout .mark{width:56px;height:56px;border-radius:50%;background:var(--lime);
-  display:grid;place-items:center;flex:none;}
-.callout .mark svg{width:28px;height:28px;}
-.callout p{font-size:.95rem;line-height:1.6;}
-.callout b{color:var(--cream);}
-@media(max-width:620px){.callout{grid-template-columns:1fr;text-align:left;}}
+.payoff p{
+  font-family:var(--display);font-weight:700;letter-spacing:-.03em;
+  font-size:clamp(1.35rem,2.5vw,1.85rem);line-height:1.35;
+  max-width:30ch;margin-inline:auto;color:var(--cream);       /* 17.63:1 on navy-2 */
+}
+.payoff b{font-weight:700;color:var(--lime);}                 /* 16.46:1 on navy-2 */
+.strip.to-cream .payoff::before{background:var(--blue-ink);}
+.strip.to-cream .payoff p{color:var(--ink);}
+.strip.to-cream .payoff b{color:var(--blue-ink);}
 
 /* ---------- the ten-part system ---------- */
 .sys-head{text-align:center;}
 .sys-head .h2 span{color:var(--blue-ink);}
+/* .lede is capped at 46ch with no auto margins, which is right everywhere it sits
+   in a left-aligned column. Inside a centred head the text centres but the 46ch
+   BLOCK still hugs the left edge, so the paragraph reads visibly off-axis under
+   its own heading. Centre the block, not just the text. */
+.sys-head .lede{margin-inline:auto;}
 .sys{
   display:grid;gap:var(--s4);margin-top:calc(var(--sect) * .55);
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -585,42 +632,104 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
   text-transform:uppercase;color:var(--blue-ink);line-height:1.4;}
 .scard p{font-size:.83rem;line-height:1.55;color:var(--grey);margin-top:var(--s1);}
 
-/* ---------- closing bar ---------- */
-.endbar{
-  display:grid;grid-template-columns:auto 1fr auto;gap:var(--s4) var(--s5);align-items:center;
-  margin-top:calc(var(--sect) * .5);background:var(--navy);border-radius:10px;
-  padding:var(--s5);color:var(--cream-dim);
+/* ---------- closing section ----------
+   Was .endbar until 2026-08-14: a navy panel with 10px corners and a lime disc,
+   dropped inside whatever section happened to be last. It replaced the
+   alternation instead of joining it — on websites.html and google-presence.html
+   the last pillar was cream AND the close was cream, so the only thing marking
+   the end of the page was the panel. That is what made three short claims read
+   as three cards stuck onto the page rather than part of it.
+
+   .close carries NO ground of its own. It takes .on-navy / .on-cream from the
+   page like every pillar does, so the rhythm decides how it looks and nothing
+   is chosen per page. On all three service pages the section above is cream, so
+   it lands navy, and every page now runs cream/navy to the footer with no
+   repeat and no floating panel.
+
+   It is a SIBLING of .band, not a replacement: .band always sits directly under
+   the hero, so it is always navy-on-navy and needs --navy-2 to separate itself.
+   .close never is. Give .close a hardcoded background and it breaks the
+   alternation it exists to join. */
+/* .has-strip zeroes the bottom padding so the strip runs flush to the footer,
+   and the page ends navy → navy-2 → footer navy rather than stopping on a gap. */
+.close{text-align:center;}
+/* The close reuses .h-band's markup but NOT its size. .h-band is sized for a
+   short interstitial under the hero (35.2px at 1440); the close is the page's
+   last argument and carries the CTA, so at .h-band it shipped SMALLER than the
+   pillar heads above it (41.6px) and the hierarchy inverted at the end of the
+   page. Measured 2026-08-15. It then went PAST .h2 rather than matching it:
+   with the panel gone, the close has no container, so the heading is the only
+   thing marking the end of the page and it has to be a statement, not a peer.
+   3.2rem against .h2's 2.6rem at 1440. */
+.close .h-band{
+  font-size:clamp(2.1rem,4.4vw,3.2rem);letter-spacing:-.04em;line-height:1.06;
 }
-.endbar .mark{width:56px;height:56px;border-radius:50%;background:var(--lime);
-  display:grid;place-items:center;flex:none;}
-.endbar .mark svg{width:28px;height:28px;}
-.endbar b{display:block;font-family:var(--display);font-weight:800;color:var(--cream);
-  font-size:clamp(1rem,1.7vw,1.2rem);line-height:1.3;letter-spacing:-.02em;}
-.endbar p{font-size:.9rem;margin-top:6px;}
-/* The three benefits moved out of the hero and close the page here. They span
-   the whole bar on their own row rather than sharing the middle column, which
-   at 1fr is far too narrow for three two-line items. */
-.endbenefits{
-  grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:var(--s4);margin-top:0;padding-top:var(--s4);border-top:1px solid var(--rule-d);
+.close .eyebrow{margin-bottom:var(--s1);}
+.close .h-band span{display:block;}
+.close .lede{margin-inline:auto;max-width:50ch;font-size:1.05rem;}
+.close .btn{margin-top:var(--s5);}
+
+/* THE SECOND TONE IS A SYSTEM DEVICE, NOT A HERO PATCH (2026-08-14).
+   --navy-2 existed for exactly one join: the hero and the .band under it, the
+   only two navy blocks on the site that touched. Generalised here on JP's call
+   — two moments of the same ground in a row should step rather than repeat, so
+   the three claims take the half-shade and the close reads as two beats instead
+   of one flat slab. The shared ground device is .strip, above.
+   The strip sits OUTSIDE .shell so it is full-bleed; the .shell inside it keeps
+   the content on the same grid as everything above. */
+.strip .close-three{margin-top:0;}
+
+/* The three claims that used to be the hero's tick row. Type on the ground,
+   not cards on a panel — the label colour carries the emphasis the tick disc
+   was carrying, which is the whole reason they read as boxes.
+   COLUMN RULES, NOT GAP. Removing the panel removed the only thing grouping
+   the three, and a plain gap did not put it back: three labels floating in a
+   row read as three loose fragments. A 1px divider between columns restores
+   the grouping for the cost of a hairline, and unlike a card it sits IN the
+   ground rather than on top of it. gap is 0 because the rules do the spacing —
+   padding-inline on the children, so the divider sits midway. */
+.close-three{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
 }
-/* .endbar sits on a navy panel inside an .on-cream section, so the cream
-   variant's blue disc would apply. Restate the navy pairing. */
-.endbar .endbenefits .ck circle{fill:var(--lime);}
-.endbar .endbenefits .ck path{stroke:var(--navy);}
-.endbenefits strong{display:block;font-family:var(--display);font-size:.9rem;
-  font-weight:700;color:var(--cream);}
-.endbenefits li > span > span{display:block;font-size:.79rem;line-height:1.4;
-  color:var(--cream-mute);}
-@media(max-width:880px){
-  .endbar{grid-template-columns:auto 1fr;}
-  .endbar .btn{grid-column:1/-1;justify-self:start;}
-}
+.close-three > div{padding-inline:var(--s4);border-left:1px solid var(--rule-d);}
+.close-three > div:first-child{border-left:0;}
+.close-three b{display:block;font-family:var(--display);font-weight:800;
+  font-size:clamp(1.1rem,1.9vw,1.35rem);letter-spacing:-.02em;line-height:1.2;}
+.close-three span{display:block;font-size:.92rem;line-height:1.5;
+  margin-top:var(--s1);}
+
+/* Ground pairings. Every colour here already exists in the palette because the
+   raw one fails a contrast check on that ground — none of this is new.
+   NOTE THE SPLIT: the heading follows its SECTION, the three follow their
+   STRIP. Those are two different grounds — a .close can be on cream while its
+   strip is navy-2 — and keying both off .close.on-cream is how blue-ink ends
+   up on a navy band. */
+.close.on-navy  .h-band span{color:var(--blue-lift);}
+.close.on-cream .h-band{color:var(--ink);}
+.close.on-cream .h-band span{color:var(--blue-ink);}
+
+.close-three b{color:var(--lime);}                           /* 16.46:1 on navy-2 */
+.close-three span{color:var(--cream-mute);}                  /* 7.32:1 on navy-2 */
+.strip.to-cream .close-three b{color:var(--blue-ink);}       /* 6.32:1 on cream-2 */
+/* --ink, NOT --grey. Grey is 4.77:1 on cream and passes, but 4.34:1 on cream-2
+   and fails AA for text this size. The half-shade costs it the margin. */
+.strip.to-cream .close-three span{color:var(--ink);}         /* 10.28:1 on cream-2 */
+
 @media(max-width:620px){
-  .endbenefits{grid-template-columns:1fr;gap:var(--s3);}
-}
-@media(max-width:560px){
-  .endbar{grid-template-columns:1fr;}
+  /* Stacked, the vertical rules would be meaningless — the divider rotates to
+     sit between rows instead, so the grouping survives the reflow. */
+  .close-three{grid-template-columns:1fr;}
+  .close-three > div{
+    border-left:0;border-top:1px solid var(--rule-d);
+    padding-inline:0;padding-block:var(--s3);
+  }
+  .close-three > div:first-child{border-top:0;padding-top:0;}
+  /* The 30ch measure that makes this a pull quote on desktop makes it SEVEN
+     lines on a 390px phone — the tallest block on the page, and a slab again.
+     Below 620 the line has to get longer, not shorter: the column is already
+     narrow, so the measure is doing no work and only the size is. Measured
+     2026-08-15: 7 lines at 21.6px/26ch, 5 at 19.2px/34ch. */
+  .payoff p{font-size:1.2rem;max-width:34ch;}
 }
 
 /* ---------- device mockup band ---------- */

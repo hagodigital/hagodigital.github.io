@@ -26,7 +26,7 @@
   **Two more service pages shipped 2026-08-13** — `websites.html` and `google-presence.html`, taking the
   site to **twelve pages** and `check-motion.sh` to twelve (thirteen and thirteen until `start.html`
   was retired on 2026-08-14). Both are built on the **pillar pattern** (`pagehero` → `band` → three
-  numbered `.pillar` rows alternating cream/navy, figure side flipping each row → `endbar`) — which
+  numbered `.pillar` rows alternating cream/navy, figure side flipping each row → `.close`) — which
   `start.html` also used, so `websites.html` is now the reference copy of it — **not** the `.hero`
   mascot layout — joining that grid means touching
   `--bird-h`/`--bird-tail`/`--hero-floor`, which are shared across both languages and both existing
@@ -40,6 +40,70 @@
   refusal to promise a GBP verification date (`website-rules.md` — Google owns that timing), and the
   reviews section promising the *mechanism* only, never an outcome. Do not soften any of the three;
   each replaced wording JP asked for that the rules forbid.
+  **The ground alternation is the layout, and no component may opt out of it (2026-08-14).**
+  Every section takes `.on-navy` or `.on-cream` and the page alternates.
+  **The half-shades are a system device, not a hero patch** — generalised on JP's call the same
+  day. `--navy-2` used to exist for exactly one join, the hero and the `.band` under it. The rule
+  is now the wider one: **two moments of the same ground in a row should step, never repeat.**
+  The shared device is **`.strip`** — full-bleed, sits OUTSIDE `.shell`, and its section carries
+  **`.has-strip`** to zero the bottom padding so it runs flush into whatever follows.
+  **A strip carries the half-shade of the ground it leads INTO, not of the section it sits in.**
+  It is a transition, so it takes its colour from the destination. Both current uses lead into
+  navy and are therefore `--navy-2`: the three claims at the foot of every service page (under the
+  navy `.close` statement, handing over to the navy footer), and **`.payoff`**, which sits at the
+  foot of the **cream** `#difference` section and hands over to the navy `#service` pillar.
+  `--cream-2 #EFEADB` is the mirror case and is still unused; a strip only takes it via
+  `.to-cream`. **The tone change replaced a `border-top` hairline in both places**; don't
+  reinstate the rule, it was doing the job the shade now does.
+  **The consequence that bites: a section and its strip are two different grounds.** A `.close`
+  can be on cream while its strip is navy-2, so the heading colours key off `.close.on-navy` /
+  `.close.on-cream` while the three claims key off `.strip` / `.strip.to-cream`. Key both off the
+  section and you put `--blue-ink` on a navy band.
+  **REMOVING A CONTAINER IS HALF A JOB — the type has to take over (2026-08-15).** The first
+  unboxed build kept every ground decision right and still read *worse than the panels did*,
+  because the panels were carrying structure and nothing replaced them: small centred type, dim
+  colours, a plain gap between the three claims. JP called it terrible and he was right. Diagnosed
+  against `ui-ux-pro-max`, which matches this brand to **Exaggerated Minimalism** (oversized type,
+  high contrast, extreme negative space, one accent) and **Editorial Grid** (pull quotes, section
+  dividers). Chosen from a three-way build — panels / flat / editorial — served side by side.
+  What the editorial version does, and why each part is load-bearing:
+  · **`.close .h-band` is 3.2rem, deliberately PAST `.h2`'s 2.6rem.** With no container, the
+  heading is the only thing marking the end of the page, so it is a statement, not a peer.
+  · **`.payoff` is a pull quote at `max-width:30ch`.** The measure is what reconciles display type
+  with a 182-character sentence: at 52ch Manrope read as a slab, at 62ch in body face it read as
+  just another paragraph, at 30ch it breaks into a stack of statement lines. **Two failed builds
+  either side of this — don't re-derive them.**
+  · **The 56px lime rule above the payoff is an editorial divider, not decoration.** It marks a
+  conclusion without drawing a box. Lime is the existing hero-emphasis accent, not a new colour.
+  · **`.close-three` uses 1px COLUMN RULES, `gap:0`.** A plain gap left three labels reading as
+  loose fragments. A hairline restores the grouping the card did, and sits *in* the ground rather
+  than on top of it. It rotates to a row divider below 620px.
+  Measured after: 51.2 · 35.2 · 29.6 · 16.8 · 16 · 14.1px — one unbroken ladder.
+  **The half-shade costs contrast margin, and one pairing failed it:** `--grey` is 4.77:1 on cream
+  and passes, but **4.34:1 on `--cream-2` and fails AA** for text this size, so `.close-three span`
+  on cream is `--ink` (10.28:1), not `--grey`. Everything else survives the step — lime 16.46:1,
+  `--cream-mute` 7.32:1 and `--blue-lift` 7.16:1 on `--navy-2`. **Re-check any colour you move onto
+  a half-shade; the margin is thinner than it looks.** **`.endbar` is gone.** It was a navy panel with 10px corners and a lime disc,
+  dropped inside whichever section happened to be last, and on `websites.html` and
+  `google-presence.html` that section was cream *after a cream pillar* — so the page ended on two
+  creams and the panel was doing the separating the alternation should have done. Three short
+  claims inside it, on a ruled row with tick discs, then read as three cards stuck onto the page.
+  It is now **`.close`**: a full-width section carrying **no ground of its own**, same
+  eyebrow-plus-two-line device as `.band`, with the three claims as type on the ground (label in
+  `--lime` on navy, `--blue-ink` on cream). On all three service pages the section above is cream,
+  so **the close lands navy on all three** and each page runs cream/navy unbroken to the footer.
+  Give `.close` a hardcoded background and it breaks the alternation it exists to join.
+  **`.callout` is gone too, same day, same reason** — it was the payoff line under the three
+  brand/branding/brand-identity cards on `branding.html`, set as a navy panel with a lime disc at
+  the foot of the **cream** `#difference` section and **directly above the navy `#service`
+  pillar**: a navy box on cream, touching navy. It is now **`.payoff`** — the same words as
+  centred display type on whatever ground the section already has, emphasis carried by `<b>` in
+  `--blue-ink` (cream) or `--blue-lift` (navy) instead of by a disc. It was the last copy panel on
+  the site opting out of the alternation. **No copy component carries its own ground any more.**
+  What legitimately stays boxed: `.scard` (a grid of ten system cards — ten items need
+  containers), `.framed` and `.pillar figure svg` (artwork frames, not copy), and the form
+  controls. **`.chan` on `contact.html` is the one still worth a look** — two or three bordered
+  cards in a row is the same shape as the three claims that started this.
   `branding.html` (2026-08-08) is the one deep service page: brand vs branding vs brand identity,
   then the ten-part system. It is in the header and footer nav of the **English pages only** — no
   transcreated ES version exists, so its ES toggle points at `/es/`, not a `/es/branding.html`.
