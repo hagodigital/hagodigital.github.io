@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Recibido — HagoDigital</title>
+</head>
+<body>
+<style>
+  :root{--navy:#000A18;--cream:#F8F5E6;--lime:#CEFF00;--grey:#696D71}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--navy);color:#C9C4B4;
+    font:17px/1.62 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+  main{max-width:640px;margin:0 auto;padding:18vh 24px 24px}
+  .k{display:inline-flex;align-items:center;gap:10px;font-size:.75rem;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--lime)}
+  .k::before{content:"";width:26px;height:3px;background:var(--lime)}
+  h1{font-family:Manrope,system-ui,sans-serif;font-weight:800;letter-spacing:-.03em;line-height:1.1;
+    color:var(--cream);font-size:clamp(1.9rem,5vw,2.7rem);margin:16px 0 20px;text-wrap:balance}
+  p{margin:0 0 14px;max-width:52ch}
+  b{color:var(--cream);font-weight:600}
+  .btn{display:inline-flex;align-items:center;gap:9px;margin-top:12px;padding:14px 22px;
+    border-radius:6px;background:var(--lime);color:var(--navy);text-decoration:none;
+    font-weight:600;font-size:1rem}
+  .btn:focus-visible{outline:3px solid #6E9BFF;outline-offset:3px}
+  .quiet{color:var(--grey);font-size:.95rem;margin-top:18px}
+</style>
+<main>
+  <span class="k">Enviado</span>
+  <h1>Recibido — ahora agenda la llamada.</h1>
+  <p>Tus respuestas ya están conmigo y las leo con calma antes de hablar. La llamada es el
+     siguiente paso de todas formas — cuánto llenaste cambia en qué la usamos, no si la
+     tenemos.</p>
+  <div id="next"></div>
+</main>
+<script>
+/* The call ALWAYS happens - the form prepares it, it never replaces it (2026-08-11,
+   reversing the conditional-call design of 2026-08-10). So the counts carried on the
+   redirect do not decide WHETHER to book, only what the call will be spent on: what
+   was left open gets done together, and a form that came back full buys a call spent
+   on direction instead of dictation. One button either way, same prominence. */
+(function(){
+  var BOOK = "https://calendar.app.google/d1jgYiEUs3yoh3Wr6";
+  var p = new URLSearchParams(location.search);
+  var ask = parseInt(p.get("ask") || "0", 10) || 0;
+  var blank = parseInt(p.get("blank") || "0", 10) || 0;
+  var thing = function(n, one, many){ return n + " " + (n === 1 ? one : many); };
+  var open = [];
+  if (ask) open.push("marcaste " + thing(ask, "pregunta", "preguntas") + " para la llamada");
+  if (blank) open.push("dejaste " + thing(blank, "secci\u00f3n", "secciones") + " en blanco");
+
+  var lead = open.length
+    ? "" + open.join(" y ") + ". " + (ask + blank === 1 ? "Eso lo vemos" : "Esas las vemos") +
+      " juntos — sin tareas, y sin nada que tengas que resolver por tu cuenta."
+    : "Respondiste todo, as\u00ed que la llamada no se va en tomar dictado. " +
+      "Llego con propuestas y decidimos entre ellas.";
+
+  document.getElementById("next").innerHTML =
+    "<p>" + lead + "</p>" +
+    '<p><a class="btn" href="' + BOOK + '" target="_blank" rel="noopener">Agendar la llamada</a></p>' +
+    '<p class="quiet">Elige el horario que te sirva. Si ninguno te sirve, responde a mi correo y ' +
+    'buscamos uno.</p>';
+})();
+</script>
+
+</body>
+</html>

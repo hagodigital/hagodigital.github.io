@@ -27,6 +27,14 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://hagodigital.ai/es/branding.html</loc>
+    <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/es/branding.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/es/branding.html"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <!-- The other two deep service pages, 2026-08-13. Peers of branding.html, so
        same priority. No ES alternate on any of the three: no transcreated Spanish
        service pages exist and their lang toggles point at /es/. Add the alternate
@@ -42,9 +50,25 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://hagodigital.ai/es/websites.html</loc>
+    <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/es/websites.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/es/websites.html"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://hagodigital.ai/google-presence.html</loc>
     <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/google-presence.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/google-presence.html"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hagodigital.ai/es/google-presence.html</loc>
+    <xhtml:link rel="alternate" hreflang="en-AU" href="https://hagodigital.ai/es/google-presence.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hagodigital.ai/es/google-presence.html"/>
     <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
