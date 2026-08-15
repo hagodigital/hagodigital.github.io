@@ -246,7 +246,9 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    both drawings put a wing or tail tip lower than the feet and a plain getbbox
    would read that as the floor):
      mascot-perched  725x1327, claws end y=1305, 21px of tail below -> .0158
-     mascot-chart    907x1105, claws ARE the lowest pixel            -> 0 */
+     mascot-pointing 907x1105, claws ARE the lowest pixel            -> 0
+       (was mascot-chart.webp until 2026-08-15 — the file lost its chart on
+       2026-08-12 and kept the name for three days) */
 :root{--bird-tail:.0158;}
 .hero-mascot{
   margin-bottom:calc(var(--hero-floor) - var(--bird-h) * var(--bird-tail));}
