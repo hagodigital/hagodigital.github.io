@@ -383,6 +383,29 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    carry a baked dark field), and directly on the dark ground for 09. */
 .framed{border:1px solid var(--rule-l);border-radius:10px;padding:8px;background:var(--navy);}
 .framed img{border-radius:6px;}
+/* WORDS LEFT, PICTURE RIGHT — EVERY ROW, EVERY WIDTH (2026-08-15).
+   The picture side used to flip each row: 01 words-left, 02 picture-left, 03
+   words-left. Deliberate rhythm, and it cost the one thing the page could not
+   spare — measured on the homepage, the heading left edges ran
+   128 · 735 · 128 · 735 · 128px while every other heading on the site starts at
+   128. That single break is what read as "nothing is aligned", and it is the
+   only place on the site where the eye loses the left edge.
+   This was ALREADY the rule below 900px (see the mobile block underneath, which
+   predates it); all this does is stop the desktop exception. Chosen by JP from
+   a side-by-side build.
+   Grid placement, NOT source order: the markup keeps figure-first on the even
+   rows, so this is reversible by deleting the block and no HTML moved. */
+@media(min-width:901px){
+  .pillar .row > .copy{grid-column:1;}
+  .pillar .row > figure{grid-column:2;}
+  /* A figure that used to sit on the LEFT still carries data-rise="left", so it
+     would now fly in from the far side of the page it no longer sits on. Motion
+     direction follows the ELEMENT, not the markup it was authored in. */
+  .js .pillar figure[data-rise="left"]{
+    transform:translate3d(var(--rise-x),0,0) scale(var(--rise-scale));
+  }
+  .js .pillar figure[data-rise="left"].in{transform:none;}
+}
 @media(max-width:900px){
   .pillar .row{grid-template-columns:1fr;}
   /* MOBILE RULE (addendum): copy first, image second, every pillar. */
