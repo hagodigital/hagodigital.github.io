@@ -107,6 +107,14 @@
         <a class="tlink" href="#system">See what you get <svg class="ar" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
+    <figure class="hero-mascot art-wide" data-rise>
+      <!-- art-wide is not decoration: the max-width:900px rule keys the single-column
+           grid off .hero-grid:has(.art-wide) as well as .hero-grid, because the desktop
+           selector outranks it and a media query adds no specificity. Drop the class and
+           this hero holds two columns down to 390px. -->
+      <img src="assets/hago-chart.webp" width="1053" height="1268" fetchpriority="high" decoding="async"
+           alt="Hago, the HagoDigital robot mascot, holding up a shopfront on a tray beside a bar chart with a rising lime arrow.">
+    </figure>
 
     <!-- Artwork 2026-08-11, and the panel treatment is finally gone with it. The
          two earlier files could not be keyed: their linework sat at the same value
@@ -117,7 +125,7 @@
          is empty plate and the CSS height sizes that emptiness instead of the bird.
          --flip stays 1. The bird already faces left IN THE FILE and points at the
          chart; a CSS mirror moves the chart to the other side and turns its arrow
-         over with it. See the note on --bird-h in styles.css for why the height is
+         over with it. See the note on --mascot-h in styles.css for why the height is
          driven off the bird rather than off this image. -->
   </div>
 </section>

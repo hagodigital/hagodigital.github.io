@@ -199,13 +199,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    other section, which is the right default for a section whose job is text and the
    wrong one for the section whose job is a 780px bird. Trimmed deliberately, not
    tidied — restoring the section rhythm here costs ~47px of mascot. */
-/* The hero used to take its height from the bird standing in it, and carried
-   almost no top padding because the artwork supplied the mass. With the mascots
-   gone (2026-08-15) it pays for its own height. --hero-floor still sets the
-   bottom via .hero-copy, so the two ends stay on separate knobs the way they
-   were before. */
+/* A MASCOT IS BACK IN THE HERO (2026-08-15, later the same day) — Hago, a robot,
+   replacing the birds that came out this morning. The apparatus below is the one
+   that stood the birds up, recovered from be1004b^ rather than rewritten, because
+   every number in it was measured and a fresh derivation would have re-earned the
+   same bugs. What changed is only what the new drawing changes. */
 .hero{position:relative;overflow:hidden;background:var(--navy);
-  padding-block:clamp(56px,7vw,96px) 0;}
+  padding-block:clamp(24px,2.6vw,36px) 0;}
 .hero-streaks{position:absolute;inset:0;pointer-events:none;opacity:.85;}
 /* ONE HERO GRID FOR BOTH PAGES (2026-08-12). The branding hero used to run its own
    columns, its own padding and its own size token, which is how the two birds ended
@@ -215,21 +215,56 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    WIDER of the two drawings at full height — the pointing bird is 0.821 aspect
    against the perched bird's 0.546 — and a column that fits only one of them is
    exactly what made them stop matching. */
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);
-  position:relative;z-index:2;}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.36fr);
+  gap:clamp(24px,4vw,56px);align-items:end;position:relative;z-index:2;}
 /* One floor for both hero columns. The grid is align-items:end, so this is the
    gap between the LAST LINE OF COPY and the bottom of the row — and giving the
    bird the same value is what lands its feet level with the button rather than
    on the section edge. They have to move together; hardcode either one and the
    next change to the other breaks the alignment with nothing to show for it. */
 :root{--hero-floor:clamp(48px,6vw,88px);}
-.hero-copy{padding-bottom:var(--hero-floor);max-width:62ch;}
+/* No max-width here. It was added on 2026-08-15 because a single-column hero let
+   an h1 set across the full 1280px shell; the figure column is back, so the grid
+   supplies the measure again and a second cap would fight it. */
+.hero-copy{padding-bottom:var(--hero-floor);}
 .hero h1{margin-top:var(--s3);}
 .hero h1 .lime{color:var(--lime);}
 .hero .lede{color:var(--cream-dim);max-width:44ch;}
 /* Not scoped to .hero any more — the contact page's page-hero needs the same
    primary-button-plus-text-link row. Every .ctas on the site is a hero row. */
 .ctas{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;margin-top:var(--s5);}
+/* LEFT edge, not centre (2026-08-12). The figure column has to fit the WIDER of the
+   two drawings, so centring parks the narrower one out in open navy — it read as the
+   mascot drifting away from the words it belongs to. Aligned to the column's start,
+   both files begin at the same x. */
+.hero-mascot{align-self:end;justify-self:start;}
+/* --mascot-tail is how far the artwork continues BELOW the feet, as a fraction of
+   image height. It is a property of the DRAWING, not of the layout — measure it on
+   every new file. The birds needed it (the perched one carried 21px of tail past its
+   claws, .0158); BOTH Hago files are 0, because each one's lowest pixel is the sole
+   of a shoe. Renamed off "bird" with the artwork — app.js reads only --flip, so
+   these two tokens are CSS-only and safe to rename. */
+:root{--mascot-tail:0;}
+.hero-mascot{
+  margin-bottom:calc(var(--hero-floor) - var(--mascot-h) * var(--mascot-tail));}
+/* ONE HEIGHT FOR BOTH HERO MASCOTS. They are on different pages and never seen side
+   by side, so this is about the two heroes feeling like one product. Sized by HEIGHT,
+   because the two files have nothing in common on the width axis.
+   The middle leg is a FOLD guard: the CTA's bottom lands at
+     nav(71.7) + hero pad-top + --mascot-h * (1 - --mascot-tail)
+   and artwork sized off width alone knows nothing about the height it pushes the CTA
+   into. Solved for a fixed 24px of clearance. The divisor was 0.9842 for the birds
+   (1 - .0158); with tail now 0 it is 1, so the arithmetic collapses to the bracket
+   itself. MEASURED, not asserted — verify.py prints fold+N and fails under 16px. */
+:root{--mascot-h:clamp(300px,min(60vw,calc(100vh - 143.5px)),980px);}
+/* --flip is read by app.js when it writes the parallax transform, because the script
+   overwrites any CSS mirror. It is 1 — NO mirror — and for these two files that is
+   not a preference, it is a constraint: both carry the HD wordmark on the chest, and
+   a scaleX(-1) renders it backwards. The chart file has a second reason on top, the
+   one this token was invented for — its arrow rises to the right, and mirrored it
+   sells a falling line on a page about growth. Do not "simplify" this away. */
+.hero-mascot img{--flip:1;height:var(--mascot-h);width:auto;max-width:100%;
+  transform:scaleX(var(--flip));}
 
 /* The branding hero's private layout — its own copy-width token, its own padding
    escape from .shell's 1280px cap, its own width-driven size ceiling — is DELETED
@@ -238,12 +273,27 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    artwork. Every one of those knobs was a way for the two heroes to drift apart, and
    they did. If a future hero needs different room, widen the SHARED grid so both
    pages move together, or the drift comes straight back. */
-/* Stacked, the hero copy sits directly on the section's own bottom padding.
-   The old rule zeroed this because a cutout mascot stood below it on the section
-   edge; with the mascots gone there is nothing below the copy, so it keeps the
-   floor it has at every other width. */
+/* .hero carries no bottom padding — deliberate, so a cutout mascot can stand on the
+   section edge. Stacked, the figure is the last thing in the hero, so it pays for
+   that padding itself. */
 @media(max-width:900px){
-  .hero-copy{max-width:none;}
+  .hero-mascot.art-wide{margin-bottom:calc(var(--sect) * .8);}
+}
+@media(max-width:900px){
+  /* :has(.art-wide) has to be repeated here, not just .hero-grid. The desktop rule
+     is (0,2,0) and this one is (0,1,0), and a media query adds no specificity — so
+     the branding hero went on holding two columns all the way down, 148px of copy
+     beside a 178px bird at 390px, while the mobile rules right below sat unused. It
+     had been live since the page shipped. Any future .hero-grid variant selector
+     needs adding here too. */
+  .hero-grid,.hero-grid:has(.art-wide){grid-template-columns:1fr;}
+  .hero-copy{padding-bottom:0;order:1;}
+  .hero-mascot{order:2;justify-self:center;}
+  /* Stacked, both heroes are sized by HEIGHT for the same reason they are on
+     desktop: width-driven sizing gave the wider drawing a taller mascot, and the two
+     pages stopped matching on phones the moment they started matching on desktop.
+     One height, both pages; max-width keeps the wider one inside a 390px screen. */
+  .hero-mascot img{height:clamp(420px,74vw,560px);width:auto;max-width:92%;}
 }
 
 /* ---------- system band ---------- */
