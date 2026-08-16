@@ -204,8 +204,66 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    that stood the birds up, recovered from be1004b^ rather than rewritten, because
    every number in it was measured and a fresh derivation would have re-earned the
    same bugs. What changed is only what the new drawing changes. */
-.hero{position:relative;overflow:hidden;background:var(--navy);
+/* ---------- the hero ground is BLUE, not navy (2026-08-16) ----------
+   Hago's dark mass measures #030C1A. --navy is #000A18. That is the same colour
+   to within a few units, so on a navy hero a third of the homepage drawing and
+   HALF the branding drawing had nothing to separate them from the section they
+   sat on -- 1.01:1, measured. The branding hero's bar chart was invisible.
+   The fix moves the ground rather than the artwork, so Hago stays exactly as
+   drawn: on this blue he measures 3.72:1.
+
+   THE GRADIENT DIRECTION IS LOAD-BEARING. 135deg puts the deep end top-left and
+   the bright end bottom-right, which is where the copy and the artwork sit in
+   BOTH layouts -- two-column on desktop, stacked on a phone. So the words always
+   get the deep end (9.72:1) and the drawing always gets the bright end. Flip it
+   and the body text lands on #2E72EE at 3.4:1 and fails.
+
+   Only the heroes move. Every other .on-navy section keeps --navy and the
+   page's dark/light alternation is untouched. */
+:root{
+  --hero-deep:#12326F;   /* behind the copy */
+  --hero-mid:#1B4EB0;
+  /* The bright end is the brand blue EXACTLY, and that is a contrast decision,
+     not a taste one. At #2E72EE the copy on the stacked phone layout ran down
+     into the bright end and --cream measured 3.90:1 on es/branding. #2365DE is
+     the worst ground cream ever lands on here and it still gives 4.81:1, so the
+     whole gradient is safe for text wherever the copy happens to fall -- while
+     Hago still clears 3:1 against it. */
+  --hero-bright:#2365DE; /* behind the artwork */
+  --hero-glow:#A8C6FF;   /* the radial lift, authored in each hero's inline SVG */
+  /* The bright stop lands at 70%, not 100%: at 100% the gradient was still
+     climbing where Hago actually stands and he measured 2.76:1, under the 3:1
+     floor. Reaching full brand blue by 70% puts the whole artwork on it. Safe to
+     pull forward only BECAUSE the bright end is capped at #2365DE -- cream reads
+     4.81:1 there, so copy drifting onto the bright end costs nothing. */
+  --hero-ground:linear-gradient(135deg,var(--hero-deep) 0%,
+                var(--hero-mid) 30%,var(--hero-bright) 70%);
+}
+.hero{position:relative;overflow:hidden;background:var(--hero-ground);
   padding-block:clamp(24px,2.6vw,36px) 0;}
+/* .pagehero took its navy from .on-navy (0,1,0); this is (0,2,0) so it wins
+   without touching the eleven pages that use it. */
+.pagehero.on-navy{background:var(--hero-ground);}
+
+/* HERO TEXT GOES CREAM, AND ONLY IN THE HEROES.
+   --blue-lift and --cream-dim were each mixed to clear a threshold ON NAVY --
+   7.38:1 and 11.39:1 there. On the blue ground they measure 3.25:1 and 4.37:1
+   and both fail, so carrying them over would have shipped fifteen heroes that
+   break the site's own contrast rule. Measured across all fifteen at 1440, 1024
+   and 390 before and after.
+   Qualified .on-navy so these are (0,3,0) and beat the .on-navy rules by
+   SPECIFICITY rather than by order. Order alone was not enough: .on-navy .lede
+   sits above this block and lost, but .on-navy .notecap sits ~630 lines BELOW it
+   and won, so the contact heroes shipped their note line at 2.51:1 while every
+   other element passed. Same specificity plus different source position is a
+   coin toss; this does not depend on where the block sits.
+   Any new text element added to a hero needs re-measuring; passing on navy says
+   nothing about blue. */
+.hero.on-navy .eyebrow,.pagehero.on-navy .eyebrow,
+.hero.on-navy .lede,.pagehero.on-navy .lede,
+.hero.on-navy .sub,.pagehero.on-navy .sub,
+.hero.on-navy .notecap,.pagehero.on-navy .notecap{color:var(--cream);}
+
 .hero-streaks{position:absolute;inset:0;pointer-events:none;opacity:.85;}
 /* ONE HERO GRID FOR BOTH PAGES (2026-08-12). The branding hero used to run its own
    columns, its own padding and its own size token, which is how the two birds ended
@@ -287,6 +345,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
      had been live since the page shipped. Any future .hero-grid variant selector
      needs adding here too. */
   .hero-grid,.hero-grid:has(.art-wide){grid-template-columns:1fr;}
+  /* Stacked, the grid gap is the ONLY thing between the CTA button and Hago's
+     head, and clamp(24px,4vw,56px) resolves to its 24px floor on a phone -- the
+     vw leg needs a 600px viewport to beat it, so every phone got the minimum.
+     That read as the button and the robot touching. Its own row-gap here, with a
+     floor that actually binds at 390 (39px) instead of one that never does.
+     Column gap is untouched; this axis does not exist on desktop. */
+  .hero-grid{row-gap:clamp(32px,10vw,56px);}
   .hero-copy{padding-bottom:0;order:1;}
   .hero-mascot{order:2;justify-self:center;}
   /* Stacked, both heroes are sized by HEIGHT for the same reason they are on

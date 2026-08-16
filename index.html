@@ -97,13 +97,15 @@
   <svg class="hero-streaks" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
       <radialGradient id="hg" cx="72%" cy="34%" r="52%">
-        <stop offset="0" stop-color="#2365DE" stop-opacity=".30"/>
-        <stop offset="1" stop-color="#2365DE" stop-opacity="0"/>
+        <stop offset="0" stop-color="#A8C6FF" stop-opacity=".34"/>
+        <stop offset="1" stop-color="#A8C6FF" stop-opacity="0"/>
       </radialGradient>
     </defs>
     <!-- The streak field is gone (2026-08-11) — the diagonals and dots that used
          to fill this half. The GLOW stays: it is the only thing giving the bird a
-         ground to stand against, and without it the hero is a flat navy slab.
+         ground to stand against, and without it the hero is a flat blue slab.
+         Re-pointed to #A8C6FF on 2026-08-16: the stops were #2365DE, which was a
+         lift on navy and is invisible now that the ground IS that blue.
          The element itself stays too, and keeps its class, because app.js reads
          .hero-streaks for the parallax layer. -->
     <rect width="1200" height="620" fill="url(#hg)"/>
