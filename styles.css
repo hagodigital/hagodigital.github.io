@@ -296,10 +296,16 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
      Was clamp(420px,74vw,560px), inherited from the birds and too big for Hago
      (2026-08-15). A bird is a narrow silhouette; the robot is close to square on the
      homepage and wider still on branding, so the same HEIGHT buys far more mass on a
-     phone. Down ~19% at both ends. The vw leg never binds on a phone — at 390px it
-     resolves to 234 and the floor wins — so it is the floor that is doing the work
-     here and the ceiling that governs the 900px end. */
-  .hero-mascot img{height:clamp(340px,60vw,460px);width:auto;max-width:92%;}
+     phone. Cut twice the same day — 420 to 340, then to 270 — because the first cut
+     was still too big on a phone by JP's eye. Judge this one by WIDTH, not height:
+     height is what the rule sets, but what reads as "too big" is how much of a 390px
+     screen the drawing covers, and branding is the binding case at 0.830 aspect
+     against the homepage's 0.554. At 340 it was 260px of 390, two thirds of the
+     screen; at 270 it is 224, well under. The vw leg never binds on a phone — at
+     390px it resolves to 187 and the floor wins — so the FLOOR governs phones and
+     the ceiling governs the top of the stacked range. Changing the middle number
+     alone does nothing on the screens this rule exists for. */
+  .hero-mascot img{height:clamp(270px,48vw,390px);width:auto;max-width:92%;}
 }
 
 /* ---------- system band ---------- */
