@@ -292,8 +292,14 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
   /* Stacked, both heroes are sized by HEIGHT for the same reason they are on
      desktop: width-driven sizing gave the wider drawing a taller mascot, and the two
      pages stopped matching on phones the moment they started matching on desktop.
-     One height, both pages; max-width keeps the wider one inside a 390px screen. */
-  .hero-mascot img{height:clamp(420px,74vw,560px);width:auto;max-width:92%;}
+     One height, both pages; max-width keeps the wider one inside a 390px screen.
+     Was clamp(420px,74vw,560px), inherited from the birds and too big for Hago
+     (2026-08-15). A bird is a narrow silhouette; the robot is close to square on the
+     homepage and wider still on branding, so the same HEIGHT buys far more mass on a
+     phone. Down ~19% at both ends. The vw leg never binds on a phone — at 390px it
+     resolves to 234 and the floor wins — so it is the floor that is doing the work
+     here and the ceiling that governs the 900px end. */
+  .hero-mascot img{height:clamp(340px,60vw,460px);width:auto;max-width:92%;}
 }
 
 /* ---------- system band ---------- */
