@@ -103,17 +103,36 @@ var DESTINATIONS = {
     : "-1";
   var pending = false;
 
+  /* The slide amount is a CSS custom property, not a constant here, so the
+     breakpoint that switches it off lives in the stylesheet with every other
+     breakpoint. Phones set it to 0: stacked, the mascot sits under the CTA and
+     a negative slide walks it into the button. Re-read on resize because a
+     media query changes underneath a value cached at load. */
+  function parallaxAmount() {
+    if (!mascot) return 0;
+    var v = parseFloat(getComputedStyle(mascot).getPropertyValue("--mascot-parallax"));
+    return isNaN(v) ? -0.10 : v;
+  }
+  var slide = parallaxAmount();
+
   function frame() {
     var y = window.pageYOffset;
     if (hdr) hdr.setAttribute("data-scrolled", String(y > 24));
     if (!reduced && y < 1000) {
       if (streaks) streaks.style.transform = "translate3d(0," + (y * 0.22).toFixed(1) + "px,0)";
-      if (mascot)  mascot.style.transform  = "scaleX(" + flip + ") translate3d(0," + (y * -0.10).toFixed(1) + "px,0)";
+      /* When slide is 0 the transform is still written, and still carries the
+         flip — dropping the whole assignment would leave the last transform
+         from before a resize painted on the element forever. */
+      if (mascot)  mascot.style.transform  = "scaleX(" + flip + ") translate3d(0," + (y * slide).toFixed(1) + "px,0)";
     }
     pending = false;
   }
   if (hdr || streaks) {
     window.addEventListener("scroll", function () {
+      if (!pending) { pending = true; requestAnimationFrame(frame); }
+    }, { passive: true });
+    window.addEventListener("resize", function () {
+      slide = parallaxAmount();
       if (!pending) { pending = true; requestAnimationFrame(frame); }
     }, { passive: true });
     frame();   // a reload part-way down the page starts in the right state

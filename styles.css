@@ -321,7 +321,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
    a scaleX(-1) renders it backwards. The chart file has a second reason on top, the
    one this token was invented for — its arrow rises to the right, and mirrored it
    sells a falling line on a page about growth. Do not "simplify" this away. */
-.hero-mascot img{--flip:1;height:var(--mascot-h);width:auto;max-width:100%;
+/* --mascot-parallax is how far the drawing slides against the scroll, as a
+   fraction of scrollY, and app.js reads it from here rather than hardcoding a
+   number — same reason --flip lives on this element. It is a NEGATIVE value, so
+   the mascot rises as the page goes down. Beside the copy that is free
+   decoration; STACKED it is not, because the mascot sits under the CTA and every
+   10px of scroll eats 1px of the gap to it. See the phone override below. */
+.hero-mascot img{--flip:1;--mascot-parallax:-.10;height:var(--mascot-h);width:auto;max-width:100%;
   transform:scaleX(var(--flip));}
 
 /* The branding hero's private layout — its own copy-width token, its own padding
@@ -354,6 +360,19 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
   .hero-grid{row-gap:clamp(32px,10vw,56px);}
   .hero-copy{padding-bottom:0;order:1;}
   .hero-mascot{order:2;justify-self:center;}
+  /* NO PARALLAX ON THE STACKED MASCOT (2026-08-16). Beside the copy it slides
+     up harmlessly; underneath the CTA it slides INTO it. Measured at 390: the
+     gap starts at 39px, is 9px by 300px of scroll and -1px by 400px, so the
+     button and the robot overlap on any real scroll down the homepage. No
+     amount of padding survives it -- a static gap only sets how far you scroll
+     before they touch. The row-gap above is what holds them apart; this is what
+     stops the gap being spent. Restraint is in WHERE the motion goes: the
+     streak layer still parallaxes on a phone, this one does not. */
+  .hero-mascot img{--mascot-parallax:0;}
+  /* Sat 48px off the section floor with the parallax carrying it further up the
+     longer you scrolled -- 108px of empty ground below it by 600px. Closer to
+     the floor on JP's call, and with the drift gone the number now holds. */
+  .hero-mascot,.hero-mascot.art-wide{margin-bottom:clamp(16px,5vw,32px);}
   /* Stacked, both heroes are sized by HEIGHT for the same reason they are on
      desktop: width-driven sizing gave the wider drawing a taller mascot, and the two
      pages stopped matching on phones the moment they started matching on desktop.
