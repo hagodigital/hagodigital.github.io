@@ -483,7 +483,14 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 /* ---------- about + cta ---------- */
 .about{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.66fr) minmax(0,.9fr);
   gap:clamp(24px,3.5vw,48px);align-items:center;}
-.about-mascot img{width:138%;max-width:none;margin-inline:-19%;}
+/* Sized INSIDE its column, not spilling out of it. The old rule was
+   width:138% with a -19% bleed, which was drawn for a 1.5 landscape bird and
+   only ever worked because of that aspect: a 774x1325 portrait robot under the
+   same rule rendered 628px tall against the bird's 245px and swamped the
+   section. A width percentage here is a statement about the ARTWORK's shape as
+   much as the layout, so it stays inside the column and the art is free to
+   change aspect without taking the section with it. */
+.about-mascot img{width:88%;max-width:none;margin-inline:auto;display:block;}
 /* Stacked, not three-across. The three-column rule fired at 600px, but .vals
    sits inside the About grid's 1.1fr column — about 443px at full width — so
    each value got roughly 88px of text and wrapped to four or five lines of
@@ -504,7 +511,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 @media(max-width:780px){
   .about{grid-template-columns:1fr;}
   .about-mascot{grid-row:auto;grid-column:auto;}
-  .about-mascot img{width:100%;}
+  .about-mascot img{width:100%;max-width:220px;margin-inline:auto;}
 }
 
 /* ============================================================
