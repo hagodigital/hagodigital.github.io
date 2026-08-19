@@ -345,25 +345,39 @@
      Its own section, on navy, because #system above it is cream. The old
      .endbar panel sat inside #system and did the separating that the
      alternation should have been doing. -->
-<section class="close on-navy has-strip">
-  <div class="shell" data-rise>
-    <span class="eyebrow">Por qu&eacute; importa</span>
-    <h2 class="h-band">Si no eres memorable, <span>eres invisible.</span></h2>
-    <p class="lede">Que te recuerden es lo que hace que te elijan. Todo lo que se construye aqu&iacute; alimenta directo tu sitio web, as&iacute; que la marca y el sitio son una sola decisi&oacute;n, no dos.</p>
-    <figure class="close-art" data-rise>
-      <img src="assets/brand-before-after.webp" width="1518" height="960" loading="lazy" decoding="async"
-           alt="Hago manejando un proyector: a la izquierda una fachada y una laptop grises y gen&eacute;ricas, a la derecha el mismo negocio con los colores de HagoDigital en su letrero, su sitio web y un tel&eacute;fono.">
-    </figure>
-    <a class="btn btn-lime" data-cta="book" href="#">Construyamos tu marca <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-  </div>
-  <!-- Labels are <b>, tails are <span>: .close-three styles them directly, so
-       unlike the old .endbar there is no headline rule to collide with. The
-       strip sits outside .shell so its navy-2 runs the full width. -->
-  <div class="strip">
-    <div class="shell close-three" data-stagger>
-      <div><b>S&eacute; reconocible</b><span>Al instante.</span></div>
-      <div><b>G&aacute;nate la confianza</b><span>Para siempre.</span></div>
-      <div><b>Haz que recuerden</b><span>Tu negocio.</span></div>
+<section class="close close--split on-navy">
+  <div class="shell">
+    <div class="close-grid">
+      <div class="close-copy" data-rise>
+        <span class="eyebrow">Por qu&eacute; importa</span>
+        <h2 class="h-band">Si no eres memorable, <span>eres invisible.</span></h2>
+        <p class="lede">La gente elige los negocios que reconoce, en los que conf&iacute;a y que recuerda. Construimos tu marca dentro de tu sitio web, para que cada color, cada palabra y cada detalle funcionen como uno solo &mdash; y tu negocio se quede grabado.</p>
+        <!-- Three values as stacked icon rows, the same device the homepage About
+             section uses. They were a full-width three-column strip until
+             2026-08-18; JP called the columns awkward and he is right — at this
+             measure each column held about eighty pixels of text. -->
+        <div class="vals" data-stagger>
+          <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="11" stroke="#CEFF00" stroke-width="2.2"/><path d="M17 11v6l4 2.4" stroke="#2365DE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><b>S&eacute; reconocible</b><span>De un vistazo.</span></span>
+          </div>
+          <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="M17 7l9 3.6v6c0 5.4-3.8 9.2-9 10.4-5.2-1.2-9-5-9-10.4v-6L17 7Z" stroke="#CEFF00" stroke-width="2.2" stroke-linejoin="round"/><path d="M13 17.4l2.8 2.8L22 14" stroke="#2365DE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><b>G&aacute;nate la confianza</b><span>Desde el primer clic.</span></span>
+          </div>
+          <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="m17 8 2.8 5.8 6.2.9-4.5 4.4 1.1 6.2L17 22.4l-5.6 2.9 1.1-6.2L8 14.7l6.2-.9L17 8Z" stroke="#CEFF00" stroke-width="2.2" stroke-linejoin="round"/></svg>
+            <span><b>Que te recuerden</b><span>Cuando toque decidir.</span></span>
+          </div>
+        </div>
+      </div>
+      <figure class="close-art" data-rise>
+        <!-- The drawing IS the argument: grey and generic on the left, the same
+             business branded on the right. It sits beside the claim, not after
+             the button. -->
+        <img src="assets/brand-before-after.webp" width="1518" height="960" loading="lazy" decoding="async"
+             alt="Hago manejando un proyector: a la izquierda una fachada y una laptop grises y gen&eacute;ricas, a la derecha el mismo negocio con los colores de HagoDigital en su letrero, su sitio web y un tel&eacute;fono.">
+      </figure>
+    </div>
+    <div class="close-cta" data-rise>
+      <a class="btn btn-lime" data-cta="book" href="#">Construyamos tu marca <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
 </section>

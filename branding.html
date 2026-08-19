@@ -104,7 +104,6 @@
 
       <div class="ctas">
         <a class="btn btn-lime" data-cta="start" href="#">Start your brand <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="tlink" href="#system">See what you get <svg class="ar" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
     <figure class="hero-mascot art-wide" data-rise>
@@ -112,7 +111,7 @@
            grid off .hero-grid:has(.art-wide) as well as .hero-grid, because the desktop
            selector outranks it and a media query adds no specificity. Drop the class and
            this hero holds two columns down to 390px. -->
-      <img src="assets/hago-chart.webp" width="1204" height="980" fetchpriority="high" decoding="async"
+      <img src="assets/hago-chart.webp" width="1336" height="1102" fetchpriority="high" decoding="async"
            alt="Hago, the HagoDigital robot mascot, sitting back in an armchair with a cigar, beside a tall HD-branded building with a rising lime arrow climbing it.">
     </figure>
 
@@ -353,28 +352,39 @@
      Its own section, on navy, because #system above it is cream. The old
      .endbar panel sat inside #system and did the separating that the
      alternation should have been doing. -->
-<section class="close on-navy has-strip">
-  <div class="shell" data-rise>
-    <span class="eyebrow">Why it matters</span>
-    <h2 class="h-band">If you&rsquo;re not memorable, <span>you&rsquo;re invisible.</span></h2>
-    <p class="lede">Being remembered is what makes people choose you. Everything built here feeds straight into your website, so the brand and the site are one decision, not two.</p>
-    <figure class="close-art" data-rise>
-      <!-- Sits between the argument and the button on purpose: the drawing IS the
-           argument (grey and generic on the left, the same business branded on the
-           right), so it earns its place before the ask rather than after it. -->
-      <img src="assets/brand-before-after.webp" width="1518" height="960" loading="lazy" decoding="async"
-           alt="Hago working a projector: on the left a plain grey shopfront and laptop, on the right the same business in HagoDigital colours across its sign, a website and a phone.">
-    </figure>
-    <a class="btn btn-lime" data-cta="start" href="#">Let&rsquo;s build your brand <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-  </div>
-  <!-- Labels are <b>, tails are <span>: .close-three styles them directly, so
-       unlike the old .endbar there is no headline rule to collide with. The
-       strip sits outside .shell so its navy-2 runs the full width. -->
-  <div class="strip">
-    <div class="shell close-three" data-stagger>
-      <div><b>Be recognisable</b><span>Instantly.</span></div>
-      <div><b>Earn trust</b><span>For good.</span></div>
-      <div><b>Make people remember</b><span>Your business.</span></div>
+<section class="close close--split on-navy">
+  <div class="shell">
+    <div class="close-grid">
+      <div class="close-copy" data-rise>
+        <span class="eyebrow">Why it matters</span>
+        <h2 class="h-band">If you&rsquo;re not memorable, <span>you&rsquo;re invisible.</span></h2>
+        <p class="lede">People choose the businesses they recognise, trust and remember. We build your brand directly into your website, so every colour, word and interaction works as one &mdash; and your business sticks.</p>
+        <!-- Three values as stacked icon rows, the same device the homepage About
+             section uses. They were a full-width three-column strip until
+             2026-08-18; JP called the columns awkward and he is right — at this
+             measure each column held about eighty pixels of text. -->
+        <div class="vals" data-stagger>
+          <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="11" stroke="#CEFF00" stroke-width="2.2"/><path d="M17 11v6l4 2.4" stroke="#2365DE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><b>Be recognisable</b><span>At a glance.</span></span>
+          </div>
+          <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="M17 7l9 3.6v6c0 5.4-3.8 9.2-9 10.4-5.2-1.2-9-5-9-10.4v-6L17 7Z" stroke="#CEFF00" stroke-width="2.2" stroke-linejoin="round"/><path d="M13 17.4l2.8 2.8L22 14" stroke="#2365DE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><b>Earn trust</b><span>From the first click.</span></span>
+          </div>
+          <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="m17 8 2.8 5.8 6.2.9-4.5 4.4 1.1 6.2L17 22.4l-5.6 2.9 1.1-6.2L8 14.7l6.2-.9L17 8Z" stroke="#CEFF00" stroke-width="2.2" stroke-linejoin="round"/></svg>
+            <span><b>Stay remembered</b><span>When it&rsquo;s time to choose.</span></span>
+          </div>
+        </div>
+      </div>
+      <figure class="close-art" data-rise>
+        <!-- The drawing IS the argument: grey and generic on the left, the same
+             business branded on the right. It sits beside the claim, not after
+             the button. -->
+        <img src="assets/brand-before-after.webp" width="1518" height="960" loading="lazy" decoding="async"
+             alt="Hago working a projector: on the left a plain grey shopfront and laptop, on the right the same business in HagoDigital colours across its sign, a website and a phone.">
+      </figure>
+    </div>
+    <div class="close-cta" data-rise>
+      <a class="btn btn-lime" data-cta="start" href="#">Let&rsquo;s build your brand <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
 </section>

@@ -744,9 +744,26 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .close .eyebrow{margin-bottom:var(--s1);}
 .close .h-band span{display:block;}
 .close .lede{margin-inline:auto;max-width:50ch;font-size:1.05rem;}
-.close-art{margin:var(--s5) auto 0;max-width:820px;}
+/* .close--split is branding's variant: it carries an illustration and three
+   values, so it puts the argument beside the picture instead of centring a
+   column. Everything else about .close is inherited, including the ground and
+   the blue second line. The CTA sits OUTSIDE the grid so that stacking on a
+   phone gives copy -> values -> picture -> button, rather than burying the
+   picture under the ask. */
+.close--split{text-align:left;}
+.close--split .close-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(28px,4.5vw,64px);align-items:center;}
+.close--split .lede{margin-inline:0;max-width:46ch;}
+.close--split .vals{margin-top:var(--s5);max-width:42ch;}
+.close--split .close-art{margin:0;max-width:100%;}
+.close-cta{text-align:center;}
 .close-art img{width:100%;height:auto;display:block;}
-@media(max-width:700px){.close-art{max-width:100%;}}
+@media(max-width:860px){
+  .close--split{text-align:center;}
+  .close--split .close-grid{grid-template-columns:1fr;}
+  .close--split .lede{margin-inline:auto;}
+  .close--split .vals{margin-inline:auto;text-align:left;}
+}
 .close .btn{margin-top:var(--s5);}
 
 /* THE SECOND TONE IS A SYSTEM DEVICE, NOT A HERO PATCH (2026-08-14).
