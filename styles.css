@@ -83,7 +83,7 @@ section{padding-block:var(--sect);}
   letter-spacing:.16em;text-transform:uppercase;color:var(--blue-ink);
 }
 .on-navy .eyebrow{color:var(--blue-lift);}   /* raw blue is 3.77:1 on navy */
-h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;color:var(--cream);}
+h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;color:var(--cream);text-wrap:balance;}
 .h2{font-size:clamp(1.8rem,3.6vw,2.6rem);}
 .h-band{font-size:clamp(1.5rem,3vw,2.2rem);color:var(--cream);}
 .sub{font-family:var(--display);font-weight:600;word-spacing:.05em;font-size:clamp(1.05rem,1.6vw,1.3rem);
@@ -287,7 +287,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.04em;line-height:1.02;c
 .hero-copy{padding-bottom:var(--hero-floor);}
 .hero h1{margin-top:var(--s3);}
 .hero h1 .lime{color:var(--lime);}
-.hero .lede{color:var(--cream-dim);max-width:44ch;}
+.hero .lede{color:var(--cream-dim);max-width:44ch;text-wrap:pretty;}
 /* Not scoped to .hero any more — the contact page's page-hero needs the same
    primary-button-plus-text-link row. Every .ctas on the site is a hero row. */
 .ctas{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;margin-top:var(--s5);}
