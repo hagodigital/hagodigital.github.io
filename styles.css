@@ -968,8 +968,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .chan h3{font-family:var(--body);font-size:.78rem;font-weight:700;letter-spacing:.12em;
   text-transform:uppercase;color:var(--grey);margin:0 0 8px;}
 .on-navy .chan h3{color:var(--cream-mute);}
+/* These two are the WhatsApp and email links on thanks.html — the only actions
+   on a page someone reaches straight after enquiring, and the most likely of
+   any link on the site to be tapped on a phone. They rendered 20px tall,
+   under the 24px WCAG 2.2 AA floor. Vertical padding only, same fix and same
+   reasoning as .endmeta a. Found 2026-08-20 by mobile-check.py. */
 .chan a{font-size:1.02rem;font-weight:600;color:var(--blue);text-decoration:none;
-  word-break:break-word;}
+  word-break:break-word;display:inline-block;padding-block:8px;}
 .on-navy .chan a{color:var(--lime);}
 .chan a:hover{text-decoration:underline;text-underline-offset:3px;}
 
@@ -1048,11 +1053,21 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .endcta .lede{margin-inline:auto;}
 .endcta .btn{margin-top:var(--s4);}
 .endmeta{margin-top:var(--s4);font-size:.86rem;color:var(--cream-mute);}
-.endmeta a{color:var(--cream-dim);text-decoration:underline;text-underline-offset:3px;}
+/* padding-block is the tap target, not decoration. These are the email and
+   WhatsApp links at the end of about and contact — real actions someone taps on a
+   phone — and they rendered 16px tall, under the 24px WCAG 2.2 AA minimum, sitting
+   7px apart. Vertical padding only: horizontal padding would widen the boxes and
+   close that 7px gap rather than open it. 16 + 8 + 8 = 32px, matching the footer
+   legal links, which were given min-height:32px deliberately. Found 2026-08-20 by
+   mobile-check.py. */
+.endmeta a{color:var(--cream-dim);text-decoration:underline;text-underline-offset:3px;display:inline-block;padding-block:8px;}
 .endmeta a:hover{color:var(--lime);}
 
 /* plain bulleted list — the checks grid expects an icon column */
 .checks.plain li{grid-template-columns:1fr;}
-.checks.plain a{color:inherit;text-decoration:underline;text-underline-offset:3px;}
+/* 404.html routes people out through this list. Its links sat at 23px, a
+   hair under the AA floor, on the one page where the visitor is already lost. */
+.checks.plain a{color:inherit;text-decoration:underline;text-underline-offset:3px;
+  display:inline-block;padding-block:6px;}
 .on-cream .checks.plain a:hover{color:var(--blue);}
 .on-navy .checks.plain a:hover{color:var(--lime);}
