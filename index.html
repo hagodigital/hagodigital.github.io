@@ -47,7 +47,7 @@
   "founder": {"@type":"Person","name":"JP"}
 }
 </script>
-<!-- Motion is opt-in: with JS off, nothing below is ever hidden. -->
+
 <script>document.documentElement.className+=" js";</script>
 </head>
 <body>
@@ -56,26 +56,26 @@
 <header class="hdr on-navy">
   <div class="hdr-in">
     <a class="brand" href="#top" aria-label="HagoDigital — home"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HagoDigital" viewBox="0 0 1600 400">
-    
+
     <g transform="translate(36,80) scale(0.95)">
-    
+
     <g transform="translate(12,0)">
-      <!-- H stem and crossbar -->
+
       <path fill="#F8F5E6" d="M24 24H68V99H151V141H68V216H24V24Z"/>
-      <!-- D outer form -->
+
       <path fill="#F8F5E6" fill-rule="evenodd" d="M151 24H195C255 24 296 64 296 120C296 176 255 216 195 216H151V174H195C229 174 251 151 251 120C251 89 229 66 195 66H151V24Z"/>
-      <!-- White structural cutout to keep the accent clear -->
+
       <path fill="#000A18" d="M111 216V156L172 95V67L211 106V147L193 129L154 168V216H111Z"/>
-      <!-- Blue accent path -->
+
       <path fill="#CEFF00" d="M126 216V164L182 108V84L204 106V130L193 119L145 167V216H126Z"/>
     </g>
     </g>
-    
+
         <g font-family="Clash Display, Cabin, Arial, sans-serif" font-weight="600" font-size="165" letter-spacing="-5">
           <text x="365" y="255" fill="#F8F5E6">Hago</text>
           <text x="760" y="255" fill="#CEFF00">Digital</text>
         </g>
-        
+
     </svg></a>
     <nav class="nav" id="nav" aria-label="Primary">
       <a href="branding.html">Brand Identity</a>
@@ -92,7 +92,6 @@
 
 <main id="main">
 
-<!-- ================= HERO ================= -->
 <section class="hero on-navy" id="top">
   <svg class="hero-streaks" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
@@ -101,13 +100,7 @@
         <stop offset="1" stop-color="#A8C6FF" stop-opacity="0"/>
       </radialGradient>
     </defs>
-    <!-- The streak field is gone (2026-08-11) — the diagonals and dots that used
-         to fill this half. The GLOW stays: it is the only thing giving the bird a
-         ground to stand against, and without it the hero is a flat blue slab.
-         Re-pointed to #A8C6FF on 2026-08-16: the stops were #2365DE, which was a
-         lift on navy and is invisible now that the ground IS that blue.
-         The element itself stays too, and keeps its class, because app.js reads
-         .hero-streaks for the parallax layer. -->
+
     <rect width="1200" height="620" fill="url(#hg)"/>
   </svg>
 
@@ -121,11 +114,7 @@
         <a class="btn btn-lime" data-cta="start" href="#">Book a free call <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a class="tlink" href="#what">Explore your options <svg class="ar" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
-      <!-- The hero now ENDS on the button (2026-08-11). The reassurance line and
-           the three ticks are both gone — the ticks moved down to About, which is
-           where the same three claims were already being made at length. Nothing
-           sits below .ctas on purpose: it is what lets the bird's feet land level
-           with the button instead of halfway up a list. -->
+
     </div>
     <figure class="hero-mascot" data-rise>
       <img src="assets/hago-standing.webp" width="727" height="1118" fetchpriority="high" decoding="async"
@@ -134,7 +123,6 @@
   </div>
 </section>
 
-<!-- ================= SYSTEM BAND ================= -->
 <section class="band on-navy" id="what">
   <div class="shell" data-rise>
     <span class="eyebrow">The HagoDigital system</span>
@@ -143,7 +131,6 @@
   </div>
 </section>
 
-<!-- ================= 01 BRAND — asset 08 — TEXT / IMAGE ================= -->
 <section class="pillar on-cream">
   <div class="shell row">
     <div class="copy" data-rise>
@@ -167,7 +154,6 @@
   </div>
 </section>
 
-<!-- ================= 02 WEBSITES — asset 09 — IMAGE / TEXT ================= -->
 <section class="pillar on-navy">
   <div class="shell row">
     <figure data-rise="left">
@@ -191,14 +177,6 @@
   </div>
 </section>
 
-<!-- ================= 03 GOOGLE — asset 10 — TEXT / IMAGE =================
-     Asset 10 is a concept illustration. Its embedded 5 stars, "Open now" and the
-     phone number +61 400 123 456 are mock-up content: never repeated in HTML,
-     never presented as results, never actionable.
-     The visible caption that said so was REMOVED 2026-08-07 at JP's direction.
-     That is a decision, not an oversight — do not reinstate it without asking.
-     The disclosure now rests entirely on the illustration reading as a template,
-     which it does mainly because the shopfront is labelled "Your Business". -->
 <section class="pillar on-cream">
   <div class="shell row">
     <div class="copy" data-rise>
@@ -223,7 +201,6 @@
   </div>
 </section>
 
-<!-- ================= 04 AI x HUMAN ================= -->
 <section class="pillar on-navy">
   <div class="shell row">
     <figure data-rise="left">
@@ -247,7 +224,6 @@
   </div>
 </section>
 
-<!-- ================= PROCESS ================= -->
 <section class="on-cream" id="how">
   <div class="shell">
     <div class="proc-head" data-rise>
@@ -279,7 +255,6 @@
   </div>
 </section>
 
-<!-- ================= ABOUT + CTA ================= -->
 <section class="on-navy" id="proof">
   <div class="shell about">
     <div data-rise>
@@ -288,11 +263,7 @@
       <p class="lede">Too many good businesses lose work because their digital presence looks unclear, unfinished or forgettable. We exist to close that gap &mdash; with sharper strategy, stronger design and technology used properly.</p>
       <p style="font-size:.92rem;line-height:1.6;font-weight:600;color:var(--cream);margin-top:18px">No smoke. No lock-in. No disappearing act.</p>
       <div class="vals" data-stagger>
-        <!-- These three came down out of the hero (2026-08-11) and replace the
-             Strategic / Practical / Results trio that stood here. Label only —
-             no supporting line was written for them, and inventing one to fill
-             the old shape would be putting words in JP's mouth. The icons are
-             the ones that were already here, kept in order. -->
+
         <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="12" stroke="#CEFF00" stroke-width="2.2"/><circle cx="17" cy="17" r="5" stroke="#2365DE" stroke-width="2.2"/></svg><span><b>You know what you are buying</b>Scope, deliverables and price agreed before the work starts.</span></div>
         <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="12" stroke="#CEFF00" stroke-width="2.2"/><path d="M11 17.5l4 4 8-8.5" stroke="#2365DE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>You own the result</b>Your files, site and accounts are handed over, not held behind a subscription.</span></div>
         <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><path d="M6 25l6-6 4 4 9-10" stroke="#CEFF00" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 13h5v5" stroke="#2365DE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>You get honest answers</b>No guaranteed rankings, no invented urgency, no retainer you do not need.</span></div>
@@ -321,26 +292,26 @@
   <div class="shell">
     <div class="ftr-top">
       <a class="brand" href="#top" aria-label="HagoDigital — home"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HagoDigital" viewBox="0 0 1600 400">
-    
+
     <g transform="translate(36,80) scale(0.95)">
-    
+
     <g transform="translate(12,0)">
-      <!-- H stem and crossbar -->
+
       <path fill="#F8F5E6" d="M24 24H68V99H151V141H68V216H24V24Z"/>
-      <!-- D outer form -->
+
       <path fill="#F8F5E6" fill-rule="evenodd" d="M151 24H195C255 24 296 64 296 120C296 176 255 216 195 216H151V174H195C229 174 251 151 251 120C251 89 229 66 195 66H151V24Z"/>
-      <!-- White structural cutout to keep the accent clear -->
+
       <path fill="#000A18" d="M111 216V156L172 95V67L211 106V147L193 129L154 168V216H111Z"/>
-      <!-- Blue accent path -->
+
       <path fill="#CEFF00" d="M126 216V164L182 108V84L204 106V130L193 119L145 167V216H126Z"/>
     </g>
     </g>
-    
+
         <g font-family="Clash Display, Cabin, Arial, sans-serif" font-weight="600" font-size="165" letter-spacing="-5">
           <text x="365" y="255" fill="#F8F5E6">Hago</text>
           <text x="760" y="255" fill="#CEFF00">Digital</text>
         </g>
-        
+
     </svg></a>
       <nav class="ftr-nav" aria-label="Footer">
         <a href="branding.html">Brand Identity</a>

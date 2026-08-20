@@ -24,7 +24,6 @@
 <meta name="twitter:description" content="Strategy, logo, messaging and a complete visual identity built to make your business recognisable, credible and easy to remember.">
 <meta name="twitter:image" content="https://hagodigital.ai/assets/logomark.png">
 
-<!-- Motion is opt-in: with JS off, nothing below is ever hidden. -->
 <script>document.documentElement.className+=" js";</script>
 </head>
 <body>
@@ -37,13 +36,13 @@
     <g transform="translate(36,80) scale(0.95)">
 
     <g transform="translate(12,0)">
-      <!-- H stem and crossbar -->
+
       <path fill="#F8F5E6" d="M24 24H68V99H151V141H68V216H24V24Z"/>
-      <!-- D outer form -->
+
       <path fill="#F8F5E6" fill-rule="evenodd" d="M151 24H195C255 24 296 64 296 120C296 176 255 216 195 216H151V174H195C229 174 251 151 251 120C251 89 229 66 195 66H151V24Z"/>
-      <!-- White structural cutout to keep the accent clear -->
+
       <path fill="#000A18" d="M111 216V156L172 95V67L211 106V147L193 129L154 168V216H111Z"/>
-      <!-- Blue accent path -->
+
       <path fill="#CEFF00" d="M126 216V164L182 108V84L204 106V130L193 119L145 167V216H126Z"/>
     </g>
     </g>
@@ -69,10 +68,6 @@
 
 <main id="main">
 
-<!-- ================= HERO =================
-     The magnet in the render lives in the streak field rather than as its
-     own layer, so it inherits the hero parallax already wired in app.js.
-     Parallax rides the streaks and the mascot only, never copy. -->
 <section class="hero on-navy" id="top">
   <svg class="hero-streaks" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
@@ -83,66 +78,28 @@
     </defs>
     <rect width="1200" height="620" fill="url(#bg1)"/>
 
-    <!-- Two things were CUT here at JP's direction 2026-08-08, in this order:
-         the horseshoe magnet from the original render (read as an ugly C behind
-         the mascot at every width tried), then the whole streak-and-dot field.
-         The artwork now carries its own bar chart, so the site's streaks were a
-         second scattered pattern on top of a busy illustration. Only the radial
-         glow above survives, which is a ground, not a pattern.
-         Don't reinstate either without asking. -->
   </svg>
 
   <div class="shell hero-grid">
     <div class="hero-copy" data-stagger>
       <span class="eyebrow">Brand identity</span>
-      <!-- The deck's H1 was "Be the one they remember." MEASURED 2026-08-20 with
-           line-check.py and REJECTED: it breaks to three lines at 1440 and 1101 with
-           "remember" orphaned alone on the third, because "they remember" needs more
-           than the 471px hero copy column. Same failure the homepage H1 hit with
-           "Made to be chosen" (644px needed). Same resolution as the homepage: the
-           fitted headline stays and the deck's line survives in the closing CTA,
-           "Let's build something people remember". Do not paste the deck H1 back in
-           without re-running line-check.py. -->
+
       <h1>Stand out<br><span class="lime">Get chosen</span></h1>
       <p class="lede">Give people a clear reason to recognise, remember and trust you. Your strategy, identity and everyday brand assets are brought together into one practical system you can use with confidence.</p>
-
-      <!-- The three benefits that used to sit here (recognisable / trusted /
-           remembered) now close the page in the .close section instead, so the hero
-           makes one claim and the page finishes on the payoff. -->
 
       <div class="ctas">
         <a class="btn btn-lime" data-cta="start" href="#">Build my brand <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
     <figure class="hero-mascot art-wide" data-rise>
-      <!-- art-wide is not decoration: the max-width:900px rule keys the single-column
-           grid off .hero-grid:has(.art-wide) as well as .hero-grid, because the desktop
-           selector outranks it and a media query adds no specificity. Drop the class and
-           this hero holds two columns down to 390px. -->
+
       <img src="assets/hago-chart.webp" width="1336" height="1102" fetchpriority="high" decoding="async"
            alt="Hago, the HagoDigital robot mascot, sitting back in an armchair with a cigar, beside a tall HD-branded building with a rising lime arrow climbing it.">
     </figure>
 
-    <!-- Artwork 2026-08-11, and the panel treatment is finally gone with it. The
-         two earlier files could not be keyed: their linework sat at the same value
-         as their own plate. This one's plate is a flat (0,10,34) against outlines
-         of pure black, so it keys by flood fill from the corners and the bird sits
-         on the section with nothing framing it.
-         Cropped to its content bbox before export. Uncropped, a third of the frame
-         is empty plate and the CSS height sizes that emptiness instead of the bird.
-         --flip stays 1. The bird already faces left IN THE FILE and points at the
-         chart; a CSS mirror moves the chart to the other side and turns its arrow
-         over with it. See the note on --mascot-h in styles.css for why the height is
-         driven off the bird rather than off this image. -->
   </div>
 </section>
 
-<!-- ================= THE DIFFERENCE ================= -->
-<!-- The heading is its own navy band (2026-08-11), the same device the homepage
-     uses for "Three pillars. One connected system." — a short darker strip that
-     announces the section rather than sitting inside it. #difference moves onto
-     the band because the band is now what the section starts with; nothing links
-     to it, but an id that names a section should sit at that section's top. -->
 <section class="band on-navy" id="difference">
   <div class="shell" data-rise>
     <span class="eyebrow">Know the difference</span>
@@ -189,10 +146,6 @@
 
   </div>
 
-  <!-- The conclusion of the three cards above, and the hinge into #service. It
-       takes --navy-2 because a strip carries the half-shade of the ground it
-       leads INTO, and #service below is navy. Was a floating navy .callout box
-       on the cream until 2026-08-14. -->
   <div class="strip payoff" data-rise>
     <div class="shell">
       <p>Together they turn a business into a <b>recognisable, trusted and preferred choice</b> &mdash; instant recognition, deeper loyalty, and daylight between you and everyone else in a crowded market.</p>
@@ -200,22 +153,13 @@
   </div>
 </section>
 
-<!-- ================= THE SERVICE ================= -->
 <section class="pillar on-navy" id="service">
   <div class="shell row">
     <div class="copy" data-rise>
       <span class="eyebrow">The signature brand identity</span>
       <h2 class="h2" style="color:var(--cream);margin-top:8px">Your brand, handled<br><span style="color:var(--lime)">You get on with business</span></h2>
       <p class="lede">We lead the thinking, shape the position, develop the identity and prepare the files.</p>
-      <!-- The credential sits HERE and nowhere else on the page (2026-08-12). It is
-           the answer to "who actually draws this?", which a reader only asks once the
-           package has been described — so it belongs under the description, not in the
-           hero, where it would interrupt the promise with a reassurance nobody has
-           asked for yet. Repeating it in the system grid and the end bar as well would
-           read as insecurity: a credential stated three times is a credential being
-           argued for.
-           The wording is deliberate and the reasoning is in decision-log.md, not here:
-           this file is served publicly, so claim reasoning does not belong in it. -->
+
       <p style="font-size:.86rem;line-height:1.6;color:var(--cream-mute);margin-top:16px">The identity is drawn by a professional graphic designer, briefed and directed by me.</p>
       <div class="minis">
         <div class="mini">
@@ -234,23 +178,13 @@
     </div>
 
     <figure data-rise="right">
-      <!-- Bare on navy, no .framed — this file carries no ground of its own, so a
-           panel would be drawing a box around nothing.
-           Replaced 2026-08-12 and WIDER than what it replaces: 1.62 against 1.30.
-           It arrived on a flat (0,8,28) plate — four units of blue off the
-           section's #000A18, close enough to look deliberate in a thumbnail and
-           to show as a faint rectangle at full width, so it is keyed like every
-           other supplied file rather than shipped opaque. That key had a one-unit
-           margin: the plate sits at (0,8,28) and the artwork's own darkest navy
-           at (0,1,21), seven away against a tolerance of six. It holds, but it is
-           the tightest on the site — re-measure, never reuse this tolerance. -->
+
       <img src="assets/brand-applied.webp" width="1462" height="953" loading="lazy" decoding="async"
            alt="The HagoDigital identity applied across a shopfront, signage, a website, a phone screen, a t-shirt and a delivery van, with Hago on a lift painting the HD monogram onto the wall.">
     </figure>
   </div>
 </section>
 
-<!-- ================= THE TEN-PART SYSTEM ================= -->
 <section class="on-cream" id="system">
   <div class="shell">
     <div class="sys-head" data-rise>
@@ -261,26 +195,7 @@
     <div class="sys" data-stagger>
 
       <article class="scard">
-        <!-- Eight of the ten are the 2026-08-11 supplied set (cards 4 and 9 are
-             the older art, which happens to sit in the same family). Nothing in
-             any drawing is altered: each one is cut off its plate, then scaled so
-             its LONG EDGE is 76% of a 640 square and centred there. That last step
-             is what makes the row read as one set — unaided, the six tiled cards
-             land at 71-79% but the bare microphone and swatch fan sit at 92%, and
-             beside the tiles they read as a different, larger set.
-             The plates arrived near-WHITE, not near-navy like the 08-09 batch, so
-             the key tests bright AND neutral: the ivory tile is (248,245,230), an
-             18-point spread, and it is that spread rather than any brightness
-             threshold that keeps the fill off the artwork. Two of the eight came
-             with real alpha already and are passed straight through.
-             A plate test alone was not enough. The generator wraps every outline
-             in a noisy ring dipping to ~193, which both survives the test AND
-             fragments the plate into islands the border fill cannot reach — that
-             shipped once as an 8px white border round the applied-identity art.
-             So the claimed region is grown inward through anything still light and
-             neutral (>=170, spread <=14). It stops itself: an outline pixel is too
-             dark and a coloured one is not neutral, so it cannot enter the drawing,
-             and the ivory's 18-point spread keeps it out of the tiles. -->
+
         <div class="art"><img src="assets/sys-voice.webp" width="640" height="640" loading="lazy" decoding="async" alt="A studio microphone with a lime band across its body and a blue bar at the base."></div>
         <h3>1. Brand voice</h3>
         <p>The words that sound like you. Tone, personality and key messages &mdash; clear, consistent and unmistakably yours.</p>
@@ -300,9 +215,7 @@
       </article>
 
       <article class="scard">
-        <!-- This one also retires a live <text> element: it rendered "Aa" in
-             Manrope with an Arial fallback, so the drawing changed shape on any
-             machine without the webfont. -->
+
         <div class="art"><img src="assets/sys-type.webp" width="640" height="640" loading="lazy" decoding="async" alt="A tile showing a navy capital A beside a lime lowercase a, over three text rules and a measuring bar."></div>
         <h3>4. Typography</h3>
         <p>The fonts that speak for you. Chosen for clarity, hierarchy and a personality that carries at any size.</p>
@@ -347,22 +260,11 @@
 
     </div>
 
-    <!-- The honesty line for the grid above, added 2026-08-20 with the copy swap.
-         Six of the ten ship on every brand identity; four are marked Optional in
-         their own card (5 mascot, 6 design patterns, 7 photography direction,
-         8 social toolkit) because method.md holds the conditional layer as EARNED,
-         never defaulted. Without this line the grid reads as ten items promised to
-         everyone, which is the thing method.md forbids. JP's call, 2026-08-20: show
-         all ten, mark which are conditional, agree the rollout on the call. -->
     <p style="max-width:62ch;margin:28px auto 0;text-align:center;font-size:.86rem;line-height:1.6;color:var(--ink)">The exact rollout is agreed around the business. We do not pad the package with assets you will never use.</p>
 
   </div>
 </section>
 
-<!-- ================= CLOSE =================
-     Its own section, on navy, because #system above it is cream. The old
-     .endbar panel sat inside #system and did the separating that the
-     alternation should have been doing. -->
 <section class="close close--split on-navy">
   <div class="shell">
     <div class="close-grid">
@@ -370,10 +272,7 @@
         <span class="eyebrow">Why it matters</span>
         <h2 class="h-band">If you&rsquo;re forgettable, <span>price is the only thing left to compare</span></h2>
         <p class="lede">A strong brand gives people another reason to choose you: recognition, relevance and trust.</p>
-        <!-- Three values as stacked icon rows, the same device the homepage About
-             section uses. They were a full-width three-column strip until
-             2026-08-18; JP called the columns awkward and he is right — at this
-             measure each column held about eighty pixels of text. -->
+
         <div class="vals" data-stagger>
           <div class="val"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="11" stroke="#CEFF00" stroke-width="2.2"/><path d="M17 11v6l4 2.4" stroke="#2365DE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span><b>Recognisable</b><span>Never lost in the category.</span></span>
@@ -387,20 +286,13 @@
         </div>
       </div>
       <figure class="close-art" data-rise>
-        <!-- The drawing IS the argument: grey and generic on the left, the same
-             business branded on the right. It sits beside the claim, not after
-             the button. -->
+
         <img src="assets/brand-before-after.webp" width="1518" height="960" loading="lazy" decoding="async"
              alt="Hago working a projector: on the left a plain grey shopfront and laptop, on the right the same business in HagoDigital colours across its sign, a website and a phone.">
       </figure>
     </div>
     <div class="close-cta" data-rise>
-      <!-- BUTTON LABEL CEILING, set by JP 2026-08-20: a button label stays SHORT.
-           The site had held at 16 characters ("Book a free call") on every page; the
-           new deck pushed the homepage body CTAs to 26 and this page's closing CTA to
-           43 ("Let's build something people remember"), and the buttons started reading
-           as sentences. Ceiling is 18 characters. The persuading is the heading's job,
-           not the button's — the button names the action and stops. -->
+
       <a class="btn btn-lime" data-cta="start" href="#">Build my brand <svg class="ar" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
@@ -416,13 +308,13 @@
     <g transform="translate(36,80) scale(0.95)">
 
     <g transform="translate(12,0)">
-      <!-- H stem and crossbar -->
+
       <path fill="#F8F5E6" d="M24 24H68V99H151V141H68V216H24V24Z"/>
-      <!-- D outer form -->
+
       <path fill="#F8F5E6" fill-rule="evenodd" d="M151 24H195C255 24 296 64 296 120C296 176 255 216 195 216H151V174H195C229 174 251 151 251 120C251 89 229 66 195 66H151V24Z"/>
-      <!-- White structural cutout to keep the accent clear -->
+
       <path fill="#000A18" d="M111 216V156L172 95V67L211 106V147L193 129L154 168V216H111Z"/>
-      <!-- Blue accent path -->
+
       <path fill="#CEFF00" d="M126 216V164L182 108V84L204 106V130L193 119L145 167V216H126Z"/>
     </g>
     </g>
