@@ -5,17 +5,20 @@
    Anything left null stays inert rather than pointing somewhere invented.
    ============================================================ */
 var DESTINATIONS = {
-  /* start -> the enquiry page; book -> the calendar itself.
-     2026-08-14 REPLACES 2026-08-11. The brief is no longer a public door: it
-     goes out password-protected, AFTER the discovery call. That
-     left start.html as a chooser with one real door, so it is retired and every
-     English CTA now lands on contact.html, which offers both routes on one page
-     — the qualifying form, and the calendar for anyone who would rather just
-     book. "book" is unchanged and still needed: the Spanish pages use it
-     directly, because no Spanish brief or Spanish enquiry flow exists yet.
-     To make the calendar the primary door again, point "start" at "book"'s URL —
-     that one line is the whole switch. */
-  start:     "contact.html",
+  /* start AND book are now the same door: the free 15-minute call.
+     2026-08-20 REPLACES 2026-08-14. The model split in two — a 15-minute intro
+     call anyone may book, and the 30-minute discovery call that follows once
+     they are a client and is arranged by hand (the free Google plan allows only
+     ONE booking page with ONE duration, so the 30 cannot be public).
+     "The call is earned" still holds for the 30; the 15 is the front door and
+     nothing is lost if a non-fit books it.
+     contact.html is NOT retired — it is the write-first door, reached from the
+     secondary CTA and the nav, for people who would rather type than talk.
+     Every EN primary CTA routes through data-cta="start", including the ones on
+     about/thanks/404 that used to hardcode contact.html and would have been left
+     behind by this switch. To put the form back in front, set start to
+     "contact.html" — that one line is still the whole switch. */
+  start:     "https://calendar.app.google/d1jgYiEUs3yoh3Wr6",
   book:      "https://calendar.app.google/d1jgYiEUs3yoh3Wr6",
   /* Deep-links past the hero to the form itself, so the secondary CTA is not a
      duplicate of the primary one now that both live on contact.html. */
