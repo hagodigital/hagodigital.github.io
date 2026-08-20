@@ -453,7 +453,14 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
   display:grid;place-items:center;margin:0 auto 16px;}
 .proc-step .badge svg{width:28px;height:28px;}
 .proc-step h3{font-size:1rem;}
+/* --grey is 3.81:1 on navy and this stylesheet has said so since launch, on the
+   --cream-mute line. These rungs sit on navy on about.html in both languages and
+   were failing at exactly 3.81. Found 2026-08-20 by contrast-check.py, which reads
+   the rendered page rather than the CSS — nothing that reads CSS could tell which
+   ground this rule lands on. --grey stays correct on cream, so the fix is scoped
+   to the navy case rather than changing the token. */
 .proc-step p{font-size:.88rem;color:var(--grey);margin-top:var(--s1);max-width:26ch;margin-inline:auto;}
+.on-navy .proc-step p{color:var(--cream-mute);}
 /* dashed connector between badges, desktop only */
 .proc-step::before{content:"";position:absolute;top:30px;left:calc(-50% + 42px);width:calc(100% - 84px);
   border-top:2px dashed rgba(0,10,24,.22);}
@@ -501,6 +508,11 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .val svg{width:34px;height:34px;}
 .val b{font-family:var(--body);font-weight:600;font-size:.92rem;color:var(--cream);display:block;}
 .val span{font-size:.8rem;color:var(--cream-mute);line-height:1.45;display:block;margin-top:2px;}
+/* align-self:start, because .about is align-items:center and this card is far
+   shorter than the copy column beside it — so it floated, and its heading sat 99px
+   below "You're good at this" at 1440 and 75px at 1101. Measured after JP said the
+   two did not line up. Both blocks start together now. */
+.cta-card{align-self:start;}
 .cta-card h2{color:var(--cream);}
 .cta-card .lede{margin-bottom:var(--s4);}
 @media(max-width:1080px){
@@ -608,7 +620,15 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    stuck to the bottom of the section rather than a beat of its own; a band
    needs the air a section gets. */
 .strip{padding-block:calc(var(--sect) * .55);background:var(--navy-2);}
-.strip.to-cream{background:var(--cream-2);}
+/* to-cream was dead CSS until 2026-08-20, and it was written for markup that does
+   not exist: its colour rules target .payoff as a DESCENDANT, but on branding.html
+   the classes sit on ONE element — <div class="strip to-cream payoff">. So only this
+   background rule ever matched and the text kept .payoff's cream colour ON a cream
+   ground. Cream on cream. It shipped unreadable and JP caught it live.
+   Ground is --cream now, not --cream-2, so the strip continues the section above it
+   rather than banding against it — which is what the change was for. Both selector
+   shapes are matched below. --ink on --cream is 11.29:1. */
+.strip.to-cream{background:var(--cream);}
 .has-strip{padding-bottom:0;}
 
 /* ---------- section payoff ----------
@@ -651,9 +671,9 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
   max-width:30ch;margin-inline:auto;color:var(--cream);       /* 17.63:1 on navy-2 */
 }
 .payoff b{font-weight:700;color:var(--lime);}                 /* 16.46:1 on navy-2 */
-.strip.to-cream .payoff::before{background:var(--blue-ink);}
-.strip.to-cream .payoff p{color:var(--ink);}
-.strip.to-cream .payoff b{color:var(--blue-ink);}
+.strip.to-cream .payoff::before,.strip.to-cream.payoff::before{background:var(--blue-ink);}
+.strip.to-cream .payoff p,.strip.to-cream.payoff p{color:var(--ink);}
+.strip.to-cream .payoff b,.strip.to-cream.payoff b{color:var(--blue-ink);}
 
 /* ---------- the ten-part system ---------- */
 .sys-head{text-align:center;}
@@ -807,10 +827,10 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 
 .close-three b{color:var(--lime);}                           /* 16.46:1 on navy-2 */
 .close-three span{color:var(--cream-mute);}                  /* 7.32:1 on navy-2 */
-.strip.to-cream .close-three b{color:var(--blue-ink);}       /* 6.32:1 on cream-2 */
+.strip.to-cream .close-three b,.strip.to-cream.close-three b{color:var(--blue-ink);}       /* 6.32:1 on cream-2 */
 /* --ink, NOT --grey. Grey is 4.77:1 on cream and passes, but 4.34:1 on cream-2
    and fails AA for text this size. The half-shade costs it the margin. */
-.strip.to-cream .close-three span{color:var(--ink);}         /* 10.28:1 on cream-2 */
+.strip.to-cream .close-three span,.strip.to-cream.close-three span{color:var(--ink);}         /* 10.28:1 on cream-2 */
 
 @media(max-width:620px){
   /* Stacked, the vertical rules would be meaningless — the divider rotates to

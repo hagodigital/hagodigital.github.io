@@ -27,7 +27,9 @@
     border-radius:6px;background:var(--lime);color:var(--navy);text-decoration:none;
     font-weight:600;font-size:1rem}
   .btn:focus-visible{outline:3px solid #6E9BFF;outline-offset:3px}
-  .quiet{color:var(--grey);font-size:.95rem;margin-top:18px}
+  /* --cream-mute, not --grey: this page's ground is navy, where grey measures
+     3.81:1 and fails AA. Same defect as .proc-step, found the same way. */
+  .quiet{color:var(--cream-mute);font-size:.95rem;margin-top:18px}
 </style>
 <main>
   <span class="k">Enviado</span>
