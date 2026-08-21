@@ -644,9 +644,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 /* ---------- .strip — the half-shade transition band ----------
    THE RULE: a strip carries the half-shade of the ground it leads INTO, not of
    the section it sits in. It is a transition, so it takes its colour from the
-   destination. Both current uses lead into navy, so both are --navy-2:
-     · #difference (cream) ends on a strip, then #service is navy
-     · .close (navy) ends on a strip, then the footer is navy
+   destination.
+     · #difference (cream) ends on a strip, then #service is navy — --navy-2
+     · branding.html ends on a strip into the footer — .to-cream, below
+   The .close on websites.html and google-presence.html used to end on a strip
+   too. It does not any more (2026-08-21): JP wanted the close to read as one
+   continuous ground, so its three claims moved inside .shell above the button
+   and the half-shade came out. Nothing else changed about the rule.
    Full-bleed — it sits OUTSIDE .shell and its section pays no bottom padding,
    so it runs edge to edge and flush into whatever follows.
    --cream-2 is here for the mirror case and is currently unused; a strip only
@@ -830,6 +834,10 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    The strip sits OUTSIDE .shell so it is full-bleed; the .shell inside it keeps
    the content on the same grid as everything above. */
 .strip .close-three{margin-top:0;}
+/* The close's three sit INSIDE .shell now, above the button, on the section's
+   own navy — JP, 2026-08-21. The strip gave them their air through its own
+   padding; in flow they have to carry it themselves. */
+.close .close-three{margin-top:var(--s6);}
 
 /* The three claims that used to be the hero's tick row. Type on the ground,
    not cards on a panel — the label colour carries the emphasis the tick disc
@@ -843,14 +851,20 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .close-three{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
 }
-.close-three > div{padding-inline:var(--s4);border-left:1px solid var(--rule-d);}
-.close-three > div:first-child{border-left:0;}
+/* NO DIVIDERS — JP, 2026-08-21. The 1px column rule was grouping the three
+   when they sat on their own half-shade band; with the strip gone the whole
+   close is one ground and a hairline is the only thing breaking it. Grouping is
+   carried by the shared ground and the row itself instead. */
+.close-three > div{padding-inline:var(--s4);}
 /* The closing three carried no icon slot at all — they were a label and a line.
    The icon sits ABOVE the label rather than beside it because these three sit in
    a row of equal columns, and a leading icon would have pushed three different
    text measures out of alignment with each other. */
 .close-three img{width:var(--icon-sm);height:var(--icon-sm);display:block;margin:0 auto 12px;}
-@media(max-width:760px){.close-three img{margin-inline:0;}}
+/* The icon centred with its label when they stacked was previously overridden to
+   sit hard left — the row divider made each stacked item a band of its own and
+   carried the left edge. With the dividers gone (2026-08-21) a left icon over a
+   centred label is just misaligned, so the icon follows the text again. */
 .close-three b{display:block;font-family:var(--body);font-weight:700;
   font-size:clamp(1.1rem,1.9vw,1.35rem);letter-spacing:-.02em;line-height:1.2;}
 .close-three span{display:block;font-size:.92rem;line-height:1.5;
@@ -866,8 +880,8 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .close.on-cream .h-band{color:var(--ink);}
 .close.on-cream .h-band span{color:var(--blue-ink);}
 
-.close-three b{color:var(--lime);}                           /* 16.46:1 on navy-2 */
-.close-three span{color:var(--cream-mute);}                  /* 7.32:1 on navy-2 */
+.close-three b{color:var(--lime);}                           /* 16.97:1 on navy */
+.close-three span{color:var(--cream-mute);}                  /* 7.54:1 on navy */
 .strip.to-cream .close-three b,.strip.to-cream.close-three b{color:var(--blue-ink);}       /* 6.32:1 on cream-2 */
 /* --ink, NOT --grey. Grey is 4.77:1 on cream and passes, but 4.34:1 on cream-2
    and fails AA for text this size. The half-shade costs it the margin. */
@@ -877,11 +891,8 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
   /* Stacked, the vertical rules would be meaningless — the divider rotates to
      sit between rows instead, so the grouping survives the reflow. */
   .close-three{grid-template-columns:1fr;}
-  .close-three > div{
-    border-left:0;border-top:1px solid var(--rule-d);
-    padding-inline:0;padding-block:var(--s3);
-  }
-  .close-three > div:first-child{border-top:0;padding-top:0;}
+  .close-three > div{padding-inline:0;padding-block:var(--s3);}
+  .close-three > div:first-child{padding-top:0;}
   /* The 30ch measure that makes this a pull quote on desktop makes it SEVEN
      lines on a 390px phone — the tallest block on the page, and a slab again.
      Below 620 the line has to get longer, not shorter: the column is already
