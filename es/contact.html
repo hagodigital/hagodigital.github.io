@@ -96,26 +96,95 @@
       <input type="hidden" name="from_name" value="hagodigital.ai">
       <input type="hidden" name="redirect" value="https://hagodigital.ai/es/thanks.html">
 
-      <div class="frow">
-        <div class="field"><label for="f-name">Tu nombre</label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required></div>
-        <div class="field"><label for="f-business">Nombre del negocio</label>
-          <input id="f-business" name="business" type="text" autocomplete="organization" required></div>
-      </div>
-      <div class="frow">
-        <div class="field"><label for="f-email">Correo</label>
-          <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
-        <div class="field"><label for="f-phone">Tel&eacute;fono <span class="opt">(opcional)</span></label>
-          <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"></div>
-      </div>
-      <div class="field"><label for="f-link">Tu p&aacute;gina o tu perfil de Google <span class="opt">(opcional)</span></label>
-        <input id="f-link" name="link" type="text" inputmode="url" aria-describedby="f-link-hint">
-        <span class="hint" id="f-link-hint">Si todav&iacute;a no tienes ninguno de los dos, eso tambi&eacute;n me sirve saberlo &mdash; d&eacute;jalo en blanco.</span></div>
-      <div class="field"><label for="f-message">&iquest;Qu&eacute; est&aacute; pasando?</label>
-        <textarea id="f-message" name="message" required aria-describedby="f-message-hint"></textarea>
-        <span class="hint" id="f-message-hint">Qu&eacute; haces, y qu&eacute; no te est&aacute; funcionando ahorita. Con un par de l&iacute;neas basta.</span></div>
+      <fieldset class="fsec">
+        <legend>1 &middot; Sobre ti</legend>
+        <div class="frow">
+          <div class="field"><label for="f-name">Tu nombre</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="f-business">Nombre del negocio</label>
+            <input id="f-business" name="business" type="text" autocomplete="organization" required></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label for="f-email">Correo</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
+          <div class="field"><label for="f-where">D&oacute;nde est&aacute;s</label>
+            <input id="f-where" name="location" type="text" autocomplete="address-level2" required></div>
+        </div>
+        <div class="field"><label for="f-link">Tu p&aacute;gina o tus redes <span class="opt">(opcional)</span></label>
+          <input id="f-link" name="link" type="text" inputmode="url" aria-describedby="f-link-hint">
+          <span class="hint" id="f-link-hint">Si todav&iacute;a no tienes ninguna de las dos, eso tambi&eacute;n me sirve saberlo &mdash; d&eacute;jalo en blanco.</span></div>
+      </fieldset>
 
-      <button class="btn btn-lime" type="submit">Enviar consulta</button>
+      <fieldset class="fsec">
+        <legend>2 &middot; El proyecto</legend>
+        <div class="field">
+          <label for="f-int-brand">&iquest;Qu&eacute; te interesa?</label>
+          <span class="hint">Marca todas las que apliquen.</span>
+          <div class="choices">
+            <label class="choice" for="f-int-brand"><input id="f-int-brand" type="checkbox" name="interest_branding" value="Branding">Marca</label>
+            <label class="choice" for="f-int-web"><input id="f-int-web" type="checkbox" name="interest_website" value="Website">P&aacute;gina web</label>
+            <label class="choice" for="f-int-gbp"><input id="f-int-gbp" type="checkbox" name="interest_gbp" value="Google Business Profile">Perfil de Empresa de Google</label>
+            <label class="choice" for="f-int-unsure"><input id="f-int-unsure" type="checkbox" name="interest_unsure" value="Not sure yet">Todav&iacute;a no s&eacute; &mdash; ay&uacute;dame a decidir</label>
+          </div>
+        </div>
+        <div class="field"><label for="f-describe">Cu&eacute;ntame de tu negocio</label>
+          <textarea id="f-describe" name="describe" required aria-describedby="f-describe-hint"></textarea>
+          <span class="hint" id="f-describe-hint">Qu&eacute; vendes, y qui&eacute;n te lo compra normalmente.</span></div>
+        <div class="field"><label for="f-why-now">&iquest;Por qu&eacute; est&aacute;s viendo esto ahorita?</label>
+          <textarea id="f-why-now" name="why_now" required aria-describedby="f-whynow-hint"></textarea>
+          <span class="hint" id="f-whynow-hint">Qu&eacute; cambi&oacute;, o qu&eacute; dej&oacute; de funcionar.</span></div>
+        <div class="field"><label for="f-goals">&iquest;Qu&eacute; quieres lograr con esto?</label>
+          <textarea id="f-goals" name="goals" required></textarea></div>
+      </fieldset>
+
+      <fieldset class="fsec">
+        <legend>3 &middot; Presupuesto y tiempos</legend>
+        <div class="field"><label for="f-budget">&iquest;Cu&aacute;nto tienes pensado invertir en esto?</label>
+          <select id="f-budget" name="budget" required>
+            <option value="">Escoge una</option>
+            <option>Menos de $1.000</option>
+            <option>$1.000 &ndash; $2.500</option>
+            <option>$2.500 &ndash; $5.000</option>
+            <option>$5.000 en adelante</option>
+            <option>Todav&iacute;a no s&eacute; &mdash; quiero que me orienten</option>
+          </select>
+          <span class="hint">En d&oacute;lares australianos (AUD). Un rango basta &mdash; es solo para saber qu&eacute; es realista proponerte.</span></div>
+        <div class="frow">
+          <div class="field"><label for="f-start">&iquest;Cu&aacute;ndo quieres arrancar?</label>
+            <select id="f-start" name="start_when" required>
+              <option value="">Escoge una</option>
+              <option>Lo antes posible</option>
+              <option>Dentro del pr&oacute;ximo mes</option>
+              <option>De uno a tres meses</option>
+              <option>Por ahora solo estoy planificando</option>
+            </select></div>
+          <div class="field"><label for="f-launch">Fecha ideal para salir <span class="opt">(opcional)</span></label>
+            <input id="f-launch" name="launch_date" type="text" aria-describedby="f-launch-hint">
+            <span class="hint" id="f-launch-hint">Con el mes basta. Si hay algo real detr&aacute;s &mdash; una temporada, una apertura &mdash; dilo.</span></div>
+        </div>
+        <div class="field">
+          <label for="f-ready-1">&iquest;Qu&eacute; tan listo est&aacute;s para invertir en esto?</label>
+          <div class="scale-ends hint"><span>1 &mdash; solo estoy viendo</span><span>5 &mdash; listo ya</span></div>
+          <div class="scale">
+            <label class="choice" for="f-ready-1"><input id="f-ready-1" type="radio" name="readiness" value="1" required>1</label>
+            <label class="choice" for="f-ready-2"><input id="f-ready-2" type="radio" name="readiness" value="2">2</label>
+            <label class="choice" for="f-ready-3"><input id="f-ready-3" type="radio" name="readiness" value="3">3</label>
+            <label class="choice" for="f-ready-4"><input id="f-ready-4" type="radio" name="readiness" value="4">4</label>
+            <label class="choice" for="f-ready-5"><input id="f-ready-5" type="radio" name="readiness" value="5">5</label>
+          </div>
+        </div>
+        <div class="field"><label for="f-proceed">&iquest;C&oacute;mo prefieres seguir?</label>
+          <select id="f-proceed" name="proceed" required>
+            <option value="">Escoge una</option>
+            <option>Agendar una llamada y conversarlo</option>
+            <option>Que me manden algo por escrito primero</option>
+            <option>Por ahora solo estoy averiguando</option>
+          </select></div>
+        <div class="field"><label for="f-anything">&iquest;Algo m&aacute;s que deba saber antes de leer esto? <span class="opt">(opcional)</span></label>
+          <textarea id="f-anything" name="anything_else"></textarea></div>
+      </fieldset>
+
+      <button class="btn btn-lime" type="submit">Mandar los datos</button>
 
       <p class="hint">Te llega una confirmaci&oacute;n autom&aacute;tica para que sepas que s&iacute; entr&oacute; &mdash; y despu&eacute;s una respuesta de verdad, escrita por una persona que ya mir&oacute; tu negocio. Sin newsletter, sin secuencia autom&aacute;tica, y tus datos no se los paso a nadie.</p>
     </form>

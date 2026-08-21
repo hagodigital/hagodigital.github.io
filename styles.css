@@ -976,7 +976,15 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .notecap{margin-top:var(--s4);font-size:.86rem;line-height:1.6;}
 .on-cream .notecap{color:var(--grey);}
 .on-navy .notecap{color:var(--cream-mute);}
-.notecap a{color:inherit;text-decoration:underline;text-underline-offset:3px;}
+.notecap a{position:relative;color:inherit;text-decoration:underline;text-underline-offset:3px;}
+/* Inline links inside a flowing sentence render ~20px tall, under the 24px AA
+   floor. WCAG 2.5.8 exempts links in a sentence, so this was left alone on
+   2026-08-20 — padding an inline-block inside a paragraph pushes the lines
+   around it apart. An absolutely positioned pseudo-element extends the hit
+   area 7px above and below WITHOUT entering layout, so the text does not move
+   and the target clears the floor. One link per sentence here, so extended
+   areas cannot overlap and steal each other's taps. */
+.notecap a::after{content:"";position:absolute;inset:-7px -3px;}
 
 /* contact channels */
 .chans{display:grid;gap:var(--s3);margin-top:var(--s4);}
@@ -1047,26 +1055,68 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 
 .choices{display:grid;gap:10px;}
 @media(min-width:640px){.choices{grid-template-columns:1fr 1fr;}}
-.choice{display:flex;align-items:center;gap:11px;cursor:pointer;
-  background:var(--navy-3);border:1px solid var(--rule-d);border-radius:9px;
-  padding:13px 14px;min-height:48px;font-size:.95rem;color:var(--cream);}
-.choice input{appearance:none;flex:0 0 20px;width:20px;height:20px;margin:0;
-  border:2px solid var(--cream-mute);border-radius:5px;background:transparent;
-  display:grid;place-content:center;cursor:pointer;}
+.choice{display:flex;align-items:center;gap:12px;cursor:pointer;
+  background:var(--navy-3);border:1px solid var(--rule-d);border-radius:10px;
+  padding:13px 14px;min-height:48px;font-size:.95rem;color:var(--cream);
+  transition:border-color .16s ease,background-color .16s ease;}
+.choice:hover{border-color:var(--edge-d);}
+
+/* THE PADDING RESET IS LOAD-BEARING, not tidying. `.field input` above sets
+   width:100% and vertical padding for text inputs, and a checkbox inside a
+   .field matches that selector too. Equal specificity, so only the properties
+   .choice input actually re-declares get overridden — padding was not one of
+   them, so every box inherited it and inflated: measured 26x40 for a control
+   declared 20x20, which is why the checkboxes read as lozenges and the radios
+   as ovals rather than circles. Reset padding and pin both axes. */
+.choice input{appearance:none;-webkit-appearance:none;
+  flex:0 0 20px;width:20px;height:20px;min-width:20px;min-height:20px;
+  padding:0;margin:0;border:2px solid var(--cream-mute);border-radius:6px;
+  background:transparent;display:grid;place-content:center;cursor:pointer;
+  transition:background-color .16s ease,border-color .16s ease;}
 .choice input[type=radio]{border-radius:50%;}
-.choice input::after{content:"";width:10px;height:10px;transform:scale(0);
-  background:var(--navy);clip-path:polygon(14% 44%,0 59%,39% 100%,100% 22%,84% 7%,39% 68%);}
-.choice input[type=radio]::after{clip-path:none;border-radius:50%;width:8px;height:8px;}
+
+/* Tick drawn with two borders on a rotated box, not a clip-path polygon.
+   The polygon it replaces was a hand-plotted six-point path rendered at 10px,
+   where a half-pixel on any vertex shows; two borders stay crisp at any size
+   and pick up the browser's own antialiasing. */
+.choice input[type=checkbox]::after{content:"";width:5px;height:10px;margin-top:-2px;
+  border:solid var(--navy);border-width:0 2.5px 2.5px 0;
+  transform:rotate(45deg) scale(0);transform-origin:center;
+  transition:transform .18s cubic-bezier(.2,.9,.3,1.35);}
+.choice input[type=radio]::after{content:"";width:8px;height:8px;border-radius:50%;
+  background:var(--navy);transform:scale(0);
+  transition:transform .18s cubic-bezier(.2,.9,.3,1.35);}
 .choice input:checked{background:var(--lime);border-color:var(--lime);}
-.choice input:checked::after{transform:scale(1);}
-.choice:has(input:checked){border-color:var(--lime);}
+.choice input[type=checkbox]:checked::after{transform:rotate(45deg) scale(1);}
+.choice input[type=radio]:checked::after{transform:scale(1);}
+
+/* One selected state, said twice quietly rather than once loudly: the card
+   picks up a lime edge and an 8% wash of the same lime, so a ticked row reads
+   at a glance down a column of four without the border alone doing all of it.
+   Literal rgba because the wash is 8% of --lime and color-mix is not assumed. */
+.choice:has(input:checked){border-color:var(--lime);background:rgba(206,255,0,.08);}
 .choice input:focus-visible{outline:3px solid var(--lime);outline-offset:2px;}
 
-/* 1-5 readiness row: same control, laid out as a single strip */
+/* 1-5 readiness row: a SEGMENTED CONTROL, not five circles with numbers under
+   them. The circle was pure redundancy — the number is the answer, and stacking
+   an empty ring above it asked the reader to parse two marks for one choice.
+   The tile is now the control: the whole 56px block is the hit target, the
+   input is present for the form and the keyboard but never painted. */
 .scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;}
-.scale .choice{flex-direction:column;gap:7px;justify-content:center;text-align:center;
-  padding:11px 6px;font-size:.9rem;}
+.scale .choice{position:relative;justify-content:center;text-align:center;gap:0;
+  padding:0;min-height:56px;font-family:var(--display);font-weight:600;
+  font-size:1.15rem;letter-spacing:-.01em;}
+.scale .choice input{position:absolute;inset:0;width:100%;height:100%;
+  min-width:0;min-height:0;flex:none;opacity:0;margin:0;border:0;border-radius:inherit;}
+.scale .choice input::after{content:none;}
+.scale .choice:has(input:checked){background:var(--lime);border-color:var(--lime);
+  color:var(--navy);}
+.scale .choice:has(input:focus-visible){outline:3px solid var(--lime);outline-offset:2px;}
 .scale-ends{display:flex;justify-content:space-between;gap:12px;}
+
+@media(prefers-reduced-motion:reduce){
+  .choice,.choice input,.choice input::after{transition:none;}
+}
 
 /* closing CTA on subpages */
 .endcta{text-align:center;max-width:62ch;}
