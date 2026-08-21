@@ -29,6 +29,15 @@
   --navy-3:#0A1526;      /* card on navy */
   --cream-2:#EFEADB;
 
+  /* Every icon from the supplied 64-icon system renders at this one size. It is
+     a token and not five separate numbers because the slots had drifted to 34px
+     and 38px, which reads as two sets rather than one. JP, 2026-08-21: "they all
+     should be the same size". 64px is also what makes the keyline survive — at
+     34px the outer contour of 16 of 17 icons fell under 3:1 against its ground;
+     at 64px all fifteen navy-ground icons pass. The README's range is 32-120px
+     and 34 was sitting on the floor of it. */
+  --icon:64px;
+
   --rule-d:rgba(248,245,230,.14);
   --rule-l:rgba(0,10,24,.12);
   --edge-d:rgba(248,245,230,.42);
@@ -449,13 +458,16 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4);margin-top:calc(var(--sect) * .5);
   position:relative;}
 .proc-step{text-align:center;position:relative;}
-.proc-step .badge{width:60px;height:60px;border-radius:50%;background:var(--navy);
-  display:grid;place-items:center;margin:0 auto 16px;}
-.proc-step .badge svg{width:28px;height:28px;}
-/* The raster icons carry more detail than the line SVGs they replace and the
-   supplied README puts the floor at 32px. 34 inside a 60px disc keeps 13px of
-   navy around them, which is what stops the disc reading as a box. */
-.proc-step .badge img{width:34px;height:34px;display:block;}
+/* No disc. It was a 60px navy circle carrying a 34px icon, and it made the row
+   read as four buttons rather than four steps — JP, 2026-08-21: "I don't want
+   them in circles". Taking it away lands the icon straight on the cream section,
+   which is why these four now come from the IVORY edition: the Navy edition's
+   exterior is an ivory keyline and it would have dissolved into #F8F5E6.
+   Measured both ways at 64px — Navy edition on cream loses 92-99% of its
+   contour, Ivory edition loses 0-38%. */
+.proc-step .stepicon{display:grid;place-items:center;margin:0 auto 16px;}
+.proc-step .stepicon svg{width:var(--icon);height:var(--icon);}
+.proc-step .stepicon img{width:var(--icon);height:var(--icon);display:block;}
 .proc-step h3{font-size:1rem;}
 /* --grey is 3.81:1 on navy and this stylesheet has said so since launch, on the
    --cream-mute line. These rungs sit on navy on about.html in both languages and
@@ -466,7 +478,12 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .proc-step p{font-size:.88rem;color:var(--grey);margin-top:var(--s1);max-width:26ch;margin-inline:auto;}
 .on-navy .proc-step p{color:var(--cream-mute);}
 /* dashed connector between badges, desktop only */
-.proc-step::before{content:"";position:absolute;top:30px;left:calc(-50% + 42px);width:calc(100% - 84px);
+/* The dashed run joins the icons, so its geometry is derived from --icon rather
+   than from the 60px disc it used to cross: half the icon down, and inset by
+   half the icon plus the 12px breathing room on each side. Hardcoding 30/42/84
+   is how it would silently stop meeting the icons the next time the size moves. */
+.proc-step::before{content:"";position:absolute;top:calc(var(--icon) / 2);
+  left:calc(-50% + (var(--icon) / 2) + 12px);width:calc(100% - var(--icon) - 24px);
   border-top:2px dashed rgba(0,10,24,.22);}
 .proc-step:first-child::before{display:none;}
 @media(max-width:860px){
@@ -508,8 +525,8 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    8px copy. Stacked they read at a sensible measure, and the taller left
    column balances the CTA card opposite it. */
 .vals{display:grid;gap:var(--s4);margin-top:var(--s4);}
-.val{display:grid;grid-template-columns:34px 1fr;gap:var(--s2);align-items:start;}
-.val svg,.val img{width:34px;height:34px;display:block;}
+.val{display:grid;grid-template-columns:var(--icon) 1fr;gap:var(--s2);align-items:start;}
+.val svg,.val img{width:var(--icon);height:var(--icon);display:block;}
 .val b{font-family:var(--body);font-weight:600;font-size:.92rem;color:var(--cream);display:block;}
 .val span{font-size:.8rem;color:var(--cream-mute);line-height:1.45;display:block;margin-top:2px;}
 /* align-self:start, because .about is align-items:center and this card is far
@@ -565,8 +582,8 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 @media(min-width:901px){
   .pillar .minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4);}
 }
-.mini{display:grid;grid-template-columns:34px 1fr;gap:var(--s2);align-items:center;}
-.mini svg,.mini img{width:34px;height:34px;display:block;}
+.mini{display:grid;grid-template-columns:var(--icon) 1fr;gap:var(--s2);align-items:center;}
+.mini svg,.mini img{width:var(--icon);height:var(--icon);display:block;}
 .mini b{display:block;font-family:var(--body);font-size:.9rem;font-weight:700;color:var(--cream);}
 .mini span{display:block;font-size:.79rem;line-height:1.4;color:var(--cream-mute);}
 .on-cream .mini b{color:var(--ink);}
@@ -584,16 +601,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    and open a gap half again as deep as every other section's. */
 .shell > .trio:first-child{margin-top:0;}
 .tcard{text-align:center;position:relative;}
-.tcard .ring{
-  width:74px;height:74px;border-radius:50%;background:var(--navy);
-  display:grid;place-items:center;margin:0 auto var(--s3);
-  border:2px solid var(--lime);
-}
-/* The middle card inverts its ring border to blue so the three read as a
-   sequence rather than three copies of one thing — the render does the
-   same with a filled blue disc. */
-.tcard:nth-child(2) .ring{border-color:var(--blue);}
-.tcard .ring svg,.tcard .ring img{width:34px;height:34px;display:block;}
+/* Same call as the process row: the 74px navy circle with its lime keyline is
+   gone and the icon sits on the cream card. The middle card used to invert that
+   keyline to blue so the three read as a sequence — that device goes with the
+   ring, and nothing has replaced it yet. Say so rather than let it disappear
+   quietly; it is a real thing the row is now missing. */
+.tcard .cardicon{display:grid;place-items:center;margin:0 auto var(--s3);}
+.tcard .cardicon svg,.tcard .cardicon img{width:var(--icon);height:var(--icon);display:block;}
 .tcard h3{font-family:var(--body);font-weight:700;font-size:clamp(1.05rem,1.9vw,1.32rem);
   letter-spacing:-.02em;}
 .tcard .role{
@@ -818,7 +832,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    The icon sits ABOVE the label rather than beside it because these three sit in
    a row of equal columns, and a leading icon would have pushed three different
    text measures out of alignment with each other. */
-.close-three img{width:38px;height:38px;display:block;margin:0 auto 12px;}
+.close-three img{width:var(--icon);height:var(--icon);display:block;margin:0 auto 12px;}
 @media(max-width:760px){.close-three img{margin-inline:0;}}
 .close-three b{display:block;font-family:var(--body);font-weight:700;
   font-size:clamp(1.1rem,1.9vw,1.35rem);letter-spacing:-.02em;line-height:1.2;}
