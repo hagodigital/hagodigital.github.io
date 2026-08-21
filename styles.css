@@ -37,6 +37,23 @@
      at 64px all fifteen navy-ground icons pass. The README's range is 32-120px
      and 34 was sitting on the floor of it. */
   --icon:64px;
+  /* TWO TIERS, and the line between them is the ground, not the taste.
+     JP, 2026-08-21, looking at the live page: the brand cards should stay this
+     size, the pillar rows and the closing three should be smaller. Measured, his
+     eye and the physics agree exactly — every slot he wanted bigger sits on CREAM
+     and every slot he wanted smaller sits on NAVY, and those two grounds have
+     opposite tolerances.
+
+     On navy the artwork holds at ANY size: the new 393px-source icons lose 0.0%
+     of their contour at 64px and still 0.0% at 24px, because whatever bleeds
+     toward the edge is ivory or lime and both are ~17:1 against navy.
+     On cream it does not: the same icons pass at 64px and fall apart below it,
+     because the light interior blends across the navy keyline and lands on a
+     ground it matches. Cream is the constrained one, so cream is the big tier.
+
+     So --icon is for a standalone slot on cream, --icon-sm for a row on navy.
+     Do not use --icon-sm on a cream ground without re-measuring. */
+  --icon-sm:40px;
 
   --rule-d:rgba(248,245,230,.14);
   --rule-l:rgba(0,10,24,.12);
@@ -525,8 +542,8 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    8px copy. Stacked they read at a sensible measure, and the taller left
    column balances the CTA card opposite it. */
 .vals{display:grid;gap:var(--s4);margin-top:var(--s4);}
-.val{display:grid;grid-template-columns:var(--icon) 1fr;gap:var(--s2);align-items:start;}
-.val svg,.val img{width:var(--icon);height:var(--icon);display:block;}
+.val{display:grid;grid-template-columns:var(--icon-sm) 1fr;gap:var(--s2);align-items:start;}
+.val svg,.val img{width:var(--icon-sm);height:var(--icon-sm);display:block;}
 .val b{font-family:var(--body);font-weight:600;font-size:.92rem;color:var(--cream);display:block;}
 .val span{font-size:.8rem;color:var(--cream-mute);line-height:1.45;display:block;margin-top:2px;}
 /* align-self:start, because .about is align-items:center and this card is far
@@ -582,8 +599,8 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 @media(min-width:901px){
   .pillar .minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4);}
 }
-.mini{display:grid;grid-template-columns:var(--icon) 1fr;gap:var(--s2);align-items:center;}
-.mini svg,.mini img{width:var(--icon);height:var(--icon);display:block;}
+.mini{display:grid;grid-template-columns:var(--icon-sm) 1fr;gap:var(--s2);align-items:center;}
+.mini svg,.mini img{width:var(--icon-sm);height:var(--icon-sm);display:block;}
 .mini b{display:block;font-family:var(--body);font-size:.9rem;font-weight:700;color:var(--cream);}
 .mini span{display:block;font-size:.79rem;line-height:1.4;color:var(--cream-mute);}
 .on-cream .mini b{color:var(--ink);}
@@ -832,7 +849,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    The icon sits ABOVE the label rather than beside it because these three sit in
    a row of equal columns, and a leading icon would have pushed three different
    text measures out of alignment with each other. */
-.close-three img{width:var(--icon);height:var(--icon);display:block;margin:0 auto 12px;}
+.close-three img{width:var(--icon-sm);height:var(--icon-sm);display:block;margin:0 auto 12px;}
 @media(max-width:760px){.close-three img{margin-inline:0;}}
 .close-three b{display:block;font-family:var(--body);font-weight:700;
   font-size:clamp(1.1rem,1.9vw,1.35rem);letter-spacing:-.02em;line-height:1.2;}
