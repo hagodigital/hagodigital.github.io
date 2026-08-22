@@ -439,7 +439,37 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
   letter-spacing:.02em;}
 .on-navy .pillar .n,.pillar.on-navy .n{color:var(--blue-lift);}
 .pillar h2{margin-top:var(--s1);}
-.pillar figure img{width:100%;}
+/* THE PILLAR ILLUSTRATION HEIGHT BAND (2026-08-22, JP: the Google one reads
+   "absolutely massive" beside the others on the same page).
+   There was never a rule here. Each illustration was cut tight to its own drawing
+   and dropped in at width:100%, so its rendered HEIGHT was whatever its aspect
+   happened to be -- and the aspects run 1.085 to 2.076. Measured across all six
+   supplied pillar images: websites-navy 1.431, websites 1.517, brand-applied
+   1.534 and ai-human 1.627 all land 329-374px tall at the real column width.
+   Only two sit outside it: google-presence at 1.085 rendered 517px -- 1.9x the
+   shortest illustration on its own page -- and brand-identity at 2.076 rendered
+   270px. So the band is not invented; it is the one four of the six already
+   occupy, and 372px is its top edge. Capping there costs the cluster nothing and
+   brings the Google image down 517 -> 372.
+   BOTH maxima with auto sizing is what preserves the aspect. width:100% plus a
+   max-height SQUASHES the drawing, because the width is then fixed and only the
+   height gets clamped -- the image is not free to scale.
+   This rule does NOT rescue brand-identity. At 2.076 it already spans the full
+   column, so its only route to more height is more width and there is none.
+   That one needs a squarer composition, not CSS.
+   The cap only bites at desktop: at 390px the column is 350 wide, so even the
+   1.085 image renders 323px tall and passes under it untouched. */
+.pillar figure img{max-width:100%;max-height:372px;width:auto;height:auto;
+  display:block;}
+/* A capped image is NARROWER than its column, so it has to be told where to sit
+   in it. Centring floats it: the Google row ended at 1225 while the identity row
+   directly above it reached 1304, and the page's outer margin -- the strongest
+   alignment on the page -- broke for one row only. So a capped image hugs the
+   OUTER edge of its column, which is the page margin on whichever side the
+   figure was authored. The slack then falls into the middle gutter, where a
+   two-column editorial row already has air. */
+.pillar .row > figure:first-child img{margin-inline:0 auto;}
+.pillar .row > figure:last-child img{margin-inline:auto 0;}
 /* The pillar figures on websites.html and google-presence.html are drawn SVG
    rather than supplied artwork, so they need the same "fill the column" rule the
    raster ones get. (start.html established this and was retired 2026-08-14; the
