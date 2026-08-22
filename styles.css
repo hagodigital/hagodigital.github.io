@@ -488,7 +488,10 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    exterior is an ivory keyline and it would have dissolved into #F8F5E6.
    Measured both ways at 64px — Navy edition on cream loses 92-99% of its
    contour, Ivory edition loses 0-38%. */
-.proc-step .stepicon{display:grid;place-items:center;margin:0 auto 16px;}
+/* Gap follows the icon. It was 16px when the icon was 64; at 80 the icon
+   dominates and 16 reads cramped under it, so it steps with the tier. Also a
+   raw 16px here where everything else uses the scale -- now --s4. */
+.proc-step .stepicon{display:grid;place-items:center;margin:0 auto var(--s4);}
 .proc-step .stepicon svg{width:var(--icon);height:var(--icon);}
 .proc-step .stepicon img{width:var(--icon);height:var(--icon);display:block;}
 .proc-step h3{font-size:1rem;}
@@ -629,7 +632,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    keyline to blue so the three read as a sequence — that device goes with the
    ring, and nothing has replaced it yet. Say so rather than let it disappear
    quietly; it is a real thing the row is now missing. */
-.tcard .cardicon{display:grid;place-items:center;margin:0 auto var(--s3);}
+.tcard .cardicon{display:grid;place-items:center;margin:0 auto var(--s4);}
 .tcard .cardicon svg,.tcard .cardicon img{width:var(--icon);height:var(--icon);display:block;}
 .tcard h3{font-family:var(--body);font-weight:700;font-size:clamp(1.05rem,1.9vw,1.32rem);
   letter-spacing:-.02em;}
