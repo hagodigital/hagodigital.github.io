@@ -36,7 +36,13 @@
      34px the outer contour of 16 of 17 icons fell under 3:1 against its ground;
      at 64px all fifteen navy-ground icons pass. The README's range is 32-120px
      and 34 was sitting on the floor of it. */
-  --icon:64px;
+  /* Raised 64 -> 80 on JP's call, 2026-08-21: the cream slots carry the
+     argument (the three brand cards, the four steps) and were reading at the
+     same weight as the 40px rows that only annotate a line. The gap between the
+     tiers is now 2x rather than 1.6x, so which one you are looking at is
+     obvious. Source art is 256px per cell and the file is 192, so an 80px slot
+     is still under the file even on a 2x screen -- no resampling cost. */
+  --icon:80px;
   /* TWO TIERS, and the line between them is the ground, not the taste.
      JP, 2026-08-21, looking at the live page: the brand cards should stay this
      size, the pillar rows and the closing three should be smaller. Measured, his
