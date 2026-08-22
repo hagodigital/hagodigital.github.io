@@ -899,9 +899,26 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 @media(max-width:620px){
   /* Stacked, the vertical rules would be meaningless — the divider rotates to
      sit between rows instead, so the grouping survives the reflow. */
-  .close-three{grid-template-columns:1fr;}
-  .close-three > div{padding-inline:0;padding-block:var(--s3);}
+  /* STACKED, THE THREE BECOME ROWS LIKE .val AND .mini -- icon on the left,
+     text beside it, everything on one left edge. JP, 2026-08-22: on a phone the
+     home and branding pages read as left-aligned rows while websites and
+     google-presence centred their closing three, so the same kind of content
+     had two different alignments depending on which page you were on. This is
+     the pattern the other two pages already use, so it is the one that spreads.
+     text-align has to be overridden explicitly: .close sets center on the
+     section and it inherits straight through the reflow. */
+  .close-three{grid-template-columns:1fr;text-align:left;}
+  .close-three > div{
+    display:grid;grid-template-columns:var(--icon-sm) 1fr;gap:var(--s3);
+    align-items:start;padding-inline:0;padding-block:var(--s3);
+  }
   .close-three > div:first-child{padding-top:0;}
+  /* The icon spans BOTH rows. Left in row 1 only, it sets that row's height to
+     40px and the sub-line drops to row 2 underneath it -- a gap the size of the
+     icon between a label and its own second line. */
+  .close-three img{margin:0;grid-row:1/3;align-self:start;}
+  .close-three b{grid-column:2;grid-row:1;}
+  .close-three span{grid-column:2;grid-row:2;margin-top:2px;}
   /* The 30ch measure that makes this a pull quote on desktop makes it SEVEN
      lines on a 390px phone — the tallest block on the page, and a slab again.
      Below 620 the line has to get longer, not shorter: the column is already
