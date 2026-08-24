@@ -1,0 +1,18 @@
+<svg role="img" aria-label="HagoDigital" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1065 871">
+<!-- Redrawn logo, supplied 2026-08-24. Traced from the designer's PNG with
+     vtracer, because no SVG was supplied: the mark is flat and hard edged, which
+     traces exactly (15 paths, two flat fills, no gradients or shading bands).
+     REPLACE THIS FILE the moment the designer's own SVG arrives; a trace has no
+     author and cannot be signed over.
+     The wordmark is outlines, not live text, so it renders identically on any
+     machine. That closes the Clash Display / Arial fallback defect the old
+     lockup carried.
+     The HD monogram alone, dark ground.
+     The colours are the designer's, NOT the site tokens: lime #BFFD00 against
+     the site's #CEFF00, ink #000320 against navy #000A18, white #FFFFFF against
+     cream #F8F5E6. Left exactly as supplied.
+     Do not put a double hyphen in this comment. It is illegal in XML and silently
+     breaks the whole file. -->
+<path d="M0,0 L547,0 L563,6 L578,15 L592,25 L603,34 L617,46 L632,60 L650,78 L657,86 L666,96 L677,110 L688,125 L699,143 L704,154 L706,160 L706,709 L699,726 L688,744 L674,763 L665,774 L653,788 L639,803 L617,825 L609,832 L596,843 L578,856 L562,865 L552,869 L548,870 L337,871 L0,871 L-9,867 L-14,862 L-18,856 L-20,848 L-20,704 L-17,694 L-11,686 L-4,682 L0,681 L437,680 L449,672 L463,661 L476,649 L483,642 L492,631 L503,616 L512,601 L512,257 L500,241 L488,227 L475,214 L464,205 L447,192 L444,190 L-1,189 L-11,184 L-17,176 L-19,172 L-20,166 L-20,23 L-17,13 L-11,5 L-4,1 Z " fill="#BFFD00" transform="translate(359,0)"/>
+<path d="M0,0 L149,0 L159,5 L166,13 L169,22 L170,320 L175,330 L182,336 L190,339 L542,340 L703,341 L713,346 L719,353 L722,360 L722,511 L717,521 L710,527 L702,530 L190,531 L180,535 L173,543 L170,550 L169,849 L165,860 L158,867 L148,871 L1,871 L-7,868 L-15,861 L-19,853 L-20,848 L-20,23 L-17,13 L-9,4 Z " fill="#FFFFFF" transform="translate(20,0)"/>
+</svg>
