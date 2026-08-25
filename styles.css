@@ -174,7 +174,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .hdr{position:sticky;top:0;z-index:100;background:rgba(0,10,24,.92);
   backdrop-filter:blur(10px);border-bottom:1px solid var(--rule-d);}
 .hdr-in{display:flex;align-items:center;gap:28px;max-width:var(--max);
-  margin-inline:auto;padding:12px var(--pad);}
+  margin-inline:auto;padding:14px var(--pad);}
 .brand{display:flex;align-items:center;min-height:44px;flex:none;}
 /* LOGO SIZE IS SET BY CAP HEIGHT (2026-08-23 JP: the logo reads tiny next to
    the nav; re-derived 2026-08-24 for the redrawn mark).
@@ -202,8 +202,23 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    The only two widths JP has actually judged with his eye are the ends: 96px,
    which ran for the site's whole life and which he called tiny, and 161px,
    which he called way too massive. 135px is a reading between them, not a
-   restoration of anything. Re-measure if the file is recropped or redrawn. */
-.brand img{height:21px;width:auto;display:block;}
+   restoration of anything. Re-measure if the file is recropped or redrawn.
+   135px WAS ALSO TOO BIG (JP, 2026-08-25: "still way way too big").
+   THE VALUE IS 15px — 97px wide, a 9.6px capital. JP CHOSE IT BY EYE on
+   2026-08-25 from a rendered ladder of eight sizes, real stylesheet, real face,
+   header and footer together. 17px was the recommendation and he went one step
+   further down.
+   THAT CAPITAL IS SMALLER THAN THE NAV'S 11px, which everything above this line
+   argues against. The derivation is retired, not merely overruled: it produced
+   34px, then 25px, then 21px, and JP rejected all three by eye. What it misses
+   is weight — the redrawn mark is far bolder and denser than the old one, so it
+   holds rank at a cap height the old mark could not have survived.
+   97px is also, to within a pixel, the 96px the OLD lockup ran at for the site's
+   whole life and which JP once called tiny. Same width, different mark: that
+   earlier judgement does not transfer, and it is not a reason to go back up.
+   DO NOT RE-DERIVE THIS FROM THE NAV. Re-measure only if the file is recropped
+   or redrawn, and then show JP a ladder rather than a calculation. */
+.brand img{height:15px;width:auto;display:block;}
 /* auto on BOTH sides so the links sit centred between the logo and the CTA. The
    phone number used to occupy the right-hand side and hold this balance; without
    it a single margin-left:auto shunts the whole nav against the button. */
@@ -214,7 +229,11 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .nav a:not(.btn)::after{content:"";position:absolute;left:0;right:100%;bottom:10px;height:2px;
   background:var(--lime);transition:right .22s var(--ease);}
 .nav a:not(.btn):hover::after{right:0;}
-.hdr .btn{padding:11px 18px;min-height:44px;font-size:.86rem;white-space:nowrap;}
+/* 9px, not 11px: at 11px the button was 46.7px and it — not the logo, not the
+   links — was the tallest thing in the row, so it alone set the bar height. At
+   9px it lands on the 44px min-height every other target already carries, and
+   the bar bottoms out at 44 + 2x8 + 1 = 61px. */
+.hdr .btn{padding:9px 18px;min-height:44px;font-size:.86rem;white-space:nowrap;}
 /* The phone number that used to sit here is gone by decision, not oversight —
    the number is no longer published anywhere on the site. WhatsApp carries that
    job now, from the contact and thanks pages. */
@@ -1079,7 +1098,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .hdr{transition:background .28s var(--ease),box-shadow .28s var(--ease);}
 .hdr-in{transition:padding .28s var(--ease);}
 .hdr[data-scrolled="true"]{background:rgba(0,10,24,.97);box-shadow:0 12px 30px rgba(0,10,24,.42);}
-.hdr[data-scrolled="true"] .hdr-in{padding-block:7px;}
+/* The condense is an ABSOLUTE travel, not a ratio. 7px against the 12px rest
+   state is a 10px drop and reads as movement; an 8px rest state was tried on
+   2026-08-25 and left only 2px, which reads as nothing happening at all — the
+   background and shadow change, the bar does not. Whatever the rest value
+   becomes, keep about 10px between the two. The floor is 0px: every control in
+   the row carries min-height:44px, so the bar cannot go below 45px. */
+.hdr[data-scrolled="true"] .hdr-in{padding-block:9px;}
 
 /* Parallax rides the decorative layers only — the streak field and the
    mascot. Never the copy: parallaxed body text hurts reading and is the
