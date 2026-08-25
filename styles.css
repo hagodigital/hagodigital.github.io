@@ -422,6 +422,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    10px of scroll eats 1px of the gap to it. See the phone override below. */
 .hero-mascot img{--flip:1;--mascot-parallax:-.10;height:var(--mascot-h);width:auto;max-width:100%;
   transform:scaleX(var(--flip));}
+/* The homepage hero swaps its still for a transparent-WebM video at runtime, so
+   the video has to inherit exactly what the image had — same height token, same
+   floor, same flip. Anything it does not inherit is a jump at the moment of the
+   swap. --flip stays 1 for the same reason as the stills: the HD monogram on the
+   chest renders backwards mirrored. */
+.hero-mascot video{--flip:1;--mascot-parallax:-.10;height:var(--mascot-h);width:auto;max-width:100%;
+  display:block;transform:scaleX(var(--flip));}
 
 /* The branding hero's private layout — its own copy-width token, its own padding
    escape from .shell's 1280px cap, its own width-driven size ceiling — is DELETED

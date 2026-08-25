@@ -100,7 +100,11 @@ var DESTINATIONS = {
      slot gets mirrored whether or not its artwork has a direction in it. */
   var hdr     = document.querySelector(".hdr");
   var streaks = document.querySelector(".hero-streaks");
-  var mascot  = document.querySelector(".hero-mascot img");
+  /* img OR video: the homepage hero swaps its still for a <video> once alpha
+     support is confirmed (see below). Re-queried after the swap. A selector
+     naming only one of them does not throw — it silently drops the parallax,
+     which nothing reports. */
+  var mascot  = document.querySelector(".hero-mascot img, .hero-mascot video");
   var flip    = mascot
     ? (getComputedStyle(mascot).getPropertyValue("--flip").trim() || "-1")
     : "-1";
@@ -130,6 +134,68 @@ var DESTINATIONS = {
     }
     pending = false;
   }
+  /* ---- hero animation, only where transparency actually works ----
+     The hero animation is a VP9 WebM with an alpha channel. Chrome, Edge and
+     Firefox composite that alpha; SAFARI DECODES THE FILE AND IGNORES IT, which
+     would paint the #D8005A keying ground on screen instead of a cutout — worse
+     than no animation at all.
+
+     There is no feature query for this, so it is measured: a 593-byte fully
+     transparent WebM is decoded to a canvas and one pixel is read back. Alpha
+     under 200 means the browser composited it and the real file is worth
+     fetching. Anything else — no support, an error, a decode that never
+     starts — leaves the still in place, and the 380KB animation is never
+     requested. Failure is silent and correct by construction.
+
+     prefers-reduced-motion skips the whole thing: a five-second loop is exactly
+     the unattended repeat that setting exists to stop, and the still already
+     shows the character. */
+  function upgradeHeroToVideo() {
+    var fig = document.querySelector(".hero-mascot");
+    var still = fig && fig.querySelector(".hero-still");
+    if (!still || reduced) return;
+
+    var probe = document.createElement("video");
+    probe.muted = true; probe.playsInline = true; probe.preload = "auto";
+    probe.src = "data:video/webm;base64,GkXfo59ChoEBQveBAULygQRC84EIQoKEd2VibUKHgQJChYECGFOAZwEAAAAAAAIhEU2bdLpNu4tTq4QVSalmU6yBoU27i1OrhBZUrmtTrIHWTbuMU6uEElTDZ1OsggE2TbuMU6uEHFO7a1OsggIL7AEAAAAAAABZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVSalmsCrXsYMPQkBNgIxMYXZmNjMuMS4xMDBXQYxMYXZmNjMuMS4xMDBEiYhARAAAAAAAABZUrmvbrgEAAAAAAABS14EBc8WIxc4EmX4fv4KcgQAitZyDdW5kiIEAhoVWX1ZQOYOBASPjg4QCYloA4JSwgRC6gRCagQJTwIEBVbCEVbmBAVXugQHsAQAAAAAAAAIAABJUw2f+c3OfY8CAZ8iZRaOHRU5DT0RFUkSHjExhdmY2My4xLjEwMHNz2WPAi2PFiMXOBJl+H7+CZ8ikRaOHRU5DT0RFUkSHl0xhdmM2My4xLjEwMCBsaWJ2cHgtdnA5Z8ihRaOIRFVSQVRJT05Eh5MwMDowMDowMC4wNDAwMDAwMDAAH0O2dc3ngQCgyKGggQAAAIJJg0IAAPAA9gA4JBwYjAAAMGAAABC///qN4AB1oaOmoe6BAaWcgkmDQgAA8AD2ADgkHBiMAAAwYAAAEL//+2hoABxTu2uRu4+zgQC3iveBAfGCAbnwgQM=";
+
+    var settled = false;
+    function decide(ok) {
+      if (settled) return;
+      settled = true;
+      if (!ok) return;
+      var v = document.createElement("video");
+      v.className = "hero-video";
+      v.width = 580; v.height = 900;
+      v.autoplay = true; v.muted = true; v.loop = true;
+      v.playsInline = true; v.preload = "auto";
+      v.setAttribute("aria-label", still.getAttribute("alt") || "");
+      v.src = "assets/videos/hago-hero.webm";
+      /* Swap only once the animation can actually paint, so the still never
+         blinks out to an empty column on a slow connection. */
+      v.addEventListener("canplay", function () {
+        if (!still.parentNode) return;
+        fig.replaceChild(v, still);
+        mascot = v;
+        v.play().catch(function () { /* autoplay refused: the frame still shows */ });
+      }, { once: true });
+    }
+
+    probe.addEventListener("loadeddata", function () {
+      try {
+        var c = document.createElement("canvas");
+        c.width = c.height = 4;
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0, 0, 4, 4);
+        ctx.drawImage(probe, 0, 0, 4, 4);
+        decide(ctx.getImageData(1, 1, 1, 1).data[3] < 200);
+      } catch (e) { decide(false); }
+    }, { once: true });
+    probe.addEventListener("error", function () { decide(false); }, { once: true });
+    setTimeout(function () { decide(false); }, 2500);
+  }
+  upgradeHeroToVideo();
+
   if (hdr || streaks) {
     window.addEventListener("scroll", function () {
       if (!pending) { pending = true; requestAnimationFrame(frame); }
