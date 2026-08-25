@@ -1106,6 +1106,16 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    the row carries min-height:44px, so the bar cannot go below 45px. */
 .hdr[data-scrolled="true"] .hdr-in{padding-block:9px;}
 
+/* Phones get a shorter bar. The burger is the tallest thing in the row there and
+   it stays 44px — that is the tap-target floor, not a style choice — so padding
+   is the only lever: 10px gives a 65px bar against the 73px desktop one. The
+   condense keeps its ~10px of travel at 5px scrolled. */
+@media(max-width:620px){
+  .hdr-in{padding-block:10px;}
+  .hdr[data-scrolled="true"] .hdr-in{padding-block:5px;}
+}
+
+
 /* Parallax rides the decorative layers only — the streak field and the
    mascot. Never the copy: parallaxed body text hurts reading and is the
    part of scroll motion that actually makes people queasy.
@@ -1135,6 +1145,14 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
   color:var(--cream-mute)!important;min-height:36px!important;}
 .lang-toggle:hover{color:var(--navy)!important;background:var(--lime);border-color:var(--lime);}
 .lang-toggle::after{display:none!important;}
+/* Flag + language code, never the flag alone. A flag on a language switcher says
+   COUNTRY, and both sides of this site are worldwide — the code beside it is what
+   keeps the control meaning "language". Drawn inline rather than as flag emoji:
+   Windows ships no flag glyphs at all and renders them as the two letters. */
+.lang-toggle{gap:7px!important;}
+.lang-toggle .flag{width:20px;height:13px;flex:none;display:block;border-radius:1.5px;
+  box-shadow:0 0 0 1px rgba(248,245,230,.22);}
+.lang-toggle:hover .flag{box-shadow:0 0 0 1px rgba(0,10,24,.35);}
 
 /* page hero — shorter than the homepage hero, no mascot */
 .pagehero{padding-block:var(--sect) calc(var(--sect) * .62);}
