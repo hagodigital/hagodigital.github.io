@@ -188,10 +188,22 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    THE BOX HEIGHT THAT REACHES IT IS A PROPERTY OF THE FILE, NOT A CONSTANT.
    The old lockup carried padding and its capital was 41% of the box, so 34px.
    The redrawn mark is cropped tight and its capital is 63.9% of the box, so the
-   SAME 34px would render a 21.7px capital and a 219px-wide logo. 25px gives a
-   16.0px capital and 161px of width. Measured, not assumed -- re-measure again
-   if the file is ever recropped. */
-.brand img{height:25px;width:auto;display:block;}
+   SAME 34px would render a 21.7px capital and a 219px-wide logo.
+   AND CAP HEIGHT IS NOT THE WHOLE STORY EITHER (JP, 2026-08-24: "wayyyy too
+   massive"). 25px hit the 16px capital the old mark wanted, and still read far
+   too heavy, because the redrawn letterforms are much BOLDER and the monogram
+   much denser than what they replaced. Equal cap height between two weights is
+   not equal presence. 21px gives a 13.4px capital, 1.22x the nav, and 135px of
+   width.
+   NOTHING IN THIS BAR IS SPACED AGAINST THE LOGO, so do not justify a size that
+   way (I did, wrongly, on 2026-08-24). .hdr-in is a flex row with a flat 28px
+   gap and .nav carries margin-inline:auto, so the nav simply centres in whatever
+   room is left. The logo width moves the nav; it is not derived from it.
+   The only two widths JP has actually judged with his eye are the ends: 96px,
+   which ran for the site's whole life and which he called tiny, and 161px,
+   which he called way too massive. 135px is a reading between them, not a
+   restoration of anything. Re-measure if the file is recropped or redrawn. */
+.brand img{height:21px;width:auto;display:block;}
 /* auto on BOTH sides so the links sit centred between the logo and the CTA. The
    phone number used to occupy the right-hand side and hold this balance; without
    it a single margin-left:auto shunts the whole nav against the button. */
