@@ -135,53 +135,95 @@ var DESTINATIONS = {
     pending = false;
   }
   /* ---- hero animation, only where transparency actually works ----
-     The hero animation is a VP9 WebM with an alpha channel. Chrome, Edge and
-     Firefox composite that alpha; SAFARI DECODES THE FILE AND IGNORES IT, which
-     would paint the #D8005A keying ground on screen instead of a cutout — worse
-     than no animation at all.
+     The animation is a VP9 WebM carrying an alpha channel. Chrome, Edge and
+     Firefox composite it; SAFARI DECODES THE FILE AND IGNORES THE ALPHA, which
+     would paint the #D8005A keying ground onto the homepage. There is no feature
+     query for this, so it is measured: a 593-byte fully transparent WebM is
+     decoded to a canvas and one pixel read back.
 
-     There is no feature query for this, so it is measured: a 593-byte fully
-     transparent WebM is decoded to a canvas and one pixel is read back. Alpha
-     under 200 means the browser composited it and the real file is worth
-     fetching. Anything else — no support, an error, a decode that never
-     starts — leaves the still in place, and the 380KB animation is never
-     requested. Failure is silent and correct by construction.
+     TWO THINGS THIS GOT WRONG ON ANDROID FIRST TIME (2026-08-25, JP on a Samsung
+     saw the still while desktop animated), and both are the same mistake:
 
-     prefers-reduced-motion skips the whole thing: a five-second loop is exactly
-     the unattended repeat that setting exists to stop, and the still already
-     shows the character. */
+     1. THE PROBE MUST BE IN THE DOCUMENT AND MUST BE PLAYING. A detached <video>
+        that is never played is not obliged to fetch or decode anything, and
+        mobile Chrome and Samsung Internet do not — preload="auto" is advisory and
+        is widely ignored off desktop. loadeddata never fired, the timeout won,
+        and every Android silently kept the still. Desktop decoded it anyway,
+        which is exactly why this passed here and failed on the phone.
+     2. THE REAL VIDEO MUST GO INTO THE PAGE BEFORE IT LOADS, not after. Waiting
+        for canplay on a detached element is the same deadlock. It goes in
+        immediately carrying the still as its POSTER, so the slot is never empty
+        and there is no blink to hide.
+
+     Anything that fails — no support, an error, a decode that never starts —
+     leaves the still, which is a finished hero in its own right. Failure is
+     silent and correct by construction. */
   function upgradeHeroToVideo() {
     var fig = document.querySelector(".hero-mascot");
     var still = fig && fig.querySelector(".hero-still");
     if (!still || reduced) return;
 
     var probe = document.createElement("video");
-    probe.muted = true; probe.playsInline = true; probe.preload = "auto";
+    probe.muted = true;
+    probe.defaultMuted = true;          /* attribute form: iOS reads this one */
+    probe.setAttribute("muted", "");
+    probe.playsInline = true;
+    probe.setAttribute("playsinline", "");
+    probe.preload = "auto";
+    probe.loop = true;
+    /* 1x1 and invisible, but IN the document and painted — display:none would
+       put us back to a decoder that is allowed to do nothing. */
+    probe.style.cssText = "position:absolute;width:1px;height:1px;opacity:0;" +
+                          "pointer-events:none;left:-9999px;top:0;";
+    probe.setAttribute("aria-hidden", "true");
     probe.src = "data:video/webm;base64,GkXfo59ChoEBQveBAULygQRC84EIQoKEd2VibUKHgQJChYECGFOAZwEAAAAAAAIhEU2bdLpNu4tTq4QVSalmU6yBoU27i1OrhBZUrmtTrIHWTbuMU6uEElTDZ1OsggE2TbuMU6uEHFO7a1OsggIL7AEAAAAAAABZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVSalmsCrXsYMPQkBNgIxMYXZmNjMuMS4xMDBXQYxMYXZmNjMuMS4xMDBEiYhARAAAAAAAABZUrmvbrgEAAAAAAABS14EBc8WIxc4EmX4fv4KcgQAitZyDdW5kiIEAhoVWX1ZQOYOBASPjg4QCYloA4JSwgRC6gRCagQJTwIEBVbCEVbmBAVXugQHsAQAAAAAAAAIAABJUw2f+c3OfY8CAZ8iZRaOHRU5DT0RFUkSHjExhdmY2My4xLjEwMHNz2WPAi2PFiMXOBJl+H7+CZ8ikRaOHRU5DT0RFUkSHl0xhdmM2My4xLjEwMCBsaWJ2cHgtdnA5Z8ihRaOIRFVSQVRJT05Eh5MwMDowMDowMC4wNDAwMDAwMDAAH0O2dc3ngQCgyKGggQAAAIJJg0IAAPAA9gA4JBwYjAAAMGAAABC///qN4AB1oaOmoe6BAaWcgkmDQgAA8AD2ADgkHBiMAAAwYAAAEL//+2hoABxTu2uRu4+zgQC3iveBAfGCAbnwgQM=";
+    document.body.appendChild(probe);
 
     var settled = false;
+    function cleanup() { if (probe.parentNode) probe.parentNode.removeChild(probe); }
+
     function decide(ok) {
       if (settled) return;
       settled = true;
+      cleanup();
       if (!ok) return;
+
       var v = document.createElement("video");
       v.className = "hero-video";
       v.width = 580; v.height = 900;
-      v.autoplay = true; v.muted = true; v.loop = true;
-      v.playsInline = true; v.preload = "auto";
+      v.muted = true; v.defaultMuted = true; v.setAttribute("muted", "");
+      v.playsInline = true; v.setAttribute("playsinline", "");
+      v.loop = true; v.setAttribute("loop", "");
+      v.autoplay = true; v.setAttribute("autoplay", "");
+      v.preload = "auto";
+      /* The poster IS the still. Same drawing, same size, so the element can go
+         in before a single video byte has arrived and nothing moves when it
+         does. */
+      v.poster = still.getAttribute("src");
       v.setAttribute("aria-label", still.getAttribute("alt") || "");
       v.src = "assets/videos/hago-hero.webm";
-      /* Swap only once the animation can actually paint, so the still never
-         blinks out to an empty column on a slow connection. */
-      v.addEventListener("canplay", function () {
-        if (!still.parentNode) return;
-        fig.replaceChild(v, still);
-        mascot = v;
-        v.play().catch(function () { /* autoplay refused: the frame still shows */ });
+
+      /* If the file fails after all this, put the still back rather than leaving
+         a poster-only <video> in a hero. */
+      v.addEventListener("error", function () {
+        if (v.parentNode) v.parentNode.replaceChild(still, v);
+        mascot = still;
       }, { once: true });
+
+      fig.replaceChild(v, still);
+      mascot = v;
+      var p = v.play();
+      if (p && p.catch) p.catch(function () { /* refused: the poster still shows */ });
     }
 
-    probe.addEventListener("loadeddata", function () {
+    function test() {
+      if (settled) return;
+      /* videoWidth, NOT readyState. The probe is a SINGLE 0.04s frame, so it
+         races through HAVE_CURRENT_DATA and settles back at HAVE_METADATA — a
+         readyState>=2 guard here blocked the canvas test forever and every
+         browser kept the still (2026-08-25, the second Android bug in a row).
+         videoWidth becomes non-zero once a frame exists and stays there. */
+      if (!probe.videoWidth) return;
       try {
         var c = document.createElement("canvas");
         c.width = c.height = 4;
@@ -190,9 +232,27 @@ var DESTINATIONS = {
         ctx.drawImage(probe, 0, 0, 4, 4);
         decide(ctx.getImageData(1, 1, 1, 1).data[3] < 200);
       } catch (e) { decide(false); }
-    }, { once: true });
+    }
+
+    ["loadeddata", "canplay", "playing", "timeupdate"].forEach(function (ev) {
+      probe.addEventListener(ev, test);
+    });
     probe.addEventListener("error", function () { decide(false); }, { once: true });
-    setTimeout(function () { decide(false); }, 2500);
+
+    /* load() + play() is what actually makes a mobile browser fetch and decode.
+       Muted and playsinline, so autoplay policy allows it. */
+    try { probe.load(); } catch (e) {}
+    var pp = probe.play();
+    if (pp && pp.catch) pp.catch(function () { /* still may decode; the poll decides */ });
+
+    /* Belt and braces: poll as well as listen, because the event that fires
+       varies by engine, then give up and keep the still. */
+    var polls = 0;
+    var iv = setInterval(function () {
+      polls++;
+      test();
+      if (settled || polls > 40) { clearInterval(iv); decide(false); }
+    }, 150);
   }
   upgradeHeroToVideo();
 
