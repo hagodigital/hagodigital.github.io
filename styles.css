@@ -366,68 +366,31 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    WIDER of the two drawings at full height — the pointing bird is 0.821 aspect
    against the perched bird's 0.546 — and a column that fits only one of them is
    exactly what made them stop matching. */
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.36fr);
-  gap:clamp(24px,4vw,56px);align-items:end;position:relative;z-index:2;}
-/* THE BRANDING HERO FLIPS THE RATIO (2026-08-25). Everywhere else the figure gets
-   the larger column, because a standing mascot is tall and narrow and the copy
-   fits in 471px. This page does not: JP's headline "Make your brand / hard to
-   forget." MEASURES 570px at 1440 and 553px at 1101 against a 471px and 406px
-   column, so it broke to four lines with "forget." orphaned — the same failure
-   this hero hit after the display-face swap, and the reason line-check.py exists.
-   Spanish fits at 1440 (449px) and fails at 1101 (435px against 406px), so it is
-   not a translation problem either; the column is too narrow for a headline of
-   this length in either language.
-   1.6fr gives the copy 684px at 1440 and 589px at 1101 — both clear the longest
-   line with room — and leaves the chart 428px, which it can afford because it is
-   a wide landscape drawing rather than a full-height figure.
-   Specificity note, same trap as the stacking rules below: this is (0,2,0) and
-   the media-query override is (0,1,0), so :has(.art-wide) has to be repeated
-   there or this keeps two columns onto a phone.
-   RE-MEASURE WITH line-check.py IF THIS HEADLINE CHANGES. The ratio is solved for
-   these words at this size, not a general improvement. */
-.hero-grid:has(.art-wide){grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);}
-/* .art-scene IS THE THIRD RATIO, AND IT IS THE MIDDLE ONE (2026-08-26).
-   Three heroes, three shapes, and the ratio is solved per shape rather than
-   picked: 1.36fr to the figure for a standing mascot with a two-word headline
-   (homepage), 1.6fr to the COPY for a wide chart under a long one (branding),
-   and 1.15fr to the copy here, for the websites and google-presence pages.
-   MEASURED WITH line-check.py AT 1440 AND 1101, ALL FOUR PAGES. The default
-   columns break "Custom-built, mobile-first, yours outright" over FOUR lines with
-   "outright" orphaned, and put "Your" alone on the first line of "Your storefront
-   on Google", because a 471px copy column was never sized for a page headline.
-   1.6fr fixes the words and costs the art: the websites scene is 1.80:1, so a
-   440px column renders Hago 230px tall against the branding hero's 343.
-   1.15fr gives 595px of copy at 1440 and 512px at 1101 — enough for three clean
-   lines in English and four in Spanish, no orphan at either width — and leaves
-   517px of art, which is Hago at 271px in the scene and 520px standing.
-   The Spanish websites headline is the binding constraint at 1101, not the
-   English one. Re-run line-check.py on BOTH languages if either changes. */
-.hero-grid:has(.art-scene){grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);}
-/* AND THE ART IN THAT COLUMN IS SIZED BY WIDTH, NOT HEIGHT (2026-08-25).
-   Everywhere else the figure is height-led — height:var(--mascot-h);width:auto —
-   because a standing mascot has to land its feet on the hero floor. That rule
-   OVERFLOWS here and always has: max-width caps the width without touching the
-   declared height, so the browser keeps the height and lets the box run past the
-   column. The chart measured 911px wide inside a 640px column before this hero's
-   ratio changed, and 428px after, and neither was visible as a bug because
-   .hero{overflow:hidden} silently clipped it and verify.py only watches for
-   horizontal SCROLL, which clipping never produces.
-   Width-led with a max-height keeps the aspect honest and the art inside its
-   column at every width. This hero's art is the one that is wider than it is
-   tall relative to the space it gets, so it is the one that needs it. */
-.hero-mascot.art-wide > img,
-.hero-mascot.art-wide > video{width:100%;height:auto;max-height:var(--mascot-h);
-  max-width:100%;display:block;}
-/* One floor for both hero columns. The grid is align-items:end, so this is the
-   gap between the LAST LINE OF COPY and the bottom of the row — and giving the
-   bird the same value is what lands its feet level with the button rather than
-   on the section edge. They have to move together; hardcode either one and the
-   next change to the other breaks the alignment with nothing to show for it. */
-:root{--hero-floor:clamp(48px,6vw,88px);}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);
+  gap:clamp(24px,4vw,56px);align-items:start;min-height:var(--mascot-h);
+  position:relative;z-index:2;}
+/* ONE RATIO, 2026-08-26, AND THE TWO CLASSES THAT USED TO BEND IT ARE GONE.
+   Every hero ran its own columns for a while: 1.36fr to the figure by default,
+   1.6fr to the copy under .art-wide, 1.15fr under .art-scene. Each was solved
+   honestly for one page, and together they put the artwork at three different
+   x positions and the copy at three different widths, which is exactly what JP
+   read as "they're all different sizes".
+   1.4fr IS DERIVED, NOT CHOSEN. The binding constraint is the widest run of
+   headline that cannot break: "Make your brand" measures 570px at 1440 and 553px
+   at 1101 in Clash Display, and branding.html carries a <br> after it, so any
+   column under that width breaks the hero into four lines. 1.4fr gives the copy
+   649px at 1440 and 559px at 1101 — the tightest ratio that clears 553 — and
+   leaves the figure 463px and 399px.
+   RE-MEASURE WITH h1width, NOT BY EYE, IF ANY HEADLINE CHANGES: the number that
+   matters is the widest segment between <br>s, not the whole string. */
+/* --hero-floor is GONE (2026-08-26). It held the last line of copy off the
+   section edge back when the copy was bottom-aligned to the artwork. Every hero
+   top-aligns its copy now, so the only floor left is the section's own
+   padding-bottom and one number does what two used to. */
 /* No max-width here. It was added on 2026-08-15 because a single-column hero let
    an h1 set across the full 1280px shell; the figure column is back, so the grid
    supplies the measure again and a second cap would fight it. */
-.hero-copy{padding-bottom:var(--hero-floor);}
+.hero-copy{padding-bottom:0;}
 .hero h1{margin-top:var(--s3);}
 .hero h1 .lime{color:var(--lime);}
 .hero .lede{color:var(--cream-dim);max-width:44ch;text-wrap:pretty;}
@@ -438,65 +401,42 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    two drawings, so centring parks the narrower one out in open navy — it read as the
    mascot drifting away from the words it belongs to. Aligned to the column's start,
    both files begin at the same x. */
-.hero-mascot{align-self:end;justify-self:start;}
-/* THE STANDING HERO CENTRES; THE PICTURE-IN-A-COLUMN HEROES DO NOT.
-   Bottom-aligning the copy to the figure is right when the figure is a fixed
-   height -- it lands the last line level with the artwork's base. It is wrong when
-   the figure's height tracks the window, because then the copy inherits that
-   movement and slides down the page as the window grows. Only the homepage figure
-   does that, so only it is centred; scoping this by :has(.art-wide) leaves the
-   branding hero, which is already stable, exactly where it is.
-   Centring also BUYS fold clearance rather than spending it: the CTA gains 215px
-   at 1440x900 and 115px at 1440x760, and is never worse at any height measured. */
-.hero-grid:not(:has(.art-wide)){align-items:start;}
-.hero-grid:not(:has(.art-wide)) .hero-mascot{align-self:start;margin-bottom:0;}
-/* TOP, not centre. Centring was the first fix and it stopped the copy being dragged
-   down, but it left it floating: the art column is 540px and the copy block 468, so
-   the copy started 113px below the section top while every other hero starts its
-   eyebrow at 36px. Top-aligning matches them AND is strictly more stable than
-   centring -- the copy's position stops depending on the artwork's height at all,
-   rather than depending on half of it.
-   The copy's own bottom padding goes with it. --hero-floor exists to hold the last
-   line off the section edge when the copy is bottom-aligned; top-aligned it is
-   padding under text that already has 200px of section beneath it, and it was what
-   pushed this hero to 662px against the branding hero's 515px. Same reason the
-   mascot's margin-bottom goes: it was the floor for a figure standing on the edge,
-   and this figure no longer stands on it. */
-.hero-grid:not(:has(.art-wide)) .hero-copy{padding-bottom:0;}
-/* ...EXCEPT THE ONE WITH A SHORT COPY BLOCK (2026-08-26). Top-aligning is right
-   for the homepage because its copy is eyebrow, headline, promise line, lede and
-   two buttons — it fills the column. google-presence has three blocks and no CTA,
-   so against a 530px figure it left ~280px of empty navy under the lede and the
-   hero read as half-built. Centred it sits against the middle of the drawing.
-   The reason top-alignment was chosen — copy sliding as the window grows — does
-   not bite here: --mascot-h is pinned at its 540px ceiling for any window taller
-   than 684px, so the figure is a FIXED height across every desktop size, and the
-   copy has nothing to inherit. Below that both shrink together.
-   Scoped off :not(:has(.art-wide)) so it catches google-presence and not the
-   websites hero, which is bottom-aligned with the branding one. */
-.hero-grid:has(.art-scene):not(:has(.art-wide)){align-items:center;}
-/* Scoped to this hero only. The branding hero is measured and liked as it is, and
-   .hero is shared, so an unscoped bottom padding would add 48px under its artwork
-   too. */
-.hero:not(:has(.art-wide)){padding-bottom:clamp(32px,3.4vw,48px);}
-/* --mascot-tail is how far the artwork continues BELOW the feet, as a fraction of
-   image height. It is a property of the DRAWING, not of the layout — measure it on
-   every new file. The birds needed it (the perched one carried 21px of tail past its
-   claws, .0158); BOTH Hago files are 0, because each one's lowest pixel is the sole
-   of a shoe. Renamed off "bird" with the artwork — app.js reads only --flip, so
-   these two tokens are CSS-only and safe to rename. */
-:root{--mascot-tail:0;}
-.hero-mascot{
-  margin-bottom:calc(var(--hero-floor) - var(--mascot-h) * var(--mascot-tail));}
-/* ONE HEIGHT FOR BOTH HERO MASCOTS. They are on different pages and never seen side
-   by side, so this is about the two heroes feeling like one product. Sized by HEIGHT,
-   because the two files have nothing in common on the width axis.
-   The middle leg is a FOLD guard: the CTA's bottom lands at
-     nav(71.7) + hero pad-top + --mascot-h * (1 - --mascot-tail)
-   and artwork sized off width alone knows nothing about the height it pushes the CTA
-   into. Solved for a fixed 24px of clearance. The divisor was 0.9842 for the birds
-   (1 - .0158); with tail now 0 it is 1, so the arithmetic collapses to the bracket
-   itself. MEASURED, not asserted — verify.py prints fold+N and fails under 16px. */
+.hero-mascot{align-self:center;justify-self:start;}
+/* ONE ALIGNMENT FOR EVERY HERO (2026-08-26). Three regimes used to live in this
+   gap and the essays arguing for each are deleted rather than kept: every one was
+   right about its own page and wrong about the set.
+
+   THE COPY IS TOP-ALIGNED, so the eyebrow starts 36px under the section top on
+   all four pages and the headlines line up when you click between them. Bottom-
+   aligning read fine on any single page and left google-presence's eyebrow 163px
+   down while every other page started at 36 — the drift JP named.
+
+   THE FIGURE SITS ON THE FLOOR of a row that is ALWAYS --mascot-h tall, which is
+   what min-height on .hero-grid buys: the artwork's base lands on the same line
+   whatever its own height, and the heroes stop changing height under the header
+   as you move between them.
+
+   The old objection to a fixed alignment was that the copy inherits the figure's
+   movement as the window grows. It cannot now — the copy is pinned to the top and
+   the figure to the bottom, so neither depends on the other's height. */
+/* Under the figure's floor, on every hero. This was scoped away from branding
+   while that page bottom-aligned its copy; nothing is scoped now. */
+.hero{padding-bottom:clamp(32px,3.4vw,48px);}
+/* --mascot-tail is GONE with the margin it fed (2026-08-26). It measured how far a
+   drawing continued BELOW the feet, so a figure with a tail could still land its
+   soles on the floor. Every Hago file is 0 — each one's lowest pixel is the sole of
+   a shoe — and the figure now sits on the grid row's own floor rather than on a
+   computed margin, so nothing reads it. Bring it back with the first drawing that
+   needs it, and measure that drawing rather than assuming the old value. */
+.hero-mascot{margin-bottom:0;}
+/* ONE HEIGHT FOR EVERY HERO MASCOT, and since 2026-08-26 it also sets the ROW: the
+   grid carries min-height:var(--mascot-h), so this is both the ceiling on the
+   artwork and the height of the hero itself. Pages are never seen side by side, so
+   the point is the four of them feeling like one product rather than four builds.
+   The middle leg is a FOLD guard: the last hero element lands at
+     nav(71.7) + hero pad-top + --mascot-h
+   and artwork sized off width alone knows nothing about the height it pushes the
+   copy into. MEASURED, not asserted — verify.py prints fold+N and fails under 16px. */
 /* THE CEILING WAS 980px UNTIL 2026-08-26, and that is what made this hero drift.
    Hago is measured against window HEIGHT; the headline is measured against window
    WIDTH and stops growing at 70px. So on a big screen he ran to 980px against a
@@ -518,7 +458,17 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    call" lands 44px below the fold at 1100x620 and 117px below at 1000x540, with
    319px of Hago below it. The term is a FOLD GUARD before it is a size, and the
    real cause is the drawing being 2:3 tall against a fixed-width column. */
-:root{--mascot-h:clamp(300px,min(60vw,calc(100vh - 143.5px)),540px);}
+:root{--mascot-h:clamp(300px,min(60vw,calc(100vh - 143.5px)),480px);}
+/* 540 BECAME 480 THE SAME DAY (2026-08-26), and it is the ROW now, not just the
+   art. The grid carries min-height:var(--mascot-h), so this number decides how
+   tall every hero is — and a row sized to the tallest drawing leaves the shorter
+   ones sitting in dead navy. At 540 that was 127px under the branding artwork and
+   283px under the websites scene. 480 is where the square google-presence drawing
+   lands on its own in a 463px column (475px), so the row is the height the widest
+   standing composition already wanted rather than a number picked to suit one file.
+   It also SHARPENS the scale argument above rather than working against it: the
+   homepage figure goes from 1.45x the biggest illustration beneath it to 1.29x,
+   and from 159px taller than the branding hero's artwork to 67px. */
 /* --flip is read by app.js when it writes the parallax transform, because the script
    overwrites any CSS mirror. It is 1 — NO mirror — and for these two files that is
    not a preference, it is a constraint: both carry the HD wordmark on the chest, and
@@ -559,16 +509,16 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    section edge. Stacked, the figure is the last thing in the hero, so it pays for
    that padding itself. */
 @media(max-width:900px){
-  .hero-mascot.art-wide{margin-bottom:calc(var(--sect) * .8);}
+  .hero-mascot{margin-bottom:calc(var(--sect) * .8);}
 }
 @media(max-width:900px){
-  /* :has(.art-wide) has to be repeated here, not just .hero-grid. The desktop rule
-     is (0,2,0) and this one is (0,1,0), and a media query adds no specificity — so
-     the branding hero went on holding two columns all the way down, 148px of copy
-     beside a 178px bird at 390px, while the mobile rules right below sat unused. It
-     had been live since the page shipped. Any future .hero-grid variant selector
-     needs adding here too. */
-  .hero-grid,.hero-grid:has(.art-wide),.hero-grid:has(.art-scene){grid-template-columns:1fr;}
+  /* This used to need every :has() variant of .hero-grid repeated, because the
+     desktop overrides were (0,2,0) and a media query adds no specificity — the
+     branding hero held two columns all the way to 390px for as long as that page
+     had been live. One selector on the desktop side means one here.
+     min-height goes with it: --mascot-h is a DESKTOP row height, and stacked it
+     would reserve 300px of nothing under the copy. */
+  .hero-grid{grid-template-columns:1fr;min-height:0;}
   /* Stacked, the grid gap is the ONLY thing between the CTA button and Hago's
      head, and clamp(24px,4vw,56px) resolves to its 24px floor on a phone -- the
      vw leg needs a 600px viewport to beat it, so every phone got the minimum.
@@ -590,7 +540,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
   /* Sat 48px off the section floor with the parallax carrying it further up the
      longer you scrolled -- 108px of empty ground below it by 600px. Closer to
      the floor on JP's call, and with the drift gone the number now holds. */
-  .hero-mascot,.hero-mascot.art-wide{margin-bottom:clamp(16px,5vw,32px);}
+  .hero-mascot{margin-bottom:clamp(16px,5vw,32px);}
   /* Stacked, both heroes are sized by HEIGHT for the same reason they are on
      desktop: width-driven sizing gave the wider drawing a taller mascot, and the two
      pages stopped matching on phones the moment they started matching on desktop.
@@ -607,7 +557,8 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
      390px it resolves to 187 and the floor wins — so the FLOOR governs phones and
      the ceiling governs the top of the stacked range. Changing the middle number
      alone does nothing on the screens this rule exists for. */
-  .hero-mascot img{height:clamp(270px,48vw,390px);width:auto;max-width:92%;}
+  .hero-mascot img,.hero-mascot video{height:auto;width:auto;
+    max-height:clamp(270px,48vw,390px);max-width:92%;}
 }
 
 /* ---------- system band ---------- */
