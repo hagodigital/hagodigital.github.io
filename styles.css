@@ -402,6 +402,23 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    mascot drifting away from the words it belongs to. Aligned to the column's start,
    both files begin at the same x. */
 .hero-mascot{align-self:center;justify-self:start;}
+/* .art-bleed — THE ONE PAGE WHOSE DRAWING IS TOO WIDE TO BE BIG (2026-08-26, JP:
+   "the website image is a bit small"). The websites scene is 1.80:1, so at the
+   shared 463px column Hago rendered 242px against 480 on the homepage. Every other
+   way of growing it was measured and is worse:
+     · a wider figure column on this page costs the copy column the site now
+       shares, and buys almost nothing — at copy 560 / figure 552 Hago reaches 289,
+       which this does without touching the copy at all;
+     · the old default ratio (figure 641) breaks the English headline into four
+       lines with "outright" orphaned.
+   So the ART grows out of its column instead: anchored to the column's right edge,
+   120% wide, and bleeding into the shell's own right padding. The copy column, the
+   hero height, the eyebrow and headline positions are all untouched.
+   1.20 IS A CEILING, NOT A PREFERENCE, and the SPANISH headline sets it. Measured
+   at 1440/1280/1200/1101/1024/940, the smallest clearance between the artwork and
+   the nearest text line on es/websites.html is 24px at 1.20 and NEGATIVE at 1.35.
+   Re-measure both languages before raising it; English alone would allow 1.48. */
+.hero-mascot.art-bleed{justify-self:end;width:120%;margin-right:calc(-1 * var(--pad));}
 /* ONE ALIGNMENT FOR EVERY HERO (2026-08-26). Three regimes used to live in this
    gap and the essays arguing for each are deleted rather than kept: every one was
    right about its own page and wrong about the set.
@@ -541,6 +558,9 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
      longer you scrolled -- 108px of empty ground below it by 600px. Closer to
      the floor on JP's call, and with the drift gone the number now holds. */
   .hero-mascot{margin-bottom:clamp(16px,5vw,32px);}
+  /* Stacked, the figure already has the full width; bleeding it would push the
+     drawing off the screen edge and hand verify.py a horizontal scrollbar. */
+  .hero-mascot.art-bleed{justify-self:start;width:100%;margin-right:0;}
   /* Stacked, both heroes are sized by HEIGHT for the same reason they are on
      desktop: width-driven sizing gave the wider drawing a taller mascot, and the two
      pages stopped matching on phones the moment they started matching on desktop.
