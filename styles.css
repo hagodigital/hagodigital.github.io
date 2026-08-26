@@ -386,6 +386,23 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    RE-MEASURE WITH line-check.py IF THIS HEADLINE CHANGES. The ratio is solved for
    these words at this size, not a general improvement. */
 .hero-grid:has(.art-wide){grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);}
+/* .art-scene IS THE THIRD RATIO, AND IT IS THE MIDDLE ONE (2026-08-26).
+   Three heroes, three shapes, and the ratio is solved per shape rather than
+   picked: 1.36fr to the figure for a standing mascot with a two-word headline
+   (homepage), 1.6fr to the COPY for a wide chart under a long one (branding),
+   and 1.15fr to the copy here, for the websites and google-presence pages.
+   MEASURED WITH line-check.py AT 1440 AND 1101, ALL FOUR PAGES. The default
+   columns break "Custom-built, mobile-first, yours outright" over FOUR lines with
+   "outright" orphaned, and put "Your" alone on the first line of "Your storefront
+   on Google", because a 471px copy column was never sized for a page headline.
+   1.6fr fixes the words and costs the art: the websites scene is 1.80:1, so a
+   440px column renders Hago 230px tall against the branding hero's 343.
+   1.15fr gives 595px of copy at 1440 and 512px at 1101 — enough for three clean
+   lines in English and four in Spanish, no orphan at either width — and leaves
+   517px of art, which is Hago at 271px in the scene and 520px standing.
+   The Spanish websites headline is the binding constraint at 1101, not the
+   English one. Re-run line-check.py on BOTH languages if either changes. */
+.hero-grid:has(.art-scene){grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);}
 /* AND THE ART IN THAT COLUMN IS SIZED BY WIDTH, NOT HEIGHT (2026-08-25).
    Everywhere else the figure is height-led — height:var(--mascot-h);width:auto —
    because a standing mascot has to land its feet on the hero floor. That rule
@@ -446,6 +463,18 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    mascot's margin-bottom goes: it was the floor for a figure standing on the edge,
    and this figure no longer stands on it. */
 .hero-grid:not(:has(.art-wide)) .hero-copy{padding-bottom:0;}
+/* ...EXCEPT THE ONE WITH A SHORT COPY BLOCK (2026-08-26). Top-aligning is right
+   for the homepage because its copy is eyebrow, headline, promise line, lede and
+   two buttons — it fills the column. google-presence has three blocks and no CTA,
+   so against a 530px figure it left ~280px of empty navy under the lede and the
+   hero read as half-built. Centred it sits against the middle of the drawing.
+   The reason top-alignment was chosen — copy sliding as the window grows — does
+   not bite here: --mascot-h is pinned at its 540px ceiling for any window taller
+   than 684px, so the figure is a FIXED height across every desktop size, and the
+   copy has nothing to inherit. Below that both shrink together.
+   Scoped off :not(:has(.art-wide)) so it catches google-presence and not the
+   websites hero, which is bottom-aligned with the branding one. */
+.hero-grid:has(.art-scene):not(:has(.art-wide)){align-items:center;}
 /* Scoped to this hero only. The branding hero is measured and liked as it is, and
    .hero is shared, so an unscoped bottom padding would add 48px under its artwork
    too. */
@@ -502,15 +531,22 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    the mascot rises as the page goes down. Beside the copy that is free
    decoration; STACKED it is not, because the mascot sits under the CTA and every
    10px of scroll eats 1px of the gap to it. See the phone override below. */
-.hero-mascot img{--flip:1;--mascot-parallax:-.10;height:var(--mascot-h);width:auto;max-width:100%;
-  transform:scaleX(var(--flip));}
+/* MAX-height, not height (2026-08-26). height + max-width is a SQUASH: the width
+   cap bites, the declared height does not move, and the drawing renders distorted
+   with nothing reporting it. It never showed on the homepage because that figure
+   is narrow enough that the cap never bit; the google-presence figure is 0.975:1
+   and 527px wide at --mascot-h, so it clips the moment its column is narrower
+   than that. Capping BOTH axes and letting the intrinsic ratio choose is the same
+   540px wherever the old rule was safe, and honest where it was not. */
+.hero-mascot img{--flip:1;--mascot-parallax:-.10;height:auto;width:auto;
+  max-height:var(--mascot-h);max-width:100%;transform:scaleX(var(--flip));}
 /* The homepage hero swaps its still for a transparent-WebM video at runtime, so
    the video has to inherit exactly what the image had — same height token, same
    floor, same flip. Anything it does not inherit is a jump at the moment of the
    swap. --flip stays 1 for the same reason as the stills: the HD monogram on the
    chest renders backwards mirrored. */
-.hero-mascot video{--flip:1;--mascot-parallax:-.10;height:var(--mascot-h);width:auto;max-width:100%;
-  display:block;transform:scaleX(var(--flip));}
+.hero-mascot video{--flip:1;--mascot-parallax:-.10;height:auto;width:auto;
+  max-height:var(--mascot-h);max-width:100%;display:block;transform:scaleX(var(--flip));}
 
 /* The branding hero's private layout — its own copy-width token, its own padding
    escape from .shell's 1280px cap, its own width-driven size ceiling — is DELETED
@@ -532,7 +568,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
      beside a 178px bird at 390px, while the mobile rules right below sat unused. It
      had been live since the page shipped. Any future .hero-grid variant selector
      needs adding here too. */
-  .hero-grid,.hero-grid:has(.art-wide){grid-template-columns:1fr;}
+  .hero-grid,.hero-grid:has(.art-wide),.hero-grid:has(.art-scene){grid-template-columns:1fr;}
   /* Stacked, the grid gap is the ONLY thing between the CTA button and Hago's
      head, and clamp(24px,4vw,56px) resolves to its 24px floor on a phone -- the
      vw leg needs a 600px viewport to beat it, so every phone got the minimum.
