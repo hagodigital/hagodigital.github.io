@@ -276,10 +276,26 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
   .nav[data-open="true"]{transform:none;visibility:visible;transition-delay:0s;}
   .nav a:not(.btn){font-family:var(--body);font-size:1.5rem;font-weight:600;color:var(--cream);}
   .nav a:not(.btn)::after{display:none;}
-  /* The desktop toggle is 44px too since 2026-08-25, so this is no longer a fix —
-     it is the panel's own scale: bigger text and a real padded row, like every
-     other item in a full-screen menu. */
-  .nav .lang-toggle{min-height:44px!important;padding:10px 18px!important;font-size:.9rem!important;}
+  /* THE LANGUAGE ROW IS A MENU ITEM, SO IT IS MENU SIZE (2026-08-26, JP: "the
+     language button both English and Spanish is still very small"). Measured in
+     the open panel at 390px it was 14.4px against 24px for every link beside it —
+     the desktop pill's scale carried into a full-screen menu where nothing else is
+     pill-sized. It matches the links now, and the flag goes up with the text: a
+     20px flag under 24px type reads like an icon that was forgotten. */
+  .nav .lang-toggle{min-height:44px!important;padding:6px 12px!important;
+    font-size:1.5rem!important;letter-spacing:.04em;gap:12px;}
+  .nav .lang-toggle .flag{width:30px;height:20px;}
+  /* AND IT TAKES THE LINK COLOUR IN HERE, which the desktop pill deliberately does
+     not. Muted-at-rest, cream-on-hover is right for a small control in a bar of
+     links it should not outrank. Blown up to 24px in a full-screen panel, with no
+     hover on a phone to ever resolve it, the same grey reads as a disabled item
+     sitting under four live ones. Scoped to the panel: the bar is untouched. */
+  .nav .lang-toggle{color:var(--cream)!important;}
+  /* AND THE BUTTON IS THE SMALLEST THING IN THE MENU, which is backwards for the
+     one item that is the point of the menu. It inherits .hdr .btn — a bar-sized
+     control at 13.76px — because the panel lives inside the header. Deliberately
+     NOT 1.5rem: a button set at link size stops reading as a button. */
+  .nav .btn{font-size:1.05rem;padding:16px 30px;min-height:56px;}
   .hdr .hdr-cta{display:none;}
 }
 
