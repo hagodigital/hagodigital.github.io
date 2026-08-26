@@ -161,7 +161,7 @@ var DESTINATIONS = {
   function upgradeHeroToVideo() {
     var fig = document.querySelector(".hero-mascot");
     var still = fig && fig.querySelector(".hero-still");
-    if (!still || reduced) return;
+    if (!still || !still.getAttribute("data-video") || reduced) return;
 
     var probe = document.createElement("video");
     probe.muted = true;
@@ -187,13 +187,26 @@ var DESTINATIONS = {
       settled = true;
       cleanup();
       if (!ok) return;
+      mount();
+    }
 
+    function mount() {
       var v = document.createElement("video");
       v.className = "hero-video";
-      v.width = 580; v.height = 900;
+      /* FROM THE STILL, not hardcoded. These were 580x900 — the homepage's
+         figure — so a second hero with a different aspect reserved the wrong
+         box and the slot jumped the moment the video went in. */
+      v.width = parseInt(still.getAttribute("width"), 10) || 580;
+      v.height = parseInt(still.getAttribute("height"), 10) || 900;
       v.muted = true; v.defaultMuted = true; v.setAttribute("muted", "");
       v.playsInline = true; v.setAttribute("playsinline", "");
-      v.loop = true; v.setAttribute("loop", "");
+      /* data-video-once: the branding animation RESOLVES — it closes on the
+         wordmark — so looping it snatches the logo away and starts over. It
+         plays through and holds its last frame. The homepage figure has no
+         ending and keeps looping. */
+      if (!still.hasAttribute("data-video-once")) {
+        v.loop = true; v.setAttribute("loop", "");
+      }
       v.autoplay = true; v.setAttribute("autoplay", "");
       v.preload = "auto";
       /* The poster IS the still. Same drawing, same size, so the element can go
@@ -201,7 +214,11 @@ var DESTINATIONS = {
          does. */
       v.poster = still.getAttribute("src");
       v.setAttribute("aria-label", still.getAttribute("alt") || "");
-      v.src = "assets/videos/hago-hero.webm";
+      /* PER PAGE, not hardcoded. The still carries its own animation's path in
+         data-video, so a second hero needed no new code — only an attribute. It
+         also keeps the relative path correct under /es/, where "assets/..." would
+         resolve one directory too deep. */
+      v.src = still.getAttribute("data-video");
 
       /* If the file fails after all this, put the still back rather than leaving
          a poster-only <video> in a hero. */

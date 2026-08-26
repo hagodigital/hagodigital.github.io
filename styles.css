@@ -368,6 +368,39 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    exactly what made them stop matching. */
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.36fr);
   gap:clamp(24px,4vw,56px);align-items:end;position:relative;z-index:2;}
+/* THE BRANDING HERO FLIPS THE RATIO (2026-08-25). Everywhere else the figure gets
+   the larger column, because a standing mascot is tall and narrow and the copy
+   fits in 471px. This page does not: JP's headline "Make your brand / hard to
+   forget." MEASURES 570px at 1440 and 553px at 1101 against a 471px and 406px
+   column, so it broke to four lines with "forget." orphaned — the same failure
+   this hero hit after the display-face swap, and the reason line-check.py exists.
+   Spanish fits at 1440 (449px) and fails at 1101 (435px against 406px), so it is
+   not a translation problem either; the column is too narrow for a headline of
+   this length in either language.
+   1.6fr gives the copy 684px at 1440 and 589px at 1101 — both clear the longest
+   line with room — and leaves the chart 428px, which it can afford because it is
+   a wide landscape drawing rather than a full-height figure.
+   Specificity note, same trap as the stacking rules below: this is (0,2,0) and
+   the media-query override is (0,1,0), so :has(.art-wide) has to be repeated
+   there or this keeps two columns onto a phone.
+   RE-MEASURE WITH line-check.py IF THIS HEADLINE CHANGES. The ratio is solved for
+   these words at this size, not a general improvement. */
+.hero-grid:has(.art-wide){grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);}
+/* AND THE ART IN THAT COLUMN IS SIZED BY WIDTH, NOT HEIGHT (2026-08-25).
+   Everywhere else the figure is height-led — height:var(--mascot-h);width:auto —
+   because a standing mascot has to land its feet on the hero floor. That rule
+   OVERFLOWS here and always has: max-width caps the width without touching the
+   declared height, so the browser keeps the height and lets the box run past the
+   column. The chart measured 911px wide inside a 640px column before this hero's
+   ratio changed, and 428px after, and neither was visible as a bug because
+   .hero{overflow:hidden} silently clipped it and verify.py only watches for
+   horizontal SCROLL, which clipping never produces.
+   Width-led with a max-height keeps the aspect honest and the art inside its
+   column at every width. This hero's art is the one that is wider than it is
+   tall relative to the space it gets, so it is the one that needs it. */
+.hero-mascot.art-wide > img,
+.hero-mascot.art-wide > video{width:100%;height:auto;max-height:var(--mascot-h);
+  max-width:100%;display:block;}
 /* One floor for both hero columns. The grid is align-items:end, so this is the
    gap between the LAST LINE OF COPY and the bottom of the row — and giving the
    bird the same value is what lands its feet level with the button rather than
@@ -389,6 +422,34 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    mascot drifting away from the words it belongs to. Aligned to the column's start,
    both files begin at the same x. */
 .hero-mascot{align-self:end;justify-self:start;}
+/* THE STANDING HERO CENTRES; THE PICTURE-IN-A-COLUMN HEROES DO NOT.
+   Bottom-aligning the copy to the figure is right when the figure is a fixed
+   height -- it lands the last line level with the artwork's base. It is wrong when
+   the figure's height tracks the window, because then the copy inherits that
+   movement and slides down the page as the window grows. Only the homepage figure
+   does that, so only it is centred; scoping this by :has(.art-wide) leaves the
+   branding hero, which is already stable, exactly where it is.
+   Centring also BUYS fold clearance rather than spending it: the CTA gains 215px
+   at 1440x900 and 115px at 1440x760, and is never worse at any height measured. */
+.hero-grid:not(:has(.art-wide)){align-items:start;}
+.hero-grid:not(:has(.art-wide)) .hero-mascot{align-self:start;margin-bottom:0;}
+/* TOP, not centre. Centring was the first fix and it stopped the copy being dragged
+   down, but it left it floating: the art column is 540px and the copy block 468, so
+   the copy started 113px below the section top while every other hero starts its
+   eyebrow at 36px. Top-aligning matches them AND is strictly more stable than
+   centring -- the copy's position stops depending on the artwork's height at all,
+   rather than depending on half of it.
+   The copy's own bottom padding goes with it. --hero-floor exists to hold the last
+   line off the section edge when the copy is bottom-aligned; top-aligned it is
+   padding under text that already has 200px of section beneath it, and it was what
+   pushed this hero to 662px against the branding hero's 515px. Same reason the
+   mascot's margin-bottom goes: it was the floor for a figure standing on the edge,
+   and this figure no longer stands on it. */
+.hero-grid:not(:has(.art-wide)) .hero-copy{padding-bottom:0;}
+/* Scoped to this hero only. The branding hero is measured and liked as it is, and
+   .hero is shared, so an unscoped bottom padding would add 48px under its artwork
+   too. */
+.hero:not(:has(.art-wide)){padding-bottom:clamp(32px,3.4vw,48px);}
 /* --mascot-tail is how far the artwork continues BELOW the feet, as a fraction of
    image height. It is a property of the DRAWING, not of the layout — measure it on
    every new file. The birds needed it (the perched one carried 21px of tail past its
@@ -407,7 +468,28 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    into. Solved for a fixed 24px of clearance. The divisor was 0.9842 for the birds
    (1 - .0158); with tail now 0 it is 1, so the arithmetic collapses to the bracket
    itself. MEASURED, not asserted — verify.py prints fold+N and fails under 16px. */
-:root{--mascot-h:clamp(300px,min(60vw,calc(100vh - 143.5px)),980px);}
+/* THE CEILING WAS 980px UNTIL 2026-08-26, and that is what made this hero drift.
+   Hago is measured against window HEIGHT; the headline is measured against window
+   WIDTH and stops growing at 70px. So on a big screen he ran to 980px against a
+   frozen headline -- 13.9x its size, against 6.4x on a small one -- and because the
+   grid was align-items:end the copy was dragged down with him, travelling 583px
+   between the smallest window measured and the largest. JP saw it as the text
+   moving and misaligning with the figure, and only on this page: every other hero
+   sizes its art off the COLUMN, the same ruler the headline uses, so the two
+   cannot drift.
+   700 capped the swing at 9.9x and pulled the copy's travel to 146px. 540 followed
+   the same day, for a second reason: SCALE AGAINST THE REST OF THE PAGE. Measured at
+   1440, every other illustration on the homepage renders 270-372px tall (the pillars),
+   with the step icons at 80 and the value icons at 40. At 700 the hero figure was
+   1.88x the biggest thing beneath it and read as a different page; at 540 it is 1.45x,
+   still clearly the lead image, and close to the branding hero's 381px so the two
+   heroes sit in the same family. Going further
+   means removing the 100vh term altogether, which was measured and rejected: it
+   locks the ratio to 1.5 and the copy to 8px, and it costs the CTA -- "Book a free
+   call" lands 44px below the fold at 1100x620 and 117px below at 1000x540, with
+   319px of Hago below it. The term is a FOLD GUARD before it is a size, and the
+   real cause is the drawing being 2:3 tall against a fixed-width column. */
+:root{--mascot-h:clamp(300px,min(60vw,calc(100vh - 143.5px)),540px);}
 /* --flip is read by app.js when it writes the parallax transform, because the script
    overwrites any CSS mirror. It is 1 — NO mirror — and for these two files that is
    not a preference, it is a constraint: both carry the HD wordmark on the chest, and
