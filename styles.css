@@ -223,6 +223,21 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    phone number used to occupy the right-hand side and hold this balance; without
    it a single margin-left:auto shunts the whole nav against the button. */
 .nav{margin-left:auto;margin-right:auto;display:flex;align-items:center;gap:30px;}
+/* THE LANGUAGE TOGGLE LEFT THE NAV ON 2026-08-26 and is a sibling of it now, so it
+   can sit in the bar on a phone instead of behind the burger. On desktop that is a
+   layout change unless it is paid for, because .nav's two auto margins were
+   centring [links + toggle] as one block and would now centre the links alone,
+   letting the toggle drift right and pack against the CTA.
+   So the RIGHT auto moves onto the toggle: the pair is still one centred group,
+   with the free space split before the links and after the toggle exactly as
+   before. The 2px is the difference between the nav's own 30px gap, which used to
+   separate them, and .hdr-in's 28px, which does now.
+   MEASURED, not asserted: at 1440 the toggle sits at x884-929 and the last link
+   ends at 854 both before and after; at 1101, 715-759 against 685. Identical. */
+@media(min-width:1101px){
+  .nav{margin-right:0;}
+  .lang-toggle{margin-right:auto;margin-left:2px;}
+}
 .nav a:not(.btn){font-size:.9rem;font-weight:500;color:var(--cream-dim);min-height:44px;
   display:inline-flex;align-items:center;gap:6px;position:relative;transition:color .2s var(--ease);}
 .nav a:not(.btn):hover{color:var(--cream);}
@@ -265,7 +280,15 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
      The blur is only decorative and only visible on desktop, where no panel
      exists. Dropping it below the breakpoint is what makes the panel work. */
   .hdr{backdrop-filter:none;}
-  .burger{display:grid;margin-left:auto;}
+  /* The toggle carries the auto now and the burger just follows it, so the two
+     sit together as a pair on the right rather than at opposite ends of the bar.
+     They sit on the bar's own 28px gap, the same as everything else in the row. */
+  .burger{display:grid;margin-left:0;}
+  .lang-toggle{margin-left:auto;}
+  /* The panel paints over the header, so the two persistent controls are lifted
+     above it — the toggle joins them. It is reachable with the menu open AND
+     closed, which is the point of moving it out here. */
+  .lang-toggle{position:relative;z-index:100;}
   /* The panel is a CHILD of the header, so it paints over the header's own bar —
      including the burger, leaving no visible way to close it. Lifting the two
      persistent controls above the panel restores the close affordance. */
@@ -276,21 +299,11 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
   .nav[data-open="true"]{transform:none;visibility:visible;transition-delay:0s;}
   .nav a:not(.btn){font-family:var(--body);font-size:1.5rem;font-weight:600;color:var(--cream);}
   .nav a:not(.btn)::after{display:none;}
-  /* THE LANGUAGE ROW IS A MENU ITEM, SO IT IS MENU SIZE (2026-08-26, JP: "the
-     language button both English and Spanish is still very small"). Measured in
-     the open panel at 390px it was 14.4px against 24px for every link beside it —
-     the desktop pill's scale carried into a full-screen menu where nothing else is
-     pill-sized. It matches the links now, and the flag goes up with the text: a
-     20px flag under 24px type reads like an icon that was forgotten. */
-  .nav .lang-toggle{min-height:44px!important;padding:6px 12px!important;
-    font-size:1.5rem!important;letter-spacing:.04em;gap:12px;}
-  .nav .lang-toggle .flag{width:30px;height:20px;}
-  /* AND IT TAKES THE LINK COLOUR IN HERE, which the desktop pill deliberately does
-     not. Muted-at-rest, cream-on-hover is right for a small control in a bar of
-     links it should not outrank. Blown up to 24px in a full-screen panel, with no
-     hover on a phone to ever resolve it, the same grey reads as a disabled item
-     sitting under four live ones. Scoped to the panel: the bar is untouched. */
-  .nav .lang-toggle{color:var(--cream)!important;}
+  /* The panel-scale rules that lived here are GONE with the move. They set the
+     toggle to 24px and cream to match the menu links; it is not in the menu any
+     more, it is in the bar, where the bar's own scale is right. Kept in the notes
+     rather than the stylesheet, because a rule that matches nothing still reads
+     as intent to the next person. */
   /* AND THE BUTTON IS THE SMALLEST THING IN THE MENU, which is backwards for the
      one item that is the point of the menu. It inherits .hdr .btn — a bar-sized
      control at 13.76px — because the panel lives inside the header. Deliberately
@@ -1264,9 +1277,17 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    COUNTRY, and both sides of this site are worldwide — the code beside it is what
    keeps the control meaning "language". Drawn inline rather than as flag emoji:
    Windows ships no flag glyphs at all and renders them as the two letters. */
-.lang-toggle{font-size:.78rem!important;font-weight:700!important;letter-spacing:.08em;
-  padding:7px 0!important;gap:7px!important;
-  color:var(--cream-mute)!important;min-height:44px!important;}
+/* display and alignment are DECLARED here, not inherited (2026-08-26). This used
+   to be a child of .nav and took inline-flex, centring and min-height from
+   `.nav a:not(.btn)`. Out in the bar it inherited none of that and collapsed to
+   an inline box 20px wide — the flag alone, with the language code beside it
+   contributing nothing and min-height ignored, because min-height does not apply
+   to an inline element. It stands on its own now. */
+.lang-toggle{display:inline-flex;align-items:center;
+  font-size:.78rem!important;font-weight:700!important;letter-spacing:.08em;
+  padding:7px 0!important;gap:7px!important;line-height:1;
+  color:var(--cream-mute)!important;min-height:44px!important;height:44px;
+  transition:color .2s var(--ease);}
 .lang-toggle:hover{color:var(--cream)!important;}
 .lang-toggle::after{display:none!important;}
 /* The hairline stays. Not decoration: the Australian flag is a navy field on a
