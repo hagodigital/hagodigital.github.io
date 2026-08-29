@@ -647,20 +647,6 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    1.085 image renders 323px tall and passes under it untouched. */
 .pillar figure img{max-width:100%;max-height:372px;width:auto;height:auto;
   display:block;}
-/* ONE EXCEPTION TO THE BAND (2026-08-28). ai-human was redrawn as two standing
-   figures shaking hands -- a PORTRAIT composition, aspect 0.777, where every
-   other pillar image is landscape. The band assumes landscape: at 372px a 0.777
-   drawing renders 289px wide in a 561px column, so it sat at half width with the
-   gutter empty and read as small and lost, which is the opposite failure to the
-   one the band was written to fix. 470px puts it at 365x470, which matches the
-   COPY BLOCK's own height (133..588) rather than the other illustrations' -- the
-   row reads as a balanced pair. That is the honest ceiling: filling the column
-   would need 722px, which is the "absolutely massive" the band exists to stop.
-   This is CSS rescuing a composition mismatch, and it only half-rescues it. The
-   real fix is a LANDSCAPE re-render -- the two figures with air either side --
-   after which this rule should be deleted, not tuned. Same conclusion the band
-   comment above already reached for brand-identity. */
-.pillar .ai-human-fig img{max-height:470px;}
 /* A capped image is NARROWER than its column, so it has to be told where to sit
    in it. Centring floats it: the Google row ended at 1225 while the identity row
    directly above it reached 1304, and the page's outer margin -- the strongest
