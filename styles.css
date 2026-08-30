@@ -1313,6 +1313,18 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .on-navy .prose a:hover{color:var(--lime);}
 .signoff{font-weight:700;margin-top:var(--s4)!important;}
 
+/* SUB-HEADINGS INSIDE A PROSE BLOCK (2026-08-30). about.html was one
+   undifferentiated column of six paragraphs; JP broke it into named movements,
+   which needs a heading level between .h2 (a SECTION head, up to 2.6rem) and the
+   body. This is that level and nothing else uses it. Deliberately NOT .h2: at
+   this measure a section-sized heading inside a 68ch column reads as a new
+   section starting, which is exactly the confusion the split was meant to fix. */
+.prose h2{font-family:var(--display);font-weight:600;letter-spacing:-.015em;
+  font-size:clamp(1.24rem,1.9vw,1.5rem);line-height:1.22;margin:var(--s6) 0 var(--s2);}
+.prose h2:first-child{margin-top:0;}
+.on-cream .prose h2{color:var(--navy);}
+.on-navy .prose h2{color:var(--cream);}
+
 /* small caption line under a block */
 .notecap{margin-top:var(--s4);font-size:.86rem;line-height:1.6;}
 .on-cream .notecap{color:var(--grey);}
