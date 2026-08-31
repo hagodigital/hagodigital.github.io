@@ -760,6 +760,19 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .about{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.66fr) minmax(0,.9fr);
   gap:clamp(24px,3.5vw,48px);align-items:start;}
 .about-mascot{align-self:center;}
+/* The two headings have to START ON THE SAME LINE, and the eyebrow above the left
+   one is the only reason they did not. It is lifted OUT OF FLOW into the section's
+   own top padding rather than offset against with a number on the card opposite:
+   the Spanish eyebrow WRAPS TO TWO LINES at 1101 (39.6px against English's 19.8),
+   so any fixed margin is correct in one language and wrong in the other at exactly
+   one width. Out of flow, a wrap grows upward into padding that is 81-104px deep
+   there and nothing below it moves. Scoped to the three-column layout - under 1080
+   the card sits beneath the copy and the eyebrow needs its space back. */
+.about-copy > .eyebrow{margin-bottom:8px;}
+@media(min-width:1081px){
+  .about-copy{position:relative;}
+  .about-copy > .eyebrow{position:absolute;bottom:100%;left:0;}
+}
 /* Sized INSIDE its column, not spilling out of it. The old rule was
    width:138% with a -19% bleed, which was drawn for a 1.5 landscape bird and
    only ever worked because of that aspect: a 774x1325 portrait robot under the
