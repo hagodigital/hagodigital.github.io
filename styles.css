@@ -751,8 +751,15 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .proc + .notecap{text-align:center;max-width:70ch;margin-inline:auto;}
 
 /* ---------- about + cta ---------- */
+/* align-items:START, not center. Both text columns must begin on the same line;
+   whichever is shorter floats otherwise, and it has now been each of them in turn.
+   It was the CTA card until the copy column carried the .vals list, and the copy
+   column the moment that list was cut (2026-08-30) - the same 100-odd px drop,
+   the other side. Centring is the MASCOT's requirement alone, so it now asks for
+   itself instead of the row granting it to everything. */
 .about{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.66fr) minmax(0,.9fr);
-  gap:clamp(24px,3.5vw,48px);align-items:center;}
+  gap:clamp(24px,3.5vw,48px);align-items:start;}
+.about-mascot{align-self:center;}
 /* Sized INSIDE its column, not spilling out of it. The old rule was
    width:138% with a -19% bleed, which was drawn for a 1.5 landscape bird and
    only ever worked because of that aspect: a 774x1325 portrait robot under the
@@ -771,11 +778,6 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .val svg,.val img{width:var(--icon-sm);height:var(--icon-sm);display:block;}
 .val b{font-family:var(--body);font-weight:600;font-size:.92rem;color:var(--cream);display:block;}
 .val span{font-size:.8rem;color:var(--cream-mute);line-height:1.45;display:block;margin-top:2px;}
-/* align-self:start, because .about is align-items:center and this card is far
-   shorter than the copy column beside it — so it floated, and its heading sat 99px
-   below "You're good at this" at 1440 and 75px at 1101. Measured after JP said the
-   two did not line up. Both blocks start together now. */
-.cta-card{align-self:start;}
 .cta-card h2{color:var(--cream);}
 .cta-card .lede{margin-bottom:var(--s4);}
 @media(max-width:1080px){
