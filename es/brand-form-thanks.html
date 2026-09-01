@@ -8,18 +8,15 @@
 </head>
 <body>
 <style>
-  @font-face{font-family:'Clash Display';font-style:normal;font-weight:200 700;font-display:swap;src:url(../assets/fonts/clash-display-var.woff2) format('woff2')}
-  @font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400;font-display:swap;src:url(../assets/fonts/instrument-400.woff2) format('woff2')}
-  @font-face{font-family:'Instrument Sans';font-style:normal;font-weight:600;font-display:swap;src:url(../assets/fonts/instrument-600.woff2) format('woff2')}
   :root{--navy:#000A18;--cream:#F8F5E6;--lime:#CEFF00;--grey:#696D71}
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--navy);color:#C9C4B4;
-    font:17px/1.62 'Instrument Sans',system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+    font:17px/1.62 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
   main{max-width:640px;margin:0 auto;padding:18vh 24px 24px}
   .k{display:inline-flex;align-items:center;gap:10px;font-size:.75rem;font-weight:600;
     letter-spacing:.16em;text-transform:uppercase;color:var(--lime)}
   .k::before{content:"";width:26px;height:3px;background:var(--lime)}
-  h1{font-family:'Clash Display',system-ui,sans-serif;font-weight:600;letter-spacing:-.03em;line-height:1.1;
+  h1{font-family:Manrope,system-ui,sans-serif;font-weight:800;letter-spacing:-.03em;line-height:1.1;
     color:var(--cream);font-size:clamp(1.9rem,5vw,2.7rem);margin:16px 0 20px;text-wrap:balance}
   p{margin:0 0 14px;max-width:52ch}
   b{color:var(--cream);font-weight:600}
@@ -27,16 +24,14 @@
     border-radius:6px;background:var(--lime);color:var(--navy);text-decoration:none;
     font-weight:600;font-size:1rem}
   .btn:focus-visible{outline:3px solid #6E9BFF;outline-offset:3px}
-  /* --cream-mute, not --grey: this page's ground is navy, where grey measures
-     3.81:1 and fails AA. Same defect as .proc-step, found the same way. */
-  .quiet{color:var(--cream-mute);font-size:.95rem;margin-top:18px}
+  .quiet{color:var(--grey);font-size:.95rem;margin-top:18px}
 </style>
 <main>
   <span class="k">Enviado</span>
-  <h1>Recibido — ahora agenda la llamada</h1>
-  <p>Tus respuestas ya están conmigo y las leo con calma antes de hablar contigo. La llamada es el
+  <h1>Recibido — ahora agenda la llamada.</h1>
+  <p>Tus respuestas ya están conmigo y las leo con calma antes de hablar. La llamada es el
      siguiente paso de todas formas — cuánto llenaste cambia para qué la usamos, no si la
-     hacemos.</p>
+     tenemos.</p>
   <div id="next"></div>
 </main>
 <script>
