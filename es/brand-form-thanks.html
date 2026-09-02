@@ -28,15 +28,14 @@
 </style>
 <main>
   <span class="k">Enviado</span>
-  <h1>Recibido — ahora agenda la llamada.</h1>
-  <p>Tus respuestas ya están conmigo y las leo con calma antes de hablar. La llamada es el
-     siguiente paso de todas formas — cuánto llenaste cambia para qué la usamos, no si la
-     tenemos.</p>
+  <h1>Listo. Tus respuestas ya están conmigo.</h1>
+  <p>Las leo con calma y después te escribo con una hora para la llamada. No tienes que
+     agendar nada ni estar pendiente — la llamada va de todas formas, y cuánto llenaste
+     cambia para qué la usamos, no si la tenemos.</p>
   <div id="next"></div>
 </main>
 <script>
 (function(){
-  var BOOK = "https://calendar.app.google/d1jgYiEUs3yoh3Wr6";
   var p = new URLSearchParams(location.search);
   var ask = parseInt(p.get("ask") || "0", 10) || 0;
   var blank = parseInt(p.get("blank") || "0", 10) || 0;
@@ -51,11 +50,32 @@
     : "Respondiste todo, as\u00ed que la llamada no se va en tomar dictado. " +
       "Llego con propuestas y decidimos entre ellas.";
 
+  /* ONE thanks page serves BOTH routes, and build.py rewrites the form's storage
+     key per route - hago-form-strengthen or hago-form-create - so a single literal
+     here can only ever match half the clients. It matched NEITHER at first: the
+     source key is hago-brand-form-v2 and that name never survives the build. Caught
+     by driving the real page in a browser; nothing static would have shown it,
+     because a key that never matches renders no button and throws no error. */
+  var saved = "";
+  try {
+    saved = localStorage.getItem("hago-form-strengthen-sent")
+         || localStorage.getItem("hago-form-create-sent") || "";
+  } catch(e){}
+
   document.getElementById("next").innerHTML =
     "<p>" + lead + "</p>" +
-    '<p><a class="btn" href="' + BOOK + '" target="_blank" rel="noopener">Agendar la llamada</a></p>' +
-    '<p class="quiet">Elige el horario que te sirva. Si ninguno te sirve, responde a mi correo y ' +
-    'buscamos uno.</p>';
+    (saved ? '<p><button type="button" class="btn" id="keep">Guarda una copia para ti</button></p>' : "") +
+    '<p class="quiet">Pendiente del correo — yo te escribo con la hora.</p>';
+
+  var keep = document.getElementById("keep");
+  if (keep) keep.addEventListener("click", function(){
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([saved], { type: "text/plain" }));
+    a.download = "mis-respuestas.txt";
+    document.body.appendChild(a); a.click();
+    keep.textContent = "Guardado";
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  });
 })();
 </script>
 

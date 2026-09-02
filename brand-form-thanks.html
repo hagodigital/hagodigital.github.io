@@ -28,10 +28,10 @@
 </style>
 <main>
   <span class="k">Sent</span>
-  <h1>Got it — now book the call.</h1>
-  <p>Your answers are with me and I read them properly before we talk. The call is the next
-     step either way — how much you filled in changes what we spend it on, not whether we
-     have it.</p>
+  <h1>Got it. Your answers are with me.</h1>
+  <p>I read them properly, then I write to you with a time for the call. Nothing to book and
+     nothing to chase — the call happens either way, and how much you filled in changes what
+     we spend it on, not whether we have it.</p>
   <div id="next"></div>
 </main>
 <script>
@@ -39,9 +39,22 @@
    reversing the conditional-call design of 2026-08-10). So the counts carried on the
    redirect do not decide WHETHER to book, only what the call will be spent on: what
    was left open gets done together, and a form that came back full buys a call spent
-   on direction instead of dictation. One button either way, same prominence. */
+   on direction instead of dictation.
+
+   NO BOOKING LINK HERE (JP, 2026-09-01). It used to end on a calendar button. JP
+   reads the brief first and sends the time himself, so a client cannot book against
+   a brief he has not read yet. This is the one page on the domain whose primary
+   action is NOT the calendar, and it is deliberate: the reader is already a client,
+   not someone being acquired.
+
+   The keepsake copy is offered HERE rather than beside the send button, because a
+   save button standing next to the only action that matters is a rival to it. Once
+   the answers are actually delivered it is a receipt, and it competes with nothing.
+   It is read from the same localStorage the form saves into - same origin, so the
+   brief at /brief/<route>/ and this page can both see it. Absent is normal: a
+   different device, a cleared browser, or a client who tapped through from a link.
+   Then the block simply does not render. */
 (function(){
-  var BOOK = "https://calendar.app.google/d1jgYiEUs3yoh3Wr6";
   var p = new URLSearchParams(location.search);
   var ask = parseInt(p.get("ask") || "0", 10) || 0;
   var blank = parseInt(p.get("blank") || "0", 10) || 0;
@@ -56,11 +69,32 @@
     : "You answered the lot, which means the call is not spent taking dictation. " +
       "I come with proposals and we decide between them.";
 
+  /* ONE thanks page serves BOTH routes, and build.py rewrites the form's storage
+     key per route - hago-form-strengthen or hago-form-create - so a single literal
+     here can only ever match half the clients. It matched NEITHER at first: the
+     source key is hago-brand-form-v2 and that name never survives the build. Caught
+     by driving the real page in a browser; nothing static would have shown it,
+     because a key that never matches renders no button and throws no error. */
+  var saved = "";
+  try {
+    saved = localStorage.getItem("hago-form-strengthen-sent")
+         || localStorage.getItem("hago-form-create-sent") || "";
+  } catch(e){}
+
   document.getElementById("next").innerHTML =
     "<p>" + lead + "</p>" +
-    '<p><a class="btn" href="' + BOOK + '" target="_blank" rel="noopener">Book the call</a></p>' +
-    '<p class="quiet">Pick whichever slot suits. If none of them do, reply to my email and ' +
-    'we will find one.</p>';
+    (saved ? '<p><button type="button" class="btn" id="keep">Save a copy for yourself</button></p>' : "") +
+    '<p class="quiet">Watch your inbox — I will write to you with a time.</p>';
+
+  var keep = document.getElementById("keep");
+  if (keep) keep.addEventListener("click", function(){
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([saved], { type: "text/plain" }));
+    a.download = "my-answers.txt";
+    document.body.appendChild(a); a.click();
+    keep.textContent = "Saved";
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  });
 })();
 </script>
 
