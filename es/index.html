@@ -28,16 +28,79 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "HagoDigital",
-  "url": "https://hagodigital.ai/es/",
-  "logo": "https://hagodigital.ai/assets/icon-512.png",
-  "email": "jp@hagodigital.ai",
-  "description": "Identidad de marca, montaje del Perfil de Empresa de Google y páginas estáticas rápidas. Con base en Sídney, Australia, trabajando con negocios en cualquier parte del mundo.",
-  "areaServed": {"@type":"Place","name":"Worldwide"},
-  "address": {"@type":"PostalAddress","addressLocality":"Sydney","addressCountry":"AU"},
-  "sameAs": ["https://www.google.com/search?kgmid=/g/11zd400kfc"],
-  "founder": {"@type":"Person","name":"JP"}
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://hagodigital.ai/#organization",
+      "name": "HagoDigital",
+      "alternateName": [
+        "Hago Digital",
+        "hagodigital.ai"
+      ],
+      "url": "https://hagodigital.ai/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://hagodigital.ai/assets/icon-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://hagodigital.ai/assets/og-card.png",
+      "email": "jp@hagodigital.ai",
+      "description": "Brand identity, Google Business Profile setup and fast static websites. Based in Sydney, working with businesses worldwide.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sydney",
+        "addressRegion": "NSW",
+        "addressCountry": "AU"
+      },
+      "areaServed": {
+        "@type": "Place",
+        "name": "Worldwide"
+      },
+      "founder": {
+        "@id": "https://hagodigital.ai/#jp"
+      },
+      "sameAs": [
+        "https://www.google.com/search?kgmid=/g/11zd400kfc"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://hagodigital.ai/#jp",
+      "name": "Juan Pablo Tagliaferro",
+      "worksFor": {
+        "@id": "https://hagodigital.ai/#organization"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://hagodigital.ai/#website",
+      "name": "HagoDigital",
+      "alternateName": "Hago Digital",
+      "url": "https://hagodigital.ai/",
+      "publisher": {
+        "@id": "https://hagodigital.ai/#organization"
+      },
+      "inLanguage": [
+        "en-AU",
+        "es"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://hagodigital.ai/es/#webpage",
+      "url": "https://hagodigital.ai/es/",
+      "name": "HagoDigital — Marca, página y perfil de Google, como una sola cosa.",
+      "description": "Identidad de marca, una página rápida y un perfil de Google terminado — construidos para funcionar como una sola cosa, para que más de los que ya te están buscando levanten el teléfono. Todo es tuyo.",
+      "inLanguage": "es",
+      "isPartOf": {
+        "@id": "https://hagodigital.ai/#website"
+      },
+      "about": {
+        "@id": "https://hagodigital.ai/#organization"
+      }
+    }
+  ]
 }
 </script>
 

@@ -28,15 +28,79 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "HagoDigital",
-  "url": "https://hagodigital.ai/",
-  "logo": "https://hagodigital.ai/assets/icon-512.png",
-  "email": "jp@hagodigital.ai",
-  "description": "Brand identity, Google Business Profile setup and fast static websites. Based in Sydney, working with businesses worldwide.",
-  "areaServed": "Worldwide",
-  "sameAs": ["https://www.google.com/search?kgmid=/g/11zd400kfc"],
-  "founder": {"@type":"Person","name":"JP"}
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://hagodigital.ai/#organization",
+      "name": "HagoDigital",
+      "alternateName": [
+        "Hago Digital",
+        "hagodigital.ai"
+      ],
+      "url": "https://hagodigital.ai/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://hagodigital.ai/assets/icon-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://hagodigital.ai/assets/og-card.png",
+      "email": "jp@hagodigital.ai",
+      "description": "Brand identity, Google Business Profile setup and fast static websites. Based in Sydney, working with businesses worldwide.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sydney",
+        "addressRegion": "NSW",
+        "addressCountry": "AU"
+      },
+      "areaServed": {
+        "@type": "Place",
+        "name": "Worldwide"
+      },
+      "founder": {
+        "@id": "https://hagodigital.ai/#jp"
+      },
+      "sameAs": [
+        "https://www.google.com/search?kgmid=/g/11zd400kfc"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://hagodigital.ai/#jp",
+      "name": "Juan Pablo Tagliaferro",
+      "worksFor": {
+        "@id": "https://hagodigital.ai/#organization"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://hagodigital.ai/#website",
+      "name": "HagoDigital",
+      "alternateName": "Hago Digital",
+      "url": "https://hagodigital.ai/",
+      "publisher": {
+        "@id": "https://hagodigital.ai/#organization"
+      },
+      "inLanguage": [
+        "en-AU",
+        "es"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://hagodigital.ai/#webpage",
+      "url": "https://hagodigital.ai/",
+      "name": "HagoDigital — Brand, websites and Google Business Profiles, built as one.",
+      "description": "Brand identity, a fast website and a finished Google Business Profile, built to work as one — so more of the people already looking you up pick up the phone. Sydney-based, working worldwide. You own everything.",
+      "inLanguage": "en-AU",
+      "isPartOf": {
+        "@id": "https://hagodigital.ai/#website"
+      },
+      "about": {
+        "@id": "https://hagodigital.ai/#organization"
+      }
+    }
+  ]
 }
 </script>
 
