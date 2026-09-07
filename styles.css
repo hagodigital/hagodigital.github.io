@@ -218,7 +218,14 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    earlier judgement does not transfer, and it is not a reason to go back up.
    DO NOT RE-DERIVE THIS FROM THE NAV. Re-measure only if the file is recropped
    or redrawn, and then show JP a ladder rather than a calculation. */
-.brand img{height:15px;width:auto;display:block;}
+/* RE-MEASURED 2026-09-07: the file was replaced, which the note above says is
+   the one condition that reopens this. The old wordmark ran 6.447:1 and 15px
+   put it at 96.7px wide. The robot lockup is 5.338:1, so 18px holds that same
+   96.1px width — the width JP actually chose by eye on 2026-08-25, preserved
+   through a file swap rather than re-derived. The capital lands at 8.7px.
+   The mark is denser than the wordmark it replaces, so equal width will read
+   heavier; show JP a ladder before changing this, never a calculation. */
+.brand img{height:18px;width:auto;display:block;}
 /* auto on BOTH sides so the links sit centred between the logo and the CTA. The
    phone number used to occupy the right-hand side and hold this balance; without
    it a single margin-left:auto shunts the whole nav against the button. */
