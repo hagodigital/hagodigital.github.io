@@ -101,6 +101,11 @@
        "some small letters cannot be read at all"   -> raise the floor
        "I don't want waaayyy too many different sizes ... I want this system to
         be able to be passed to my customers"       -> as few steps as possible
+     RAISED TO 14/16/20 AND REVERTED THE SAME DAY. JP reported it too small a
+     second time; the set went up a whole step rather than being defended. He
+     then saw the 18px build once his browser let go of the cached stylesheet --
+     "nevermind about the size, it looks nice now" -- so 20px was never a thing
+     he asked for and it went back. The fault was a cache, not a size.
      Three is the smallest set that still separates a label from a sentence.
      Every Instrument Sans role uses one of them and there is no fourth. If a
      role seems to need one, the role is wrong.
@@ -151,7 +156,12 @@ section{padding-block:var(--sect);}
 .on-navy .eyebrow{color:var(--blue-lift);}   /* raw blue is 3.77:1 on navy */
 h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;color:var(--cream);text-wrap:balance;}
 .h2{font-size:clamp(1.8rem,3.6vw,2.6rem);}
-.h-band{font-size:clamp(1.5rem,3vw,2.2rem);color:var(--cream);}
+/* JP, 2026-09-09, on "A site you own": "you own in two different lines, it should
+   be in the same line". balance is the whole fix -- it keeps a short heading on one
+   line and splits a long one evenly, where the old forced break did neither. A blanket
+   white-space:nowrap on the span was tried first and rejected: the close headings carry
+   spans five words long, which would then overflow a phone rather than wrap. */
+.h-band{font-size:clamp(1.5rem,3vw,2.2rem);color:var(--cream);text-wrap:balance;}
 .sub{font-family:var(--display);font-weight:600;word-spacing:.05em;font-size:clamp(1.05rem,1.6vw,1.3rem);
   color:var(--grey);letter-spacing:-.02em;margin-top:var(--s1);}
 .on-navy .sub{color:var(--cream-mute);}
@@ -814,7 +824,12 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    8px copy. Stacked they read at a sensible measure, and the taller left
    column balances the CTA card opposite it. */
 .vals{display:grid;gap:var(--s4);margin-top:var(--s4);}
-.val{display:grid;grid-template-columns:var(--icon-sm) 1fr;gap:var(--s2);align-items:start;}
+@media(min-width:721px){.vals{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s5) var(--s4);}}
+/* ICON ON TOP, TEXT UNDER -- JP, 2026-09-09: "the text should go under the icons
+   just as everywhere else in the page, at the moment they're on the right and it
+   looks weird". Every other icon block on the site stacks; these two were the only
+   ones running the label beside the drawing, and the odd one out is what he saw. */
+.val{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s2);align-items:start;}
 .val svg,.val img{width:var(--icon-sm);height:var(--icon-sm);display:block;}
 .val b{font-family:var(--body);font-weight:600;font-size:var(--t-small);color:var(--cream);display:block;}
 .val span{font-size:var(--t-small);color:var(--cream-mute);line-height:1.55;display:block;margin-top:2px;}
@@ -866,7 +881,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 @media(min-width:901px){
   .pillar .minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4);}
 }
-.mini{display:grid;grid-template-columns:var(--icon-sm) 1fr;gap:var(--s2);align-items:center;}
+.mini{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s2);align-items:start;}
 .mini svg,.mini img{width:var(--icon-sm);height:var(--icon-sm);display:block;}
 .mini b{display:block;font-family:var(--body);font-size:var(--t-small);font-weight:700;color:var(--cream);}
 .mini span{display:block;font-size:var(--t-small);line-height:1.55;color:var(--cream-mute);}
@@ -1068,7 +1083,11 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
   font-size:clamp(2.1rem,4.4vw,3.2rem);letter-spacing:-.03em;line-height:1.06;
 }
 .close .eyebrow{margin-bottom:var(--s1);}
-.close .h-band span{display:block;}
+/* THE COLOURED HALF WAS FORCED ONTO ITS OWN LINE, and that -- not wrapping -- is
+   why JP saw "A site / you own" as two lines for a three-word phrase. display:block
+   suits a long close heading and breaks a short one. text-wrap:balance does the
+   same job for the long ones and leaves the short ones alone, so the rule goes. */
+.close .h-band span{display:inline;}
 .close .lede{margin-inline:auto;max-width:50ch;font-size:var(--t-body);}
 /* .close--split is branding's variant: it carries an illustration and three
    values, so it puts the argument beside the picture instead of centring a
