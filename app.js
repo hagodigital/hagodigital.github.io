@@ -18,8 +18,17 @@ var DESTINATIONS = {
      about/thanks/404 that used to hardcode contact.html and would have been left
      behind by this switch. To put the form back in front, set start to
      "contact.html" — that one line is still the whole switch. */
-  start:     "https://calendar.app.google/d1jgYiEUs3yoh3Wr6",
-  book:      "https://calendar.app.google/d1jgYiEUs3yoh3Wr6",
+  /* THE DOOR IS THE CONTACT PAGE NOW, NOT THE CALENDAR (2026-09-09, JP: "instead
+     of the book a free call everywhere it should be just contact me, and as soon
+     as you open contact me it should have the option for WhatsApp, mainly, and if
+     not, use the contact form"). Booking is not gone -- it is one of the three
+     doors on contact.html, alongside WhatsApp and the form -- it just stops being
+     the only thing a first click can do. The comment above always said this was a
+     one-line switch; this is that line being used.
+     `book` moves with it because the Spanish pages route through that key, and a
+     relative "contact.html" from /es/ resolves to /es/contact.html on its own. */
+  start:     "contact.html",
+  book:      "contact.html",
   /* Deep-links past the hero to the form itself, so the secondary CTA is not a
      duplicate of the primary one now that both live on contact.html. */
   message:   "contact.html#enquire",

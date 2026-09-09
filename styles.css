@@ -154,8 +154,18 @@ section{padding-block:var(--sect);}
   line-height:1.4;letter-spacing:.11em;text-transform:uppercase;color:var(--blue-ink);
 }
 .on-navy .eyebrow{color:var(--blue-lift);}   /* raw blue is 3.77:1 on navy */
-h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;color:var(--cream);text-wrap:balance;}
-.h2{font-size:clamp(1.8rem,3.6vw,2.6rem);}
+/* THE FLOORS COME DOWN ON PHONES -- JP, 2026-09-09: "when did you change the mobile
+   size for characters? now it looks massive". Answer: this morning, when the type
+   went from twenty-eight sizes to three and the body rose from 16px to 18px. Nothing
+   about a HEADING changed then, but a heading only looks right against the body under
+   it, and at 390px these two were pinned to their clamp MINIMUMS -- 41.6px and 28.8px
+   against an 18px body, so a 2.3x jump landed on a 350px column.
+   Only the minimum moves, so nothing above roughly 560px (h1) or 800px (h2) changes at
+   all: past those widths the vw term is already larger and governs. The body stays at
+   18px because that is the rule JP set this morning after parts of the site were
+   unreadable -- this makes the headings agree with it rather than undo it. */
+h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;color:var(--cream);text-wrap:balance;}
+.h2{font-size:clamp(1.5rem,3.6vw,2.6rem);}
 /* JP, 2026-09-09, on "A site you own": "you own in two different lines, it should
    be in the same line". balance is the whole fix -- it keeps a short heading on one
    line and splits a long one evenly, where the old forced break did neither. A blanket
