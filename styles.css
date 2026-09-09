@@ -650,6 +650,12 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 /* ---------- system band ---------- */
 .band{background:var(--navy-2);text-align:center;padding-block:calc(var(--sect) * .5);}
 .band .eyebrow{margin-bottom:var(--s1);}
+/* The band centres its TEXT, but .lede carries a 46ch max-width and no auto
+   margin, so the paragraph BOX still sat hard left inside the shell and the
+   sentence read as off-centre under a centred heading -- JP, 2026-09-09: "none
+   of those are properly centered". Centring the box is the fix; the measure
+   stays, because a full-width sentence under a balanced heading is worse. */
+.band .lede{margin-inline:auto;}
 /* branding.html's band breaks its heading over two lines. --blue-lift, not the
    --blue-ink used for the same job on cream: that one is mixed FOR cream and
    fails against navy-2. */
