@@ -823,7 +823,7 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    each value got roughly 88px of text and wrapped to four or five lines of
    8px copy. Stacked they read at a sensible measure, and the taller left
    column balances the CTA card opposite it. */
-.vals{display:grid;gap:var(--s4);margin-top:var(--s4);}
+.vals{display:grid;gap:var(--s4);margin-top:var(--s4);align-items:start;}
 @media(min-width:721px){.vals{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s5) var(--s4);}}
 /* ICON ON TOP, TEXT UNDER -- JP, 2026-09-09: "the text should go under the icons
    just as everywhere else in the page, at the moment they're on the right and it
@@ -874,12 +874,18 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    comment text as well as code, so quoting it here re-raises the finding.) */
 
 /* ---------- inline benefit row (hero + band) ---------- */
-.minis{display:flex;flex-wrap:wrap;gap:var(--s4) var(--s5);margin-top:var(--s5);}
+/* EQUAL COLUMNS, NOT A RAGGED FLEX ROW. Once the icons moved on top of the text
+   (2026-09-09) each item sized to its own longest word, so three stacked blocks sat
+   at three different widths and read as misaligned rather than as a set. A grid
+   gives them one width and one top edge; the flex row was fine only while the icon
+   sat beside the text and fixed the height. */
+.minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:var(--s4) var(--s5);margin-top:var(--s5);align-items:start;}
 /* Inside a pillar the copy column is ~600px, which is a hair under what three
    flex items need — they broke 2 + 1. A three-track grid keeps the row the
    render's shape and lets the labels wrap instead of the row. */
 @media(min-width:901px){
-  .pillar .minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4);}
+  .pillar .minis{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4);}
 }
 .mini{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s2);align-items:start;}
 .mini svg,.mini img{width:var(--icon-sm);height:var(--icon-sm);display:block;}
