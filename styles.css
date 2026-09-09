@@ -1544,20 +1544,34 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 /* .sys-head paints its heading span --blue-ink, which is mixed for cream and
    fails against navy. Same job, the navy-safe mix. */
 .team .sys-head .h2 span{color:var(--blue-lift);}
-/* NEVER STACKS. Two 200px portraits fit side by side inside the 390px shell with
-   room to spare, and JP asked for the pair read as a pair — him left, Bernardo
-   right — at any size. The old single-column break under 620px is gone. */
+/* RESTORED 2026-09-09 (JP) TO THE ec4724e GEOMETRY, not re-invented. The name-badge
+   pass (726be08) capped the grid at 440px, which put each portrait near 200px, and
+   removed the single-column break on the grounds that the pair should read as a pair
+   at any size. JP has overruled both: too small to see, and they must run one after
+   the other on a phone, him first. These are the numbers that were here before that
+   pass — 820px cap, --s3 caption pull, 620px break at 340px. DOM order is already
+   JP then Bernardo, so the stack needs no order property.
+   THE PORTRAIT FILES WERE RESTORED WITH THEM. 726be08 shipped 440x600 re-renders
+   whose alpha mean is 0.355 against the 760x1036 originals' 0.661 — half the picture
+   dissolved, which is the "lost a lot of quality" and the visible fade. Measured, not
+   judged by eye. Do not re-downscale these: at 820px the card renders ~380px, so a
+   760px asset is still under 1:1 and never upscales. */
 .team-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:clamp(16px,3vw,40px);margin-top:calc(var(--sect) * .4);
-  max-width:440px;margin-inline:auto;}
+  gap:clamp(20px,4vw,56px);margin-top:calc(var(--sect) * .5);
+  max-width:820px;margin-inline:auto;}
 .team-card{margin:0;text-align:center;}
 .team-card img{width:100%;height:auto;display:block;}
 /* The portrait fades out at the bottom, so a caption at its natural distance
    reads as floating away from a picture that has already ended. Pulled up into
-   the tail of the fade, where the eye still reads the two as one object. It
-   scales with the picture: at 200px the old fixed --s3 pull was most of a line. */
-.team-card figcaption{margin-top:-8%;}
+   the tail of the fade, where the eye still reads the two as one object. */
+.team-card figcaption{margin-top:calc(var(--s3) * -1);}
 .team-card b{display:block;font-family:var(--display);font-weight:600;
-  font-size:clamp(.95rem,1.15vw,1.06rem);letter-spacing:-.012em;color:var(--cream);}
-.team-card .role{display:block;margin-top:4px;font-size:.79rem;letter-spacing:.02em;
+  font-size:clamp(1.02rem,1.5vw,1.2rem);letter-spacing:-.012em;color:var(--cream);}
+.team-card .role{display:block;margin-top:6px;font-size:.82rem;letter-spacing:.02em;
   color:var(--blue-lift);}
+/* Two 4:5 portraits side by side stop being faces long before the layout breaks.
+   One column under 620px, and the card capped so a single portrait does not
+   inflate to the full measure. */
+@media(max-width:620px){
+  .team-grid{grid-template-columns:minmax(0,1fr);max-width:340px;gap:var(--s5);}
+}
