@@ -1,7 +1,7 @@
-@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/instrument-400.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
-@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:500;font-display:swap;src:url(assets/fonts/instrument-500.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
-@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/instrument-600.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
-@font-face{font-family:'Clash Display';font-style:normal;font-weight:200 700;font-display:swap;src:url(assets/fonts/clash-display-var.woff2) format('woff2');}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/instrument-400.woff2?v=fa41c43a) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:500;font-display:swap;src:url(assets/fonts/instrument-500.woff2?v=fa41c43a) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/instrument-600.woff2?v=fa41c43a) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Clash Display';font-style:normal;font-weight:200 700;font-display:swap;src:url(assets/fonts/clash-display-var.woff2?v=ecb3ce8c) format('woff2');}
 
 /* ============================================================
    HagoDigital.ai — built to the supplied ChatGPT homepage render.
@@ -835,7 +835,10 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    just as everywhere else in the page, at the moment they're on the right and it
    looks weird". Every other icon block on the site stacks; these two were the only
    ones running the label beside the drawing, and the odd one out is what he saw. */
-.val{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s2);align-items:start;}
+/* Same treatment as .mini above, and for the same reason -- the three
+   Recognisable / Credible / Consistent blocks sit in the same section. */
+.val{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s2);align-items:start;
+  justify-items:center;text-align:center;}
 .val svg,.val img{width:var(--icon-sm);height:var(--icon-sm);display:block;}
 .val b{font-family:var(--body);font-weight:600;font-size:var(--t-small);color:var(--cream);display:block;}
 .val span{font-size:var(--t-small);color:var(--cream-mute);line-height:1.55;display:block;margin-top:2px;}
@@ -893,7 +896,13 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 @media(min-width:901px){
   .pillar .minis{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4);}
 }
-.mini{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s2);align-items:start;}
+/* CENTRED, like every other icon-over-text block on the site -- JP, 2026-09-09:
+   "icons, the titles and subtitles under there, they're all centered". The icon
+   moved on top of the text earlier today; left-aligning what sits under a centred
+   icon is what made these read as unaligned. justify-items centres the icon and
+   the text box, text-align centres the lines inside it. */
+.mini{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s2);align-items:start;
+  justify-items:center;text-align:center;}
 .mini svg,.mini img{width:var(--icon-sm);height:var(--icon-sm);display:block;}
 .mini b{display:block;font-family:var(--body);font-size:var(--t-small);font-weight:700;color:var(--cream);}
 .mini span{display:block;font-size:var(--t-small);line-height:1.55;color:var(--cream-mute);}
@@ -1595,6 +1604,14 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
 .team{background:var(--navy-2);padding-block:calc(var(--sect) * .62);}
 /* .sys-head paints its heading span --blue-ink, which is mixed for cream and
    fails against navy. Same job, the navy-safe mix. */
+/* THE HEADING IS CREAM, NOT CREAM-DIM. Every other heading on a navy ground gets
+   its colour from its own context rule -- .h-band, .cta-card h2, .on-navy .prose
+   h2, the pillars -- and this section, added 2026-09-08, had none, so it fell
+   through to --cream-dim, the BODY colour on navy. Measured 2026-09-09: 2 of 45
+   navy headings across both languages were dimmer than the rest, and both were
+   this one. JP saw it without measuring: "should go in a clearer white like the
+   rest of the same sections for the other pages". */
+.team .sys-head .h2{color:var(--cream);}
 .team .sys-head .h2 span{color:var(--blue-lift);}
 /* RESTORED 2026-09-09 (JP) TO THE ec4724e GEOMETRY, not re-invented. The name-badge
    pass (726be08) capped the grid at 440px, which put each portrait near 200px, and
@@ -1623,11 +1640,19 @@ h1{font-size:clamp(2.6rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;c
    its natural distance from a picture that had already dissolved read as floating.
    The cut-outs end on a hard edge, so there is no tail to sit in — a negative
    margin here now lands the name on the torso. */
-.team-card figcaption{margin-top:var(--s4);}
-.team-card b{display:block;font-family:var(--display);font-weight:600;
-  font-size:clamp(1.02rem,1.5vw,1.2rem);letter-spacing:-.012em;color:var(--cream);}
-.team-card .role{display:block;margin-top:6px;font-size:var(--t-small);line-height:1.4;letter-spacing:.02em;
-  color:var(--blue-lift);}
+/* The caption sat one step off the photograph and read as attached to it. A step
+   up separates the person from their name -- JP, 2026-09-09: "a little bit more
+   padding in between the images and our names". */
+.team-card figcaption{margin-top:var(--s5);}
+/* Bigger and heavier on JP's call, 2026-09-09. Two names on the page carry the
+   only faces on the site; at 600 and 1.2rem they read as a caption under a
+   photograph rather than as the people the section is about. */
+.team-card b{display:block;font-family:var(--display);font-weight:700;
+  font-size:clamp(1.2rem,2vw,1.5rem);letter-spacing:-.015em;color:var(--cream);}
+/* The role moves up to the body size and gains weight with the name above it.
+   18px is the reading size in the three-size scale, so this stays on it. */
+.team-card .role{display:block;margin-top:8px;font-size:var(--t-body);font-weight:600;
+  line-height:1.4;letter-spacing:.02em;color:var(--blue-lift);}
 /* Two 4:5 portraits side by side stop being faces long before the layout breaks.
    One column under 620px, and the card capped so a single portrait does not
    inflate to the full measure. */
