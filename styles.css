@@ -91,7 +91,43 @@
      The steps below are the internal scale: before this the stylesheet used
      6/10/11/14/18/22/26/28/30/34 more or less arbitrarily, which is why the
      spacing never felt settled even though section padding was already even. */
-  --sect:clamp(60px,7.5vw,104px);
+  --sect:clamp(50px,7.5vw,104px);
+  /* THREE SECTION HEIGHTS, NOT SEVEN FRACTIONS OF ONE. Every band used to be
+     --sect times some fraction -- .5, .55, .62, .8 -- which produced 52, 57, 64
+     and 83px at 1440 and read as four decisions nobody had made. A full section,
+     a compact one and a band is the whole set. Anything still using a fraction is
+     geometry (artwork fit), and says so where it sits. */
+  --sect-compact:clamp(32px,4.6vw,64px);
+  --sect-band:clamp(30px,3.5vw,50px);
+  /* LAYOUT GAPS. The component steps (--s1..--s6) are for the inside of a
+     component; these two are for the space BETWEEN blocks, and they shrink on a
+     phone where a 64px gap reads as a missing section. */
+  --gap-l:clamp(32px,4.6vw,64px);
+  --gap-m:clamp(24px,3.4vw,48px);
+  /* ---------------------------------------------------------------------
+     THE DISPLAY SCALE -- SIX STEPS, CLASH DISPLAY, AND THAT IS THE WHOLE SET.
+     Set 2026-09-09 alongside the body scale below. Before this, Clash was set by
+     nine separate clamps written where they were needed: 4.4/3.6/3.2/2.6/2.2/1.85
+     /1.5/1.5/1.3rem, plus two inline in the HTML. Several of them landed within a
+     pixel of each other on a phone -- 19.84, 19.2, 18.4 -- which is not a
+     hierarchy, it is noise.
+     The face is chosen by what the text DOES, not by which element it happens to
+     be: Clash carries the message, Instrument Sans carries the explanation. An
+     .eyebrow introducing an editorial band is Clash; an .eyebrow labelling a form
+     section is not. ------------------------------------------------------- */
+  --d-xl:clamp(2rem,4.6vw,4.15rem);        /* main H1, every hero, every page   */
+  --d-statement:clamp(1.85rem,3.4vw,3.06rem); /* the closing statement          */
+  --d-l:clamp(1.4rem,2.85vw,2.56rem);      /* section H2, navy-band H2          */
+  --d-m:clamp(1.15rem,2vw,1.8rem);         /* editorial subhead, payoff, names  */
+  --d-s:clamp(1rem,1.4vw,1.25rem);         /* hero top line and hero sub line   */
+  --d-xs:clamp(.94rem,1.2vw,1.1rem);       /* the line above a navy band        */
+  /* ---- line height by ROLE, not by size -----------------------------------
+     A button and a paragraph at the same size need different leading, so one
+     value per size would be wrong. What was wrong before is SEVEN values per
+     size: 18px body copy was set at 21.6, 22.5, 25.2, 27.9, 29.7, 30.6 and 31.5
+     because each component had grown its own. These are the eight that exist. */
+  --lh-h1:1.02; --lh-h2:1.08; --lh-display:1.3; --lh-label:1.4;
+  --lh-btn:1.2; --lh-support:1.55; --lh-body:1.62; --lh-prose:1.7;
   /* ---------------------------------------------------------------------
      THE TEXT SCALE -- THREE SIZES, AND THAT IS THE WHOLE SET.
      Set 2026-09-09. Before this the site had 28 distinct sizes, THIRTEEN of them
@@ -122,20 +158,45 @@
   --ease:cubic-bezier(.2,.7,.3,1);
 }
 
+/* ONE STEP DOWN ON A PHONE, AND ONLY THE READING SIZE. JP, 2026-09-09: "I think
+   you went to 18 and at the beginning was 16, so we just try 17, maybe between the
+   middle." That is exactly the split -- the site read at 16px until this morning,
+   went to 18px when twenty-eight sizes became three, and on a 350px column that
+   last step is what made everything feel loud. 17px keeps every sentence above the
+   16px floor where iOS zooms a focused input, so the forms still behave.
+   The three-size system survives intact: on a phone it reads 13 / 15 / 17. Only
+   this one token moves, so nothing has to be re-tuned rule by rule. */
+@media(max-width:720px){
+  /* 16px on a phone, and ONLY the reading size. JP, 2026-09-09, after seeing 17:
+     "everything still feels slightly too large and loud." 16 is also the floor
+     under which iOS zooms a focused input, so this is the smallest the reading
+     size can go without the contact form starting to jump about -- which makes
+     it a floor with a mechanical reason, not a preference. The 15px supporting
+     tier and the 13px label tier do not move: they are already small, and
+     shrinking them is what made text unreadable in the first place. */
+  :root{--t-body:16px;}
+}
+
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip;}
 body{
   margin:0;background:var(--cream);color:var(--ink);
-  font-family:var(--body);font-size:var(--t-body);line-height:1.65;
+  font-family:var(--body);font-size:var(--t-body);line-height:var(--lh-body);
   -webkit-font-smoothing:antialiased;overflow-x:clip;
 }
 img{max-width:100%;display:block;height:auto;}
 figure{margin:0;}
 p{margin:0;}
 a{color:inherit;text-decoration:none;}
-h1{margin:0;font-family:var(--display);font-weight:600;line-height:1.04;letter-spacing:-.03em;word-spacing:.04em;}
-h2{margin:0;font-family:var(--display);font-weight:600;line-height:1.08;letter-spacing:-.02em;word-spacing:.06em;}
-h3,h4{margin:0;font-family:var(--body);font-size:var(--t-body);font-weight:600;line-height:1.25;letter-spacing:-.01em;}
+h1{margin:0;font-family:var(--display);font-weight:600;line-height:var(--lh-h1);letter-spacing:-.03em;word-spacing:.04em;}
+h2{margin:0;font-family:var(--display);font-weight:600;line-height:var(--lh-h2);letter-spacing:-.02em;word-spacing:.06em;}
+/* NO SYNTHESISED BOLD. Instrument Sans ships 400, 500 and 600 -- there is no 700
+   file, so every font-weight:700 on the body face was the browser smearing the
+   600 into a fake bold, which is why some emphasis read heavier and blurrier than
+   the rest. 600 is the emphasis weight. Clash Display is a variable face carrying
+   200-700, so display type keeps its 700 where it earns it. */
+b,strong{font-weight:600;}
+h3,h4{margin:0;font-family:var(--body);font-size:var(--t-body);font-weight:600;line-height:var(--lh-btn);letter-spacing:-.01em;}
 ul{margin:0;padding:0;list-style:none;}
 ::selection{background:var(--lime);color:var(--navy);}
 a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px;}
@@ -151,7 +212,7 @@ section{padding-block:var(--sect);}
 /* ---------- type ---------- */
 .eyebrow{
   display:block;font-family:var(--body);font-size:var(--t-label);font-weight:600;
-  line-height:1.4;letter-spacing:.11em;text-transform:uppercase;color:var(--blue-ink);
+  line-height:var(--lh-label);letter-spacing:.11em;text-transform:uppercase;color:var(--blue-ink);
 }
 .on-navy .eyebrow{color:var(--blue-lift);}   /* raw blue is 3.77:1 on navy */
 /* THE FLOORS COME DOWN ON PHONES -- JP, 2026-09-09: "when did you change the mobile
@@ -164,23 +225,40 @@ section{padding-block:var(--sect);}
    all: past those widths the vw term is already larger and governs. The body stays at
    18px because that is the rule JP set this morning after parts of the site were
    unreadable -- this makes the headings agree with it rather than undo it. */
-h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;color:var(--cream);text-wrap:balance;}
-.h2{font-size:clamp(1.5rem,3.6vw,2.6rem);}
+h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:var(--cream);text-wrap:balance;}
+.h2{font-size:var(--d-l);text-wrap:balance;}
 /* JP, 2026-09-09, on "A site you own": "you own in two different lines, it should
    be in the same line". balance is the whole fix -- it keeps a short heading on one
    line and splits a long one evenly, where the old forced break did neither. A blanket
    white-space:nowrap on the span was tried first and rejected: the close headings carry
    spans five words long, which would then overflow a phone rather than wrap. */
-.h-band{font-size:clamp(1.5rem,3vw,2.2rem);color:var(--cream);text-wrap:balance;}
-.sub{font-family:var(--display);font-weight:600;word-spacing:.05em;font-size:clamp(1.05rem,1.6vw,1.3rem);
-  color:var(--grey);letter-spacing:-.02em;margin-top:var(--s1);}
+.h-band{font-size:var(--d-l);color:var(--cream);text-wrap:balance;}
+.sub{font-family:var(--display);font-weight:600;word-spacing:.05em;font-size:var(--d-s);
+  color:var(--grey);letter-spacing:-.02em;line-height:var(--lh-display);margin-top:var(--s1);}
+/* THE HERO LABEL IS SET LIKE THE SUB LINE -- JP, 2026-09-09: "there's always one
+   top line in the hero... it's written on a different typography. It should be the
+   same typography down there where it says 'So they choose you', like the same size
+   and stuff, and basically that one in every single of the heroes."
+   It was the only place on a hero using the body face, at 13px, uppercase and
+   tracked out -- three differences at once against a display-face headline sitting
+   directly under it. Same face, same size, same weight, same tracking, and the
+   uppercasing comes off, so the top of every hero now reads as one voice.
+   The colour stays exactly as it was -- --cream on a hero, from the combined
+   .hero.on-navy rule below -- because colour is not what he was looking at.
+   Scoped to heroes ONLY. The same .eyebrow class labels sections all over the site
+   at 13px, and those are not what he was looking at. */
+.hero .eyebrow,.pagehero .eyebrow{
+  font-family:var(--display);font-weight:600;word-spacing:.05em;
+  font-size:var(--d-s);letter-spacing:-.02em;text-transform:none;
+  line-height:var(--lh-display);
+}
 .on-navy .sub{color:var(--cream-mute);}
-.lede{font-size:var(--t-body);font-weight:500;line-height:1.7;margin-top:var(--s3);max-width:46ch;}
+.lede{font-size:var(--t-body);font-weight:500;line-height:var(--lh-body);margin-top:var(--s3);max-width:46ch;}
 .on-navy .lede{color:var(--cream-dim);}
 
 /* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:600;
-  font-size:var(--t-body);line-height:1.2;padding:15px 26px;min-height:50px;border-radius:6px;border:1px solid transparent;
+  font-size:var(--t-body);line-height:var(--lh-btn);padding:15px 26px;min-height:50px;border-radius:6px;border:1px solid transparent;
   cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),
   border-color .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease);}
 .btn .ar{transition:transform .22s var(--ease);}
@@ -199,7 +277,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
 /* ---------- check list ---------- */
 .checks{display:grid;gap:var(--s2);margin-top:var(--s4);}
 .checks li{display:grid;grid-template-columns:20px 1fr;gap:12px;align-items:start;
-  font-size:var(--t-body);font-weight:500;line-height:1.55;}
+  font-size:var(--t-body);font-weight:500;line-height:var(--lh-support);}
 .checks .ck{width:20px;height:20px;flex:none;margin-top:1px;}
 /* On cream the ring is BLUE, not lime: lime measures 1.05:1 against cream and
    would be an invisible bullet. On navy lime is 17:1 and is used. */
@@ -302,7 +380,10 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
 /* The nav carries its own CTA for the mobile panel; on desktop the standalone
    .hdr-cta is the one shown, so hide the in-nav duplicate above the breakpoint. */
 @media(min-width:1101px){.nav .btn{display:none;}}
-.burger{display:none;width:44px;height:44px;border:1px solid var(--edge-d);border-radius:6px;
+/* font:inherit so this button is not the one control on the site sitting at the
+   browser default of 13.33px Arial. It draws three bars and holds no text, so it
+   changed nothing visually -- it just stopped being an exception in the audit. */
+.burger{font:inherit;display:none;width:44px;height:44px;border:1px solid var(--edge-d);border-radius:6px;
   background:none;cursor:pointer;padding:0;place-items:center;}
 .burger span{display:block;width:17px;height:2px;background:var(--cream);margin:3px auto;
   transition:transform .22s var(--ease),opacity .16s linear;}
@@ -658,8 +739,20 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
 }
 
 /* ---------- system band ---------- */
-.band{background:var(--navy-2);text-align:center;padding-block:calc(var(--sect) * .5);}
-.band .eyebrow{margin-bottom:var(--s1);}
+.band{background:var(--navy-2);text-align:center;padding-block:var(--sect-band);}
+/* THE LINE ABOVE A NAVY BAND IS EDITORIAL, NOT FUNCTIONAL -- JP, 2026-09-09:
+   "the little label above it is currently Instrument Sans, tiny, uppercase and
+   widely tracked. It looks like it comes from another design system." It does:
+   that treatment is the FORM LABEL treatment, and this is a section introduction.
+   Face follows what the text does, so it takes Clash at the smallest display
+   step -- clearly under the heading it introduces, clearly related to it.
+   This is deliberately NOT a global .eyebrow change. A 13px tracked capital
+   still labels a form section and a card, and should. */
+.band .eyebrow{
+  font-family:var(--display);font-size:var(--d-xs);font-weight:600;
+  letter-spacing:-.01em;text-transform:none;line-height:var(--lh-label);
+  margin-bottom:var(--s2);
+}
 /* The band centres its TEXT, but .lede carries a 46ch max-width and no auto
    margin, so the paragraph BOX still sat hard left inside the shell and the
    sentence read as off-centre under a centred heading -- JP, 2026-09-09: "none
@@ -674,7 +767,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
 /* ---------- pillars ---------- */
 .pillar .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
   gap:clamp(28px,5vw,72px);align-items:center;}
-.pillar .n{font-family:var(--body);font-weight:700;font-size:var(--t-body);color:var(--blue-ink);
+.pillar .n{font-family:var(--body);font-weight:600;font-size:var(--t-body);color:var(--blue-ink);
   letter-spacing:.02em;}
 .on-navy .pillar .n,.pillar.on-navy .n{color:var(--blue-lift);}
 .pillar h2{margin-top:var(--s1);}
@@ -747,7 +840,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
 
 /* ---------- process ---------- */
 .proc-head{text-align:center;}
-.proc{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4);margin-top:calc(var(--sect) * .5);
+.proc{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4);margin-top:var(--gap-l);
   position:relative;}
 .proc-step{text-align:center;position:relative;}
 /* No disc. It was a 60px navy circle carrying a 34px icon, and it made the row
@@ -851,7 +944,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
   justify-items:center;text-align:center;}
 .val svg,.val img{width:var(--icon-sm);height:var(--icon-sm);display:block;}
 .val b{font-family:var(--body);font-weight:600;font-size:var(--t-small);color:var(--cream);display:block;}
-.val span{font-size:var(--t-small);color:var(--cream-mute);line-height:1.55;display:block;margin-top:2px;}
+.val span{font-size:var(--t-small);color:var(--cream-mute);line-height:var(--lh-support);display:block;margin-top:2px;}
 .cta-card h2{color:var(--cream);}
 .cta-card .lede{margin-bottom:var(--s4);}
 @media(max-width:1080px){
@@ -914,8 +1007,8 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
 .mini{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s2);align-items:start;
   justify-items:center;text-align:center;}
 .mini svg,.mini img{width:var(--icon-sm);height:var(--icon-sm);display:block;}
-.mini b{display:block;font-family:var(--body);font-size:var(--t-small);font-weight:700;color:var(--cream);}
-.mini span{display:block;font-size:var(--t-small);line-height:1.55;color:var(--cream-mute);}
+.mini b{display:block;font-family:var(--body);font-size:var(--t-small);font-weight:600;color:var(--cream);}
+.mini span{display:block;font-size:var(--t-small);line-height:var(--lh-support);color:var(--cream-mute);}
 .on-cream .mini b{color:var(--ink);}
 .on-cream .mini span{color:var(--grey);}
 
@@ -924,7 +1017,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    rules that centred it inside the cream section have nothing left to style. */
 .trio{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:var(--s4);margin-top:calc(var(--sect) * .55);align-items:start;
+  gap:var(--s4);margin-top:var(--gap-l);align-items:start;
 }
 /* ...but that top margin existed to clear the heading it no longer follows. As
    the section's first child it would stack on top of the section's own padding
@@ -938,11 +1031,11 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    quietly; it is a real thing the row is now missing. */
 .tcard .cardicon{display:grid;place-items:center;margin:0 auto var(--s4);}
 .tcard .cardicon svg,.tcard .cardicon img{width:var(--icon);height:var(--icon);display:block;}
-.tcard h3{font-family:var(--body);font-weight:700;font-size:var(--t-body);
+.tcard h3{font-family:var(--body);font-weight:600;font-size:var(--t-body);
   letter-spacing:-.02em;}
 .tcard .role{
   display:block;font-family:var(--body);font-size:var(--t-label);font-weight:600;
-  line-height:1.4;letter-spacing:.11em;text-transform:uppercase;color:var(--blue-ink);margin-top:6px;
+  line-height:var(--lh-label);letter-spacing:.11em;text-transform:uppercase;color:var(--blue-ink);margin-top:6px;
 }
 .tcard .checks{margin-top:var(--s4);text-align:left;}
 .tcard .checks li{font-size:var(--t-body);font-weight:500;}
@@ -971,7 +1064,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
 /* Padding is section-scale, not --s5. At --s5 the strip read as a thin bar
    stuck to the bottom of the section rather than a beat of its own; a band
    needs the air a section gets. */
-.strip{padding-block:calc(var(--sect) * .55);background:var(--navy-2);}
+.strip{padding-block:var(--sect-band);background:var(--navy-2);}
 /* to-cream was dead CSS until 2026-08-20, and it was written for markup that does
    not exist: its colour rules target .payoff as a DESCENDANT, but on branding.html
    the classes sit on ONE element — <div class="strip to-cream payoff">. So only this
@@ -1012,14 +1105,14 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    Lime is the site's existing statement accent (the hero emphasis), not a new
    colour. */
 .payoff{text-align:center;}
-.strip.payoff{padding-block:calc(var(--sect) * .62);}
+.strip.payoff{padding-block:var(--sect-compact);}
 .payoff::before{
   content:"";display:block;width:56px;height:3px;
   background:var(--lime);margin:0 auto var(--s4);
 }
 .payoff p{
   font-family:var(--display);font-weight:600;letter-spacing:-.02em;word-spacing:.06em;
-  font-size:clamp(1.35rem,2.5vw,1.85rem);line-height:1.35;
+  font-size:var(--d-m);line-height:var(--lh-display);
   max-width:30ch;margin-inline:auto;color:var(--cream);       /* 17.63:1 on navy-2 */
 }
 .payoff b{font-weight:700;color:var(--lime);}                 /* 16.46:1 on navy-2 */
@@ -1036,7 +1129,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    its own heading. Centre the block, not just the text. */
 .sys-head .lede{margin-inline:auto;}
 .sys{
-  display:grid;gap:var(--s4);margin-top:calc(var(--sect) * .55);
+  display:grid;gap:var(--s4);margin-top:var(--gap-l);
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 }
 /* auto-fit lands on 5 across at the 1280 shell and 1 across on a phone, where ten
@@ -1078,8 +1171,8 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    however this box is styled — re-measure, don't just swap the file. */
 .scard .art img{width:100%;height:100%;object-fit:contain;display:block;}
 .scard h3{font-family:var(--body);font-size:var(--t-small);font-weight:600;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--blue-ink);line-height:1.4;}
-.scard p{font-size:var(--t-small);font-weight:500;line-height:1.55;color:var(--grey);margin-top:var(--s1);}
+  text-transform:uppercase;color:var(--blue-ink);line-height:var(--lh-label);}
+.scard p{font-size:var(--t-small);font-weight:500;line-height:var(--lh-support);color:var(--grey);margin-top:var(--s1);}
 
 /* ---------- closing section ----------
    Was .endbar until 2026-08-14: a navy panel with 10px corners and a lime disc,
@@ -1111,7 +1204,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    thing marking the end of the page and it has to be a statement, not a peer.
    3.2rem against .h2's 2.6rem at 1440. */
 .close .h-band{
-  font-size:clamp(2.1rem,4.4vw,3.2rem);letter-spacing:-.03em;line-height:1.06;
+  font-size:var(--d-statement);letter-spacing:-.03em;line-height:var(--lh-h2);
 }
 .close .eyebrow{margin-bottom:var(--s1);}
 /* THE COLOURED HALF WAS FORCED ONTO ITS OWN LINE, and that -- not wrapping -- is
@@ -1183,9 +1276,9 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    sit hard left — the row divider made each stacked item a band of its own and
    carried the left edge. With the dividers gone (2026-08-21) a left icon over a
    centred label is just misaligned, so the icon follows the text again. */
-.close-three b{display:block;font-family:var(--body);font-weight:700;
-  font-size:var(--t-body);letter-spacing:-.02em;line-height:1.2;}
-.close-three span{display:block;font-size:var(--t-small);line-height:1.55;
+.close-three b{display:block;font-family:var(--body);font-weight:600;
+  font-size:var(--t-body);letter-spacing:-.02em;line-height:var(--lh-btn);}
+.close-three span{display:block;font-size:var(--t-small);line-height:var(--lh-support);
   margin-top:var(--s1);}
 
 /* Ground pairings. Every colour here already exists in the palette because the
@@ -1240,7 +1333,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
      Below 620 the line has to get longer, not shorter: the column is already
      narrow, so the measure is doing no work and only the size is. Measured
      2026-08-15: 7 lines at 21.6px/26ch, 5 at 19.2px/34ch. */
-  .payoff p{font-size:1.2rem;max-width:34ch;}
+  .payoff p{font-size:var(--d-m);line-height:var(--lh-display);max-width:34ch;}
 }
 
 /* ---------- device mockup band ---------- */
@@ -1377,7 +1470,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    contributing nothing and min-height ignored, because min-height does not apply
    to an inline element. It stands on its own now. */
 .lang-toggle{display:inline-flex;align-items:center;
-  font-size:var(--t-small)!important;font-weight:700!important;letter-spacing:.08em;
+  font-size:var(--t-small)!important;font-weight:600!important;letter-spacing:.08em;
   padding:7px 0!important;gap:7px!important;line-height:1;
   color:var(--cream-mute)!important;min-height:44px!important;height:44px;
   transition:color .2s var(--ease);}
@@ -1389,14 +1482,14 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
   box-shadow:0 0 0 1px rgba(248,245,230,.22);}
 
 /* page hero — shorter than the homepage hero, no mascot */
-.pagehero{padding-block:var(--sect) calc(var(--sect) * .62);}
-.h1-page{font-family:var(--display);font-weight:600;line-height:1.04;letter-spacing:-.02em;word-spacing:.04em;
-  color:var(--cream);font-size:clamp(2.1rem,5.4vw,3.6rem);margin:var(--s1) 0 var(--s3);}
+.pagehero{padding-block:var(--sect) var(--sect-compact);}
+.h1-page{font-family:var(--display);font-weight:600;line-height:var(--lh-h1);letter-spacing:-.02em;word-spacing:.04em;
+  color:var(--cream);font-size:var(--d-xl);margin:var(--s1) 0 var(--s3);}
 .pagehero .lede{max-width:60ch;}
 
 /* long-form copy */
 .prose{max-width:68ch;}
-.prose p{margin:0 0 20px;font-size:var(--t-body);font-weight:500;line-height:1.75;}
+.prose p{margin:0 0 20px;font-size:var(--t-body);font-weight:500;line-height:var(--lh-prose);}
 .on-cream .prose p{color:var(--ink);}
 .on-navy .prose p{color:var(--cream-dim);}
 .prose p:last-child{margin-bottom:0;}
@@ -1404,7 +1497,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
   text-decoration-thickness:1px;}
 .on-cream .prose a:hover{color:var(--blue);}
 .on-navy .prose a:hover{color:var(--lime);}
-.signoff{font-weight:700;margin-top:var(--s4)!important;}
+.signoff{font-weight:600;margin-top:var(--s4)!important;}
 
 /* SUB-HEADINGS INSIDE A PROSE BLOCK (2026-08-30). about.html was one
    undifferentiated column of six paragraphs; JP broke it into named movements,
@@ -1413,13 +1506,24 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    this measure a section-sized heading inside a 68ch column reads as a new
    section starting, which is exactly the confusion the split was meant to fix. */
 .prose h2{font-family:var(--display);font-weight:600;letter-spacing:-.015em;
-  font-size:clamp(1.24rem,1.9vw,1.5rem);line-height:1.22;margin:var(--s6) 0 var(--s2);}
+  font-size:var(--d-m);line-height:var(--lh-display);margin:var(--s6) 0 var(--s2);}
 .prose h2:first-child{margin-top:0;}
 .on-cream .prose h2{color:var(--navy);}
 .on-navy .prose h2{color:var(--cream);}
 
 /* small caption line under a block */
-.notecap{margin-top:var(--s4);font-size:var(--t-small);line-height:1.6;}
+.notecap{margin-top:var(--s4);font-size:var(--t-small);line-height:var(--lh-support);}
+
+/* TWO CLASSES THAT REPLACE THIRTY-FOUR INLINE STYLES. Every one of the odd sizes
+   left on the site -- 13.76px and 14.72px, which are .86rem and .92rem -- was
+   written into a style= attribute in the HTML rather than into a rule, which is
+   why the three-size pass missed them: nothing in the stylesheet said .86rem.
+   .microcap is supporting copy under a block; .dlede is an editorial line that
+   was carrying its own copy of the display settings inline. */
+.microcap{font-size:var(--t-small);line-height:var(--lh-support);}
+.microcap b,.microcap strong{font-weight:600;}
+.dlede{font-family:var(--display);font-weight:600;font-size:var(--d-m);
+  line-height:var(--lh-display);letter-spacing:-.015em;}
 .on-cream .notecap{color:var(--grey);}
 .on-navy .notecap{color:var(--cream-mute);}
 .notecap a{position:relative;color:inherit;text-decoration:underline;text-underline-offset:3px;}
@@ -1439,7 +1543,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
 @media(min-width:640px){.chans{grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:18px;}}
 .chan{border:1px solid var(--rule-l);border-radius:12px;padding:20px 22px;background:#fff;}
 .on-navy .chan{background:var(--navy-3);border-color:var(--rule-d);}
-.chan h3{font-family:var(--body);font-size:var(--t-small);font-weight:700;letter-spacing:.11em;
+.chan h3{font-family:var(--body);font-size:var(--t-small);font-weight:600;letter-spacing:.11em;
   text-transform:uppercase;color:var(--grey);margin:0 0 8px;}
 .on-navy .chan h3{color:var(--cream-mute);}
 /* These two are the WhatsApp and email links on thanks.html — the only actions
@@ -1458,7 +1562,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
 .frow{display:grid;gap:18px;}
 @media(min-width:640px){.frow{grid-template-columns:1fr 1fr;}}
 .field{display:grid;gap:7px;}
-.field label{font-size:var(--t-small);font-weight:600;line-height:1.4;color:var(--cream);}
+.field label{font-size:var(--t-small);font-weight:600;line-height:var(--lh-label);color:var(--cream);}
 .field .opt{font-weight:400;color:var(--cream-mute);}
 .field input,.field textarea{width:100%;font:inherit;font-size:var(--t-body);color:var(--cream);
   background:var(--navy-3);border:1px solid var(--rule-d);border-radius:9px;
@@ -1467,7 +1571,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
 .field input:focus-visible,.field textarea:focus-visible{outline:3px solid var(--lime);
   outline-offset:2px;border-color:var(--lime);}
 .field input::placeholder,.field textarea::placeholder{color:var(--cream-mute);}
-.hint{font-size:var(--t-small);line-height:1.55;color:var(--cream-mute);}
+.hint{font-size:var(--t-small);line-height:var(--lh-support);color:var(--cream-mute);}
 .leadform .btn{justify-self:start;}
 /* Web3Forms honeypot. MUST be display:none, not merely off-screen (2026-08-13).
    It was `position:absolute;left:-9999px;opacity:0`, which leaves the checkbox
@@ -1485,7 +1589,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    above rather than the 6px buttons use. */
 .fsec{border:0;padding:0;margin:0;display:grid;gap:var(--s3);}
 .fsec + .fsec{margin-top:var(--s5);padding-top:var(--s5);border-top:1px solid var(--rule-d);}
-.fsec legend{padding:0;font-family:var(--body);font-weight:700;font-size:var(--t-body);
+.fsec legend{padding:0;font-family:var(--body);font-weight:600;font-size:var(--t-body);
   color:var(--lime);letter-spacing:.02em;}
 .fsec .hint{margin-top:-4px;}
 
@@ -1550,8 +1654,13 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    input is present for the form and the keyboard but never painted. */
 .scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;}
 .scale .choice{position:relative;justify-content:center;text-align:center;gap:0;
-  padding:0;min-height:56px;font-family:var(--display);font-weight:600;
-  font-size:1.15rem;letter-spacing:-.01em;}
+  /* THE 1-5 TILES ARE A CONTROL, NOT A DISPLAY LINE. They carried the display
+     face at 1.15rem, which landed at 18.4px -- half a pixel from --t-body and
+     0.7px from the smallest display step, so it read as a third size that nobody
+     had decided on. As the body face at --t-body it is the same size as every
+     other control on the form and the segmented row loses nothing. */
+  padding:0;min-height:56px;font-family:var(--body);font-weight:600;
+  font-size:var(--t-body);line-height:var(--lh-btn);letter-spacing:-.01em;}
 .scale .choice input{position:absolute;inset:0;width:100%;height:100%;
   min-width:0;min-height:0;flex:none;opacity:0;margin:0;border:0;border-radius:inherit;}
 .scale .choice input::after{content:none;}
@@ -1611,7 +1720,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    the section ran 1023px tall between a hero and a page of prose. This is a
    name badge, not a gallery: the pictures are 200px, the caption is two lines,
    and the section takes a little over half the standard block. */
-.team{background:var(--navy-2);padding-block:calc(var(--sect) * .62);}
+.team{background:var(--navy-2);padding-block:var(--sect-compact);}
 /* .sys-head paints its heading span --blue-ink, which is mixed for cream and
    fails against navy. Same job, the navy-safe mix. */
 /* THE HEADING IS CREAM, NOT CREAM-DIM. Every other heading on a navy ground gets
@@ -1641,7 +1750,7 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    carries no recoloured plate, so changing --navy-2 no longer reveals a rectangle —
    it only changes what the silhouette sits on. */
 .team-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:clamp(20px,4vw,56px);margin-top:calc(var(--sect) * .5);
+  gap:clamp(20px,4vw,56px);margin-top:var(--gap-l);
   max-width:940px;margin-inline:auto;}
 .team-card{margin:0;text-align:center;}
 .team-card img{width:100%;height:auto;display:block;}
@@ -1658,11 +1767,11 @@ h1{font-size:clamp(2.15rem,6.2vw,4.4rem);letter-spacing:-.03em;line-height:1.02;
    only faces on the site; at 600 and 1.2rem they read as a caption under a
    photograph rather than as the people the section is about. */
 .team-card b{display:block;font-family:var(--display);font-weight:700;
-  font-size:clamp(1.2rem,2vw,1.5rem);letter-spacing:-.015em;color:var(--cream);}
+  font-size:var(--d-m);line-height:1.15;letter-spacing:-.015em;color:var(--cream);}
 /* The role moves up to the body size and gains weight with the name above it.
    18px is the reading size in the three-size scale, so this stays on it. */
 .team-card .role{display:block;margin-top:8px;font-size:var(--t-body);font-weight:600;
-  line-height:1.4;letter-spacing:.02em;color:var(--blue-lift);}
+  line-height:var(--lh-label);letter-spacing:.02em;color:var(--blue-lift);}
 /* Two 4:5 portraits side by side stop being faces long before the layout breaks.
    One column under 620px, and the card capped so a single portrait does not
    inflate to the full measure. */
