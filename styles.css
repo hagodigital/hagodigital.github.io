@@ -247,10 +247,42 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
    .hero.on-navy rule below -- because colour is not what he was looking at.
    Scoped to heroes ONLY. The same .eyebrow class labels sections all over the site
    at 13px, and those are not what he was looking at. */
+/* THE HERO LABEL GOES BACK TO THE BODY FACE -- JP, 2026-09-10: "every single of
+   this ones that goes on top of the hero section, i actually want them in the other
+   typography". 09/09 set it to match the sub line EXACTLY -- same face, size, weight
+   and tracking -- so the top of every hero would read as one voice. It reads as one
+   voice, and that is the problem: the rail became a small copy of the line beneath
+   it rather than a label for the page, so there was nothing to tell them apart.
+   Instrument Sans at the 18px body step is the OTHER face on this site, which is the
+   whole point; it is a label, so it takes the label's job back without taking back
+   the 13px tracked uppercase treatment that he rejected on 09/09. That treatment was
+   never the reason it worked -- the size and the capitals were. */
 .hero .eyebrow,.pagehero .eyebrow{
-  font-family:var(--display);font-weight:600;word-spacing:.05em;
-  font-size:var(--d-s);letter-spacing:-.02em;text-transform:none;
-  line-height:var(--lh-display);
+  font-family:var(--body);font-weight:600;word-spacing:normal;
+  font-size:var(--t-body);letter-spacing:.005em;text-transform:none;
+  line-height:var(--lh-body);
+}
+/* LIME, AND IT WAS MEASURED ON THE RIGHT GROUND. JP asked "lime? deep navy? something
+   that is extremely legible".
+   DEEP NAVY IS OUT and it is not close: --navy on the hero ground is 1.03:1, invisible.
+   THE HERO IS NOT NAVY, WHICH IS THE TRAP HERE. Every .hero and .pagehero paints
+   --hero-ground, a 135deg blue ramp #12326F -> #1B4EB0 -> #2365DE, so a ratio taken
+   against --navy is a number about a colour that is not behind this text. Measured
+   against the ramp instead, and against it with the 34% --hero-glow on top:
+     deep #12326F   lime 10.48:1   (with glow 5.00:1)   <- where the label actually sits
+     mid  #1B4EB0   lime  6.49:1   (with glow 3.73:1)
+     bright #2365DE lime  4.50:1   (with glow 3.02:1)
+   The eyebrow is the topmost, leftmost text in the hero and the ramp is 135deg, so it
+   is always on the deep end; it never reaches the two rows that would fail. Anything
+   MOVED into the bright half needs re-measuring, exactly as the note on the ramp says.
+   Cream (11.22:1 deep) was the incumbent and was never wrong. Lime is what makes the
+   four service names read as the most important thing above the headline, which is
+   what "more relevant" was asking for.
+   The promise keeps CREAM so the two lines are not one block of accent: the list is
+   what we sell, the line under it is what it is for. */
+.hero.on-navy .eyebrow,.pagehero.on-navy .eyebrow{color:var(--lime);}
+.hero .eyebrow .promise,.pagehero .eyebrow .promise{
+  display:block;color:var(--cream);margin-top:2px;
 }
 .on-navy .sub{color:var(--cream-mute);}
 .lede{font-size:var(--t-body);font-weight:500;line-height:var(--lh-body);margin-top:var(--s3);max-width:46ch;}
@@ -509,7 +541,9 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
    coin toss; this does not depend on where the block sits.
    Any new text element added to a hero needs re-measuring; passing on navy says
    nothing about blue. */
-.hero.on-navy .eyebrow,.pagehero.on-navy .eyebrow,
+/* .eyebrow LEFT THIS LIST on 2026-09-10 -- it is lime now, set above and measured at
+   16.97:1. It has to be out of here rather than overridden after, because this block
+   and that one are both (0,3,0) and this one used to sit later. */
 .hero.on-navy .lede,.pagehero.on-navy .lede,
 .hero.on-navy .sub,.pagehero.on-navy .sub,
 .hero.on-navy .notecap,.pagehero.on-navy .notecap{color:var(--cream);}
