@@ -592,7 +592,37 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
    treated as the floor. At 1280 it is +49px. So the query is 1280, not 1200.
    Measure BOTH languages before touching this. Measuring English alone is how you
    ship a number that is 28px wrong on the other half of the site. */
-@media(min-width:1280px){.hero-mascot.art-bleed-wide{--bleed:135%;}}
+/* SECOND PASS 2026-09-10, JP: "the contact us animation is still WAYYYY too small".
+   Measured, and the gap was the largest on the site: contact rendered 352px tall at
+   1440 against 480 on index/about/branding, and Hago HIMSELF -- who is only 29% of
+   this 1.778:1 frame, the rest being the form card drawn around him -- came out at
+   289px against about's 475.
+   135% was not the ceiling. What held it there was the LEDE, not the headline. At
+   44ch the lede was the binding line at all six widths, reaching to within 85-90px
+   of the artwork; the h1 is only 420px wide inside a 649px column and never was the
+   constraint on this page. Both changes were measured on BOTH languages at
+   1440/1280/1200/1101/1024/940 and 430/390/360/320:
+     1. the lede is 30ch here only. It is one sentence, so it goes from two lines to
+        three and gives back ~115px of horizontal room.
+     2. the bleed goes to 185% and the artwork is allowed past the viewport's right
+        edge, because the right 151px of this frame is empty plate -- the navy bars
+        stop at x969 of 1120. The overhang is capped at 13% of the rendered width so
+        no bar is ever clipped, which is why it steps down below 1101.
+   Result at 1440: 853x480, the same 480 every other hero reaches, Hago 289 -> 394.
+   Smallest SPANISH clearance across the six widths is 32px at 940, above the 24px
+   floor this file has always used, and nothing overflows at any width.
+   THE REST OF THE GAP IS THE RENDER, NOT THE CSS: 480 is the row ceiling, so contact
+   cannot grow again without a frame in which Hago fills more of it. */
+@media(min-width:1101px){
+  .hero-mascot.art-bleed-wide{--bleed:185%;margin-right:calc(-1 * var(--pad) - 95px);}
+}
+@media(max-width:1100px){
+  .hero-mascot.art-bleed-wide{--bleed:175%;margin-right:calc(-1 * var(--pad) - 65px);}
+}
+/* Scoped by the bleed class rather than a page class: art-bleed-wide is on contact
+   and its Spanish twin and nowhere else, so this cannot leak onto a hero whose lede
+   is not paying for artwork width. */
+.hero:has(.art-bleed-wide) .lede{max-width:30ch;}
 /* .bleed-1101 — branding takes the bleed only where it clears (2026-09-10, JP: "are the
    Hago's in the heros different size? i like the size of the one in the about section").
    He is right and it is measurable. Hago's DRAWN height at 1440, per hero:
@@ -1837,4 +1867,24 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
    inflate to the full measure. */
 @media(max-width:620px){
   .team-grid{grid-template-columns:minmax(0,1fr);max-width:380px;gap:var(--s5);}
+}
+
+/* CONTACT ON A PHONE -- STACKED, AND STILL BLEEDING. The general mobile rule undoes
+   every bleed because pushing a drawing off the screen edge hands verify.py a
+   horizontal scrollbar. That reasoning holds for artwork whose edge is DRAWN; it does
+   not hold here, where the right 13.5% of the frame is blank plate. Stacked and capped
+   at max-width:92%, contact came out 322x181 at 390 -- the smallest hero on a phone,
+   under social's 240 and branding's 270, which is the same complaint in a second place.
+   Running the blank edge off-screen gives 419x235 with the visible drawing unchanged:
+   at 390 the overhang hides source x989 and out, and the navy bars stop at x969.
+   Measured at 430/390/360/320 in both languages -- widest overhang is 56px at 430,
+   still 20px clear of the bars, and nothing overflows at any of them.
+   PLACED LAST ON PURPOSE. Written in its natural home beside the other bleed rules it
+   was (0,2,0) against the max-width:900px stacking block's identical (0,2,0) forty
+   lines below, so source order won and this did nothing at all -- the measurement came
+   back byte-identical to the run before it. Raising specificity instead would have
+   meant a selector that no longer says what it is for. */
+@media(max-width:900px){
+  .hero-mascot.art-bleed-wide{width:130%;max-width:none;margin-right:-30%;justify-self:start;}
+  .hero-mascot.art-bleed-wide img{width:100%;max-width:none;max-height:none;height:auto;}
 }
