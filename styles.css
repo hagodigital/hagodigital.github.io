@@ -623,6 +623,36 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
    and its Spanish twin and nowhere else, so this cannot leak onto a hero whose lede
    is not paying for artwork width. */
 .hero:has(.art-bleed-wide) .lede{max-width:30ch;}
+/* .art-bleed-scene — websites, the last hero still under the set (2026-09-10, JP: "fix the
+   websites hero too"). It was 556x309 at 1440 against 480 on index/about/branding, and Hago
+   himself 297 against About's 475.
+   IT IS NOT THE SAME PROBLEM AS CONTACT AND THE SAME FIX DOES NOT WORK. Contact grew by running
+   blank plate off the right edge; this frame has no blank plate — the alpha bbox is 1118x614 of
+   1120x622 and the right edge is the PHONE, ink to x1110. Anything sent off-screen here is
+   drawn content.
+   Three things were measured and rejected before this one:
+     · raising the shared .art-bleed — social carries the same class and went to -67px clearance
+       at 1440. The value is shared; the constraint is not.
+     · bottom-aligning the figure so the H1 leaves its vertical band — at 386-476px tall in a
+       480px row it still overlaps nearly all the copy. Gains nothing, measures worse.
+     · a hand-placed <br> in the Spanish H1 — it helped 1440 and cost 1280 and 1101, because it
+       stopped "Diseno de paginas web" from wrapping. text-wrap:balance is already on h1, so
+       605px IS the balanced result and there was nothing left to win there.
+   WHAT BINDS IS THE SPANISH H1 AT THE WIDEST WIDTHS and the LEDE below 1101, so the fix pays
+   both. The lede goes to 32ch here, and the overhang is viewport-aware rather than a flat number:
+   the shell stops growing at 1280 while the viewport does not, so a fixed px overhang lands the
+   artwork 25px past the edge at 1280 and 105px short of it at 1440. max(27px, 50vw - 613px) puts
+   the right edge the same 27px past the viewport at EVERY width, which is what keeps the clipping
+   constant instead of letting it swing with the window.
+   The clip is deliberate and bounded: 41-56 source px, the phone's rounded right corner, never
+   more than about 15% of the phone. Measured both languages at 1440/1366/1280/1101/1024/940 —
+   smallest Spanish clearance is 25px against the 24px floor, English never below 63, nothing
+   overflows. Result 686x381 at 1440, Hago 297 -> 366.
+   Like contact, the rest of the gap is the RENDER: a 1.80:1 frame with three objects in it
+   cannot fill a 480px row without either eating the copy column or eating the phone. */
+.hero-mascot.art-bleed-scene{--bleed:148%;
+  margin-right:calc(-1 * var(--pad) - max(27px, 50vw - 613px));}
+.hero:has(.art-bleed-scene) .lede{max-width:32ch;}
 /* .bleed-1101 — branding takes the bleed only where it clears (2026-09-10, JP: "are the
    Hago's in the heros different size? i like the size of the one in the about section").
    He is right and it is measurable. Hago's DRAWN height at 1440, per hero:
