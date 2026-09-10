@@ -1520,6 +1520,14 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
    why the three-size pass missed them: nothing in the stylesheet said .86rem.
    .microcap is supporting copy under a block; .dlede is an editorial line that
    was carrying its own copy of the display settings inline. */
+/* A SERVICE NAME IS ONE THING, SO IT BREAKS AS ONE THING. The homepage hero
+   label lists the four lines separated by a middot, and between 1101 and 1440 it
+   was breaking INSIDE the last one -- "Social media" on the first line and
+   "management" alone on the second. JP, 2026-09-09: "put social media in the
+   second line so you read it all together and it looks more balanced." Making
+   each name unbreakable moves the break to a separator, which is the only place
+   a break in a list of names reads as deliberate. */
+.nb{white-space:nowrap;}
 .microcap{font-size:var(--t-small);line-height:var(--lh-support);}
 .microcap b,.microcap strong{font-weight:600;}
 .dlede{font-family:var(--display);font-weight:600;font-size:var(--d-m);
