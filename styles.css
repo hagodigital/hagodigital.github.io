@@ -259,8 +259,8 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
    never the reason it worked -- the size and the capitals were. */
 .hero .eyebrow,.pagehero .eyebrow{
   font-family:var(--body);font-weight:600;word-spacing:normal;
-  font-size:var(--t-body);letter-spacing:.005em;text-transform:none;
-  line-height:var(--lh-body);
+  font-size:var(--t-small);letter-spacing:.02em;text-transform:none;
+  line-height:var(--lh-support);
 }
 /* LIME, AND IT WAS MEASURED ON THE RIGHT GROUND. JP asked "lime? deep navy? something
    that is extremely legible".
@@ -281,8 +281,25 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
    The promise keeps CREAM so the two lines are not one block of accent: the list is
    what we sell, the line under it is what it is for. */
 .hero.on-navy .eyebrow,.pagehero.on-navy .eyebrow{color:var(--lime);}
+/* THE SEPARATOR LEADS THE LINE, IT DOES NOT TRAIL IT. The four names are still
+   unbreakable and the break still lands on a separator -- that part of the 09/09 note
+   stands -- but a wrapped line was ENDING on a hanging middot. Hung on the front of the
+   following name instead, and inside the nowrap span so the two can never come apart,
+   the second line now opens "· Social media management". The space between the spans in
+   the markup is deliberate: it is the only break opportunity in the rail, and closing
+   it up would make the whole list unbreakable. */
+.hero .eyebrow .nb + .nb::before,.pagehero .eyebrow .nb + .nb::before{
+  content:"·";margin-right:.45em;opacity:.45;
+}
+/* The promise keeps the DISPLAY face it always had -- it just sits above the headline
+   now instead of below it. Set in the body face at label size it read as a third line
+   of the service rail, which is the opposite of what a master promise should do. Cream
+   against the rail's lime, Clash against its Instrument Sans, and its own space above:
+   three separate signals that it is a different kind of line. */
 .hero .eyebrow .promise,.pagehero .eyebrow .promise{
-  display:block;color:var(--cream);margin-top:2px;
+  display:block;color:var(--cream);margin-top:10px;
+  font-family:var(--display);font-weight:600;font-size:var(--d-s);
+  letter-spacing:-.02em;line-height:var(--lh-display);word-spacing:.05em;
 }
 .on-navy .sub{color:var(--cream-mute);}
 .lede{font-size:var(--t-body);font-weight:500;line-height:var(--lh-body);margin-top:var(--s3);max-width:46ch;}
