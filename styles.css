@@ -3,76 +3,27 @@
 @font-face{font-family:'Instrument Sans';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/instrument-600.woff2?v=fa41c43a) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 @font-face{font-family:'Clash Display';font-style:normal;font-weight:200 700;font-display:swap;src:url(assets/fonts/clash-display-var.woff2?v=ecb3ce8c) format('woff2');}
 
-/* ============================================================
-   HagoDigital.ai — built to the supplied ChatGPT homepage render.
-   Palette is the six swatches printed on the mascot sheet
-   (asset 07), which is also the palette on the live site.
-   Assets 08 / 09 / 10 keep the addendum's section order, grid
-   columns and mobile copy-first rule.
-   ============================================================ */
-
 :root{
-  /* the six */
+
   --navy:#000A18;
   --blue:#2365DE;
   --lime:#CEFF00;
   --cream:#F8F5E6;
   --grey:#696D71;
 
-  /* derived — each exists because one of the six fails a contrast check */
-  --blue-lift:#6E9BFF;   /* 7.38:1 on navy. Raw blue is 3.77:1 and fails as text there. */
-  --blue-ink:#1B4EB0;    /* 6.95:1 on cream. Raw blue is 4.81 — tight for small caps. */
-  --ink:#2E3540;         /* 11.3:1 body copy on cream */
-  --cream-dim:#C9C4B4;   /* body copy on navy */
-  --cream-mute:#9AA0A8;  /* 7.5:1 meta on navy. Grey is 3.81:1 there and fails. */
-  --navy-2:#050E1F;      /* raised band on navy */
-  --navy-3:#0A1526;      /* card on navy */
+  --blue-lift:#6E9BFF;
+  --blue-ink:#1B4EB0;
+  --ink:#2E3540;
+  --cream-dim:#C9C4B4;
+  --cream-mute:#9AA0A8;
+  --navy-2:#050E1F;
+  --navy-3:#0A1526;
   --cream-2:#EFEADB;
 
-  /* Every icon from the supplied 64-icon system renders at this one size. It is
-     a token and not five separate numbers because the slots had drifted to 34px
-     and 38px, which reads as two sets rather than one. JP, 2026-08-21: "they all
-     should be the same size". 64px is also what makes the keyline survive — at
-     34px the outer contour of 16 of 17 icons fell under 3:1 against its ground;
-     at 64px all fifteen navy-ground icons pass. The README's range is 32-120px
-     and 34 was sitting on the floor of it. */
-  /* Raised 64 -> 80 on JP's call, 2026-08-21: the cream slots carry the
-     argument (the three brand cards, the four steps) and were reading at the
-     same weight as the 40px rows that only annotate a line. The gap between the
-     tiers is now 2x rather than 1.6x, so which one you are looking at is
-     obvious. Source art is 256px per cell and the file is 192, so an 80px slot
-     is still under the file even on a 2x screen -- no resampling cost. */
   --icon:80px;
-  /* TWO TIERS, and the line between them is the ground, not the taste.
-     JP, 2026-08-21, looking at the live page: the brand cards should stay this
-     size, the pillar rows and the closing three should be smaller. Measured, his
-     eye and the physics agree exactly — every slot he wanted bigger sits on CREAM
-     and every slot he wanted smaller sits on NAVY, and those two grounds have
-     opposite tolerances.
 
-     On navy the artwork holds at ANY size: the new 393px-source icons lose 0.0%
-     of their contour at 64px and still 0.0% at 24px, because whatever bleeds
-     toward the edge is ivory or lime and both are ~17:1 against navy.
-     On cream it does not: the same icons pass at 64px and fall apart below it,
-     because the light interior blends across the navy keyline and lands on a
-     ground it matches. Cream is the constrained one, so cream is the big tier.
-
-     So --icon is for a standalone slot on cream, --icon-sm for a row on navy.
-     Do not use --icon-sm on a cream ground without re-measuring. */
   --icon-sm:40px;
-  /* A THIRD SIZE, FOR A THIRD COMPOSITION (2026-08-22, JP: the closing icons on
-     websites and google-presence should "pop out more").
-     The two-tier rule above is keyed to GROUND -- 80px on cream, 40px on navy --
-     and it was written for icons sitting BESIDE their text, where 40px matches
-     the height of the label-plus-line block next to it (.val, .mini, and these
-     same three once they stack below 620px). .close-three at desktop is the ONLY
-     place on the site where an icon sits CENTRED ABOVE its text, in a ~370px
-     column, over a 1.35rem label. In that composition 40px stops reading as an
-     icon and reads as a dot. Compared on the real section at 40/56/64/80: 40 is
-     a dot; 80 competes with the lime button for the eye at the exact moment the
-     section is meant to hand over to it. 64 clears both.
-     Deliberately NOT 80: on this site 80px MEANS the cream tier, and collapsing
-     a third case into it would make the ground rule unreadable. */
+
   --icon-close:64px;
 
   --rule-d:rgba(248,245,230,.14);
@@ -85,95 +36,35 @@
 
   --max:1280px;
   --pad:clamp(20px,4.5vw,56px);
-  /* ---- vertical rhythm ----------------------------------------------
-     --sect is the one number every section pad derives from, so the whole
-     page rescales together instead of each band growing at its own rate.
-     The steps below are the internal scale: before this the stylesheet used
-     6/10/11/14/18/22/26/28/30/34 more or less arbitrarily, which is why the
-     spacing never felt settled even though section padding was already even. */
+
   --sect:clamp(50px,7.5vw,104px);
-  /* THREE SECTION HEIGHTS, NOT SEVEN FRACTIONS OF ONE. Every band used to be
-     --sect times some fraction -- .5, .55, .62, .8 -- which produced 52, 57, 64
-     and 83px at 1440 and read as four decisions nobody had made. A full section,
-     a compact one and a band is the whole set. Anything still using a fraction is
-     geometry (artwork fit), and says so where it sits. */
+
   --sect-compact:clamp(32px,4.6vw,64px);
   --sect-band:clamp(30px,3.5vw,50px);
-  /* LAYOUT GAPS. The component steps (--s1..--s6) are for the inside of a
-     component; these two are for the space BETWEEN blocks, and they shrink on a
-     phone where a 64px gap reads as a missing section. */
+
   --gap-l:clamp(32px,4.6vw,64px);
   --gap-m:clamp(24px,3.4vw,48px);
-  /* ---------------------------------------------------------------------
-     THE DISPLAY SCALE -- SIX STEPS, CLASH DISPLAY, AND THAT IS THE WHOLE SET.
-     Set 2026-09-09 alongside the body scale below. Before this, Clash was set by
-     nine separate clamps written where they were needed: 4.4/3.6/3.2/2.6/2.2/1.85
-     /1.5/1.5/1.3rem, plus two inline in the HTML. Several of them landed within a
-     pixel of each other on a phone -- 19.84, 19.2, 18.4 -- which is not a
-     hierarchy, it is noise.
-     The face is chosen by what the text DOES, not by which element it happens to
-     be: Clash carries the message, Instrument Sans carries the explanation. An
-     .eyebrow introducing an editorial band is Clash; an .eyebrow labelling a form
-     section is not. ------------------------------------------------------- */
-  --d-xl:clamp(2rem,4.6vw,4.15rem);        /* main H1, every hero, every page   */
-  --d-statement:clamp(1.85rem,3.4vw,3.06rem); /* the closing statement          */
-  --d-l:clamp(1.4rem,2.85vw,2.56rem);      /* section H2, navy-band H2          */
-  --d-m:clamp(1.15rem,2vw,1.8rem);         /* editorial subhead, payoff, names  */
-  --d-s:clamp(1rem,1.4vw,1.25rem);         /* hero top line and hero sub line   */
-  --d-xs:clamp(.94rem,1.2vw,1.1rem);       /* the line above a navy band        */
-  /* ---- line height by ROLE, not by size -----------------------------------
-     A button and a paragraph at the same size need different leading, so one
-     value per size would be wrong. What was wrong before is SEVEN values per
-     size: 18px body copy was set at 21.6, 22.5, 25.2, 27.9, 29.7, 30.6 and 31.5
-     because each component had grown its own. These are the eight that exist. */
+
+  --d-xl:clamp(2rem,4.6vw,4.15rem);
+  --d-statement:clamp(1.85rem,3.4vw,3.06rem);
+  --d-l:clamp(1.4rem,2.85vw,2.56rem);
+  --d-m:clamp(1.15rem,2vw,1.8rem);
+  --d-s:clamp(1rem,1.4vw,1.25rem);
+  --d-xs:clamp(.94rem,1.2vw,1.1rem);
+
   --lh-h1:1.02; --lh-h2:1.08; --lh-display:1.3; --lh-label:1.4;
   --lh-btn:1.2; --lh-support:1.55; --lh-body:1.62; --lh-prose:1.7;
-  /* ---------------------------------------------------------------------
-     THE TEXT SCALE -- THREE SIZES, AND THAT IS THE WHOLE SET.
-     Set 2026-09-09. Before this the site had 28 distinct sizes, THIRTEEN of them
-     under 16px, running down to 11.52px, all written in rem by feel (.72 .75 .76
-     .78 .79 .8 .82 .86 .88 .9 .92 .94 .95). JP set two requirements that pull
-     against each other, and three sizes is what satisfies both:
-       "some small letters cannot be read at all"   -> raise the floor
-       "I don't want waaayyy too many different sizes ... I want this system to
-        be able to be passed to my customers"       -> as few steps as possible
-     RAISED TO 14/16/20 AND REVERTED THE SAME DAY. JP reported it too small a
-     second time; the set went up a whole step rather than being defended. He
-     then saw the 18px build once his browser let go of the cached stylesheet --
-     "nevermind about the size, it looks nice now" -- so 20px was never a thing
-     he asked for and it went back. The fault was a cache, not a size.
-     Three is the smallest set that still separates a label from a sentence.
-     Every Instrument Sans role uses one of them and there is no fourth. If a
-     role seems to need one, the role is wrong.
-     THE RULE MATTERS MORE THAN THE NUMBERS: A SENTENCE IS ALWAYS 18px. 13px is
-     only ever reached by two to four words in CAPITALS. Every role JP could not
-     read was small because its HTML element happened to be a <span>.
-     Clash Display is a SEPARATE, FLUID scale set by clamp() on the headings --
-     approved, untouched, and not part of this. ------------------------------- */
-  --t-label:13px;   /* UPPERCASE only, 2-4 words, .11em tracking, never a sentence */
-  --t-small:15px;   /* supporting copy, secondary UI, metadata, captions, nav */
-  --t-body:18px;    /* every sentence, every control, every input. Weight 500 */
+
+  --t-label:13px;
+  --t-small:15px;
+  --t-body:18px;
   --s1:8px;   --s2:12px;  --s3:16px;
   --s4:24px;  --s5:32px;  --s6:48px;
   --ease:cubic-bezier(.2,.7,.3,1);
 }
 
-/* ONE STEP DOWN ON A PHONE, AND ONLY THE READING SIZE. JP, 2026-09-09: "I think
-   you went to 18 and at the beginning was 16, so we just try 17, maybe between the
-   middle." That is exactly the split -- the site read at 16px until this morning,
-   went to 18px when twenty-eight sizes became three, and on a 350px column that
-   last step is what made everything feel loud. 17px keeps every sentence above the
-   16px floor where iOS zooms a focused input, so the forms still behave.
-   The three-size system survives intact: on a phone it reads 13 / 15 / 17. Only
-   this one token moves, so nothing has to be re-tuned rule by rule. */
 @media(max-width:720px){
-  /* 16px on a phone, and ONLY the reading size. JP, 2026-09-09, after seeing 17:
-     "everything still feels slightly too large and loud." 16 is also the floor
-     under which iOS zooms a focused input, so this is the smallest the reading
-     size can go without the contact form starting to jump about -- which makes
-     it a floor with a mechanical reason, not a preference. The 15px supporting
-     tier and the 13px label tier do not move: they are already small, and
-     shrinking them is what made text unreadable in the first place. */
+
   :root{--t-body:16px;}
 }
 
@@ -190,11 +81,7 @@ p{margin:0;}
 a{color:inherit;text-decoration:none;}
 h1{margin:0;font-family:var(--display);font-weight:600;line-height:var(--lh-h1);letter-spacing:-.03em;word-spacing:.04em;}
 h2{margin:0;font-family:var(--display);font-weight:600;line-height:var(--lh-h2);letter-spacing:-.02em;word-spacing:.06em;}
-/* NO SYNTHESISED BOLD. Instrument Sans ships 400, 500 and 600 -- there is no 700
-   file, so every font-weight:700 on the body face was the browser smearing the
-   600 into a fake bold, which is why some emphasis read heavier and blurrier than
-   the rest. 600 is the emphasis weight. Clash Display is a variable face carrying
-   200-700, so display type keeps its 700 where it earns it. */
+
 b,strong{font-weight:600;}
 h3,h4{margin:0;font-family:var(--body);font-size:var(--t-body);font-weight:600;line-height:var(--lh-btn);letter-spacing:-.01em;}
 ul{margin:0;padding:0;list-style:none;}
@@ -209,103 +96,31 @@ section{padding-block:var(--sect);}
 .on-navy{background:var(--navy);color:var(--cream-dim);}
 .on-cream{background:var(--cream);color:var(--ink);}
 
-/* ---------- type ---------- */
 .eyebrow{
   display:block;font-family:var(--body);font-size:var(--t-label);font-weight:600;
   line-height:var(--lh-label);letter-spacing:.11em;text-transform:uppercase;color:var(--blue-ink);
 }
-.on-navy .eyebrow{color:var(--blue-lift);}   /* raw blue is 3.77:1 on navy */
-/* THE FLOORS COME DOWN ON PHONES -- JP, 2026-09-09: "when did you change the mobile
-   size for characters? now it looks massive". Answer: this morning, when the type
-   went from twenty-eight sizes to three and the body rose from 16px to 18px. Nothing
-   about a HEADING changed then, but a heading only looks right against the body under
-   it, and at 390px these two were pinned to their clamp MINIMUMS -- 41.6px and 28.8px
-   against an 18px body, so a 2.3x jump landed on a 350px column.
-   Only the minimum moves, so nothing above roughly 560px (h1) or 800px (h2) changes at
-   all: past those widths the vw term is already larger and governs. The body stays at
-   18px because that is the rule JP set this morning after parts of the site were
-   unreadable -- this makes the headings agree with it rather than undo it. */
+.on-navy .eyebrow{color:var(--blue-lift);}
+
 h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:var(--cream);text-wrap:balance;}
 .h2{font-size:var(--d-l);text-wrap:balance;}
-/* JP, 2026-09-09, on "A site you own": "you own in two different lines, it should
-   be in the same line". balance is the whole fix -- it keeps a short heading on one
-   line and splits a long one evenly, where the old forced break did neither. A blanket
-   white-space:nowrap on the span was tried first and rejected: the close headings carry
-   spans five words long, which would then overflow a phone rather than wrap. */
+
 .h-band{font-size:var(--d-l);color:var(--cream);text-wrap:balance;}
 .sub{font-family:var(--display);font-weight:600;word-spacing:.05em;font-size:var(--d-s);
   color:var(--grey);letter-spacing:-.02em;line-height:var(--lh-display);margin-top:var(--s1);}
-/* THE HERO LABEL IS SET LIKE THE SUB LINE -- JP, 2026-09-09: "there's always one
-   top line in the hero... it's written on a different typography. It should be the
-   same typography down there where it says 'So they choose you', like the same size
-   and stuff, and basically that one in every single of the heroes."
-   It was the only place on a hero using the body face, at 13px, uppercase and
-   tracked out -- three differences at once against a display-face headline sitting
-   directly under it. Same face, same size, same weight, same tracking, and the
-   uppercasing comes off, so the top of every hero now reads as one voice.
-   The colour stays exactly as it was -- --cream on a hero, from the combined
-   .hero.on-navy rule below -- because colour is not what he was looking at.
-   Scoped to heroes ONLY. The same .eyebrow class labels sections all over the site
-   at 13px, and those are not what he was looking at. */
-/* THE HERO LABEL GOES BACK TO THE BODY FACE -- JP, 2026-09-10: "every single of
-   this ones that goes on top of the hero section, i actually want them in the other
-   typography". 09/09 set it to match the sub line EXACTLY -- same face, size, weight
-   and tracking -- so the top of every hero would read as one voice. It reads as one
-   voice, and that is the problem: the rail became a small copy of the line beneath
-   it rather than a label for the page, so there was nothing to tell them apart.
-   Instrument Sans at the 18px body step is the OTHER face on this site, which is the
-   whole point; it is a label, so it takes the label's job back without taking back
-   the 13px tracked uppercase treatment that he rejected on 09/09. That treatment was
-   never the reason it worked -- the size and the capitals were. */
+
 .hero .eyebrow,.pagehero .eyebrow{
   font-family:var(--body);font-weight:600;word-spacing:normal;
   font-size:var(--t-small);letter-spacing:.02em;text-transform:none;
   line-height:var(--lh-support);
 }
-/* LIME, AND IT WAS MEASURED ON THE RIGHT GROUND. JP asked "lime? deep navy? something
-   that is extremely legible".
-   DEEP NAVY IS OUT and it is not close: --navy on the hero ground is 1.03:1, invisible.
-   THE HERO IS NOT NAVY, WHICH IS THE TRAP HERE. Every .hero and .pagehero paints
-   --hero-ground, a 135deg blue ramp #12326F -> #1B4EB0 -> #2365DE, so a ratio taken
-   against --navy is a number about a colour that is not behind this text. Measured
-   against the ramp instead, and against it with the 34% --hero-glow on top:
-     deep #12326F   lime 10.48:1   (with glow 5.00:1)   <- where the label actually sits
-     mid  #1B4EB0   lime  6.49:1   (with glow 3.73:1)
-     bright #2365DE lime  4.50:1   (with glow 3.02:1)
-   The eyebrow is the topmost, leftmost text in the hero and the ramp is 135deg, so it
-   is always on the deep end; it never reaches the two rows that would fail. Anything
-   MOVED into the bright half needs re-measuring, exactly as the note on the ramp says.
-   Cream (11.22:1 deep) was the incumbent and was never wrong. Lime is what makes the
-   four service names read as the most important thing above the headline, which is
-   what "more relevant" was asking for.
-   The promise keeps CREAM so the two lines are not one block of accent: the list is
-   what we sell, the line under it is what it is for. */
+
 .hero.on-navy .eyebrow,.pagehero.on-navy .eyebrow{color:var(--lime);}
-/* THE SEPARATOR LEADS THE LINE, IT DOES NOT TRAIL IT. The four names are still
-   unbreakable and the break still lands on a separator -- that part of the 09/09 note
-   stands -- but a wrapped line was ENDING on a hanging middot. Hung on the front of the
-   following name instead, and inside the nowrap span so the two can never come apart,
-   the second line now opens "· Social media management". The space between the spans in
-   the markup is deliberate: it is the only break opportunity in the rail, and closing
-   it up would make the whole list unbreakable. */
+
 .hero .eyebrow .nb + .nb::before,.pagehero .eyebrow .nb + .nb::before{
   content:"·";margin-right:.45em;opacity:.45;
 }
-/* THE PROMISE JOINS THE RAIL -- JP, 2026-09-10: "should be the same typography as
-   Brand identity Websites Google Business Profile Social media management but just
-   keep it in that same white color... and put a - in between so its clear".
-   This REVERSES the Clash-on-its-own-line treatment set earlier the same day. That
-   version separated the two with three signals at once -- different face, different
-   size, its own line -- and separating them was never the problem; telling the reader
-   how they RELATE was. One line, one dash: the four things we sell, and what they are
-   for. Colour is now the only thing that marks the boundary, which is why it is the
-   one thing he kept.
-   THE DASH LEADS, IT DOES NOT TRAIL, for the same reason the middots do: a wrapped
-   line must never end on a hanging separator. It inherits cream, not lime, so it reads
-   as belonging to the promise rather than as a fifth service.
-   The promise is nowrap so it can drop to its own line whole rather than break inside
-   itself, and the markup carries a space before it -- that space is the break
-   opportunity, exactly as between the rail names. */
+
 .hero .eyebrow .promise,.pagehero .eyebrow .promise{
   color:var(--cream);white-space:nowrap;
 }
@@ -316,7 +131,6 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .lede{font-size:var(--t-body);font-weight:500;line-height:var(--lh-body);margin-top:var(--s3);max-width:46ch;}
 .on-navy .lede{color:var(--cream-dim);}
 
-/* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:600;
   font-size:var(--t-body);line-height:var(--lh-btn);padding:15px 26px;min-height:50px;border-radius:6px;border:1px solid transparent;
   cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),
@@ -324,9 +138,9 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .btn .ar{transition:transform .22s var(--ease);}
 .btn:hover .ar{transform:translate(3px,-3px);}
 .btn:active{transform:translateY(1px);}
-.btn-lime{background:var(--lime);color:var(--navy);}          /* 17:1 */
+.btn-lime{background:var(--lime);color:var(--navy);}
 .btn-lime:hover{background:#D9FF3D;box-shadow:0 8px 24px -10px rgba(206,255,0,.6);}
-.btn-blue{background:var(--blue);color:#fff;}                 /* 5.3:1 */
+.btn-blue{background:var(--blue);color:#fff;}
 .btn-blue:hover{background:#1B54C4;box-shadow:0 8px 24px -10px rgba(35,101,222,.7);}
 .tlink{display:inline-flex;align-items:center;gap:8px;font-family:var(--body);font-weight:600;
   font-size:var(--t-small);min-height:44px;color:var(--cream);}
@@ -334,13 +148,11 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .tlink:hover .ar{transform:translate(3px,-3px);}
 .on-cream .tlink{color:var(--blue-ink);}
 
-/* ---------- check list ---------- */
 .checks{display:grid;gap:var(--s2);margin-top:var(--s4);}
 .checks li{display:grid;grid-template-columns:20px 1fr;gap:12px;align-items:start;
   font-size:var(--t-body);font-weight:500;line-height:var(--lh-support);}
 .checks .ck{width:20px;height:20px;flex:none;margin-top:1px;}
-/* On cream the ring is BLUE, not lime: lime measures 1.05:1 against cream and
-   would be an invisible bullet. On navy lime is 17:1 and is used. */
+
 .on-cream .checks .ck circle{fill:var(--blue);}
 .on-cream .checks .ck path{stroke:#fff;}
 .on-navy .checks .ck circle{fill:var(--lime);}
@@ -348,77 +160,16 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .hero .checks{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4);margin-top:var(--s5);}
 .hero .checks li{font-size:var(--t-body);color:var(--cream-dim);}
 
-/* ---------- header ---------- */
 .hdr{position:sticky;top:0;z-index:100;background:rgba(0,10,24,.92);
   backdrop-filter:blur(10px);border-bottom:1px solid var(--rule-d);}
 .hdr-in{display:flex;align-items:center;gap:28px;max-width:var(--max);
   margin-inline:auto;padding:14px var(--pad);}
 .brand{display:flex;align-items:center;min-height:44px;flex:none;}
-/* LOGO SIZE IS SET BY CAP HEIGHT (2026-08-23 JP: the logo reads tiny next to
-   the nav; re-derived 2026-08-24 for the redrawn mark).
-   The comparison is CAP HEIGHT, not font size -- the lockup and the nav are set
-   in different faces, so the same font size renders a visibly different capital
-   in each. The nav capital measures 11px. The old lockup at a 24px box put the
-   logo capital at 11px too, dead level, which is why it read as one more nav
-   item rather than as the mark the bar belongs to. Matching the nav was the
-   defect; a header logo has to outrank the links it sits beside.
-   Target is a 16px capital, 1.45x the nav.
-   THE BOX HEIGHT THAT REACHES IT IS A PROPERTY OF THE FILE, NOT A CONSTANT.
-   The old lockup carried padding and its capital was 41% of the box, so 34px.
-   The redrawn mark is cropped tight and its capital is 63.9% of the box, so the
-   SAME 34px would render a 21.7px capital and a 219px-wide logo.
-   AND CAP HEIGHT IS NOT THE WHOLE STORY EITHER (JP, 2026-08-24: "wayyyy too
-   massive"). 25px hit the 16px capital the old mark wanted, and still read far
-   too heavy, because the redrawn letterforms are much BOLDER and the monogram
-   much denser than what they replaced. Equal cap height between two weights is
-   not equal presence. 21px gives a 13.4px capital, 1.22x the nav, and 135px of
-   width.
-   NOTHING IN THIS BAR IS SPACED AGAINST THE LOGO, so do not justify a size that
-   way (I did, wrongly, on 2026-08-24). .hdr-in is a flex row with a flat 28px
-   gap and .nav carries margin-inline:auto, so the nav simply centres in whatever
-   room is left. The logo width moves the nav; it is not derived from it.
-   The only two widths JP has actually judged with his eye are the ends: 96px,
-   which ran for the site's whole life and which he called tiny, and 161px,
-   which he called way too massive. 135px is a reading between them, not a
-   restoration of anything. Re-measure if the file is recropped or redrawn.
-   135px WAS ALSO TOO BIG (JP, 2026-08-25: "still way way too big").
-   THE VALUE IS 15px — 97px wide, a 9.6px capital. JP CHOSE IT BY EYE on
-   2026-08-25 from a rendered ladder of eight sizes, real stylesheet, real face,
-   header and footer together. 17px was the recommendation and he went one step
-   further down.
-   THAT CAPITAL IS SMALLER THAN THE NAV'S 11px, which everything above this line
-   argues against. The derivation is retired, not merely overruled: it produced
-   34px, then 25px, then 21px, and JP rejected all three by eye. What it misses
-   is weight — the redrawn mark is far bolder and denser than the old one, so it
-   holds rank at a cap height the old mark could not have survived.
-   97px is also, to within a pixel, the 96px the OLD lockup ran at for the site's
-   whole life and which JP once called tiny. Same width, different mark: that
-   earlier judgement does not transfer, and it is not a reason to go back up.
-   DO NOT RE-DERIVE THIS FROM THE NAV. Re-measure only if the file is recropped
-   or redrawn, and then show JP a ladder rather than a calculation. */
-/* RE-MEASURED 2026-09-07: the file was replaced, which the note above says is
-   the one condition that reopens this. The old wordmark ran 6.447:1 and 15px
-   put it at 96.7px wide. The robot lockup is 5.338:1, so 18px holds that same
-   96.1px width — the width JP actually chose by eye on 2026-08-25, preserved
-   through a file swap rather than re-derived. The capital lands at 8.7px.
-   The mark is denser than the wordmark it replaces, so equal width will read
-   heavier; show JP a ladder before changing this, never a calculation. */
+
 .brand img{height:18px;width:auto;display:block;}
-/* auto on BOTH sides so the links sit centred between the logo and the CTA. The
-   phone number used to occupy the right-hand side and hold this balance; without
-   it a single margin-left:auto shunts the whole nav against the button. */
+
 .nav{margin-left:auto;margin-right:auto;display:flex;align-items:center;gap:30px;}
-/* THE LANGUAGE TOGGLE LEFT THE NAV ON 2026-08-26 and is a sibling of it now, so it
-   can sit in the bar on a phone instead of behind the burger. On desktop that is a
-   layout change unless it is paid for, because .nav's two auto margins were
-   centring [links + toggle] as one block and would now centre the links alone,
-   letting the toggle drift right and pack against the CTA.
-   So the RIGHT auto moves onto the toggle: the pair is still one centred group,
-   with the free space split before the links and after the toggle exactly as
-   before. The 2px is the difference between the nav's own 30px gap, which used to
-   separate them, and .hdr-in's 28px, which does now.
-   MEASURED, not asserted: at 1440 the toggle sits at x884-929 and the last link
-   ends at 854 both before and after; at 1101, 715-759 against 685. Identical. */
+
 @media(min-width:1101px){
   .nav{margin-right:0;}
   .lang-toggle{margin-right:auto;margin-left:2px;}
@@ -429,57 +180,29 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .nav a:not(.btn)::after{content:"";position:absolute;left:0;right:100%;bottom:10px;height:2px;
   background:var(--lime);transition:right .22s var(--ease);}
 .nav a:not(.btn):hover::after{right:0;}
-/* 9px, not 11px: at 11px the button was 46.7px and it — not the logo, not the
-   links — was the tallest thing in the row, so it alone set the bar height. At
-   9px it lands on the 44px min-height every other target already carries, and
-   the bar bottoms out at 44 + 2x8 + 1 = 61px. */
+
 .hdr .btn{padding:9px 18px;min-height:44px;font-size:var(--t-small);white-space:nowrap;}
-/* The phone number that used to sit here is gone by decision, not oversight —
-   the number is no longer published anywhere on the site. WhatsApp carries that
-   job now, from the contact and thanks pages. */
-/* The nav carries its own CTA for the mobile panel; on desktop the standalone
-   .hdr-cta is the one shown, so hide the in-nav duplicate above the breakpoint. */
+
 @media(min-width:1101px){.nav .btn{display:none;}}
-/* font:inherit so this button is not the one control on the site sitting at the
-   browser default of 13.33px Arial. It draws three bars and holds no text, so it
-   changed nothing visually -- it just stopped being an exception in the audit. */
+
 .burger{font:inherit;display:none;width:44px;height:44px;border:1px solid var(--edge-d);border-radius:6px;
   background:none;cursor:pointer;padding:0;place-items:center;}
 .burger span{display:block;width:17px;height:2px;background:var(--cream);margin:3px auto;
   transition:transform .22s var(--ease),opacity .16s linear;}
-/* Bar centres are 14px apart — measured, not derived: the grid rows size to more
-   than the 2px bar plus its 3px margins. At the old 5px the bars stopped well
-   short of meeting and the open state drew a chevron pointing right, which reads
-   as "expand" — the exact opposite of "close". They have to travel the full 14px
-   to cross into an X. */
+
 .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(14px) rotate(45deg);}
 .burger[aria-expanded="true"] span:nth-child(2){opacity:0;}
 .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-14px) rotate(-45deg);}
-/* 1100px, not 960: the header has to fit logo + four nav labels + the language
-   pill + a CTA now reading "Book a Free Strategy Call". English survives to about
-   960; Spanish does not — "Quien esta detras" and "Agenda una llamada gratis" wrap
-   the nav AND the button into two lines each below 1100. The burger is the honest
-   answer for that band rather than a squeezed row that only one language fits. */
+
 @media(max-width:1100px){
-  /* backdrop-filter makes an element the containing block for any fixed-position
-     descendant. The nav panel sits inside the header, so with the blur on, its
-     inset:0 resolved to the ~70px header box instead of the viewport — the menu
-     opened header-sized, links overflowing off the top, hero showing through.
-     The blur is only decorative and only visible on desktop, where no panel
-     exists. Dropping it below the breakpoint is what makes the panel work. */
+
   .hdr{backdrop-filter:none;}
-  /* The toggle carries the auto now and the burger just follows it, so the two
-     sit together as a pair on the right rather than at opposite ends of the bar.
-     They sit on the bar's own 28px gap, the same as everything else in the row. */
+
   .burger{display:grid;margin-left:0;}
   .lang-toggle{margin-left:auto;}
-  /* The panel paints over the header, so the two persistent controls are lifted
-     above it — the toggle joins them. It is reachable with the menu open AND
-     closed, which is the point of moving it out here. */
+
   .lang-toggle{position:relative;z-index:100;}
-  /* The panel is a CHILD of the header, so it paints over the header's own bar —
-     including the burger, leaving no visible way to close it. Lifting the two
-     persistent controls above the panel restores the close affordance. */
+
   .brand,.burger{position:relative;z-index:100;}
   .nav{position:fixed;inset:0;background:var(--navy);flex-direction:column;justify-content:center;
     gap:14px;transform:translateX(100%);visibility:hidden;
@@ -487,546 +210,147 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
   .nav[data-open="true"]{transform:none;visibility:visible;transition-delay:0s;}
   .nav a:not(.btn){font-family:var(--body);font-size:var(--t-body);font-weight:600;color:var(--cream);}
   .nav a:not(.btn)::after{display:none;}
-  /* The panel-scale rules that lived here are GONE with the move. They set the
-     toggle to 24px and cream to match the menu links; it is not in the menu any
-     more, it is in the bar, where the bar's own scale is right. Kept in the notes
-     rather than the stylesheet, because a rule that matches nothing still reads
-     as intent to the next person. */
-  /* AND THE BUTTON IS THE SMALLEST THING IN THE MENU, which is backwards for the
-     one item that is the point of the menu. It inherits .hdr .btn — a bar-sized
-     control at 13.76px — because the panel lives inside the header. Deliberately
-     NOT 1.5rem: a button set at link size stops reading as a button. */
+
   .nav .btn{font-size:var(--t-body);padding:16px 30px;min-height:56px;}
   .hdr .hdr-cta{display:none;}
 }
 
-/* ---------- hero ---------- */
-/* The hero's TOP PADDING is bird height (2026-08-12). Every pixel above the artwork
-   is a pixel the bird cannot have: the feet are pinned to the CTA and the CTA has to
-   stay above the fold, so the bird's ceiling is
-     100vh - nav - THIS - clearance
-   and nothing else. It was `--sect * .8` (83px at 1440), the same rhythm as every
-   other section, which is the right default for a section whose job is text and the
-   wrong one for the section whose job is a 780px bird. Trimmed deliberately, not
-   tidied — restoring the section rhythm here costs ~47px of mascot. */
-/* A MASCOT IS BACK IN THE HERO (2026-08-15, later the same day) — Hago, a robot,
-   replacing the birds that came out this morning. The apparatus below is the one
-   that stood the birds up, recovered from be1004b^ rather than rewritten, because
-   every number in it was measured and a fresh derivation would have re-earned the
-   same bugs. What changed is only what the new drawing changes. */
-/* ---------- the hero ground is BLUE, not navy (2026-08-16) ----------
-   Hago's dark mass measures #030C1A. --navy is #000A18. That is the same colour
-   to within a few units, so on a navy hero a third of the homepage drawing and
-   HALF the branding drawing had nothing to separate them from the section they
-   sat on -- 1.01:1, measured. The branding hero's bar chart was invisible.
-   The fix moves the ground rather than the artwork, so Hago stays exactly as
-   drawn: on this blue he measures 3.72:1.
-
-   THE GRADIENT DIRECTION IS LOAD-BEARING. 135deg puts the deep end top-left and
-   the bright end bottom-right, which is where the copy and the artwork sit in
-   BOTH layouts -- two-column on desktop, stacked on a phone. So the words always
-   get the deep end (9.72:1) and the drawing always gets the bright end. Flip it
-   and the body text lands on #2E72EE at 3.4:1 and fails.
-
-   Only the heroes move. Every other .on-navy section keeps --navy and the
-   page's dark/light alternation is untouched. */
 :root{
-  --hero-deep:#12326F;   /* behind the copy */
+  --hero-deep:#12326F;
   --hero-mid:#1B4EB0;
-  /* The bright end is the brand blue EXACTLY, and that is a contrast decision,
-     not a taste one. At #2E72EE the copy on the stacked phone layout ran down
-     into the bright end and --cream measured 3.90:1 on es/branding. #2365DE is
-     the worst ground cream ever lands on here and it still gives 4.81:1, so the
-     whole gradient is safe for text wherever the copy happens to fall -- while
-     Hago still clears 3:1 against it. */
-  --hero-bright:#2365DE; /* behind the artwork */
-  --hero-glow:#A8C6FF;   /* the radial lift, authored in each hero's inline SVG */
-  /* The bright stop lands at 70%, not 100%: at 100% the gradient was still
-     climbing where Hago actually stands and he measured 2.76:1, under the 3:1
-     floor. Reaching full brand blue by 70% puts the whole artwork on it. Safe to
-     pull forward only BECAUSE the bright end is capped at #2365DE -- cream reads
-     4.81:1 there, so copy drifting onto the bright end costs nothing. */
+
+  --hero-bright:#2365DE;
+  --hero-glow:#A8C6FF;
+
   --hero-ground:linear-gradient(135deg,var(--hero-deep) 0%,
                 var(--hero-mid) 30%,var(--hero-bright) 70%);
 }
 .hero{position:relative;overflow:hidden;background:var(--hero-ground);
   padding-block:clamp(24px,2.6vw,36px) 0;}
-/* .pagehero took its navy from .on-navy (0,1,0); this is (0,2,0) so it wins
-   without touching the eleven pages that use it. */
+
 .pagehero.on-navy{background:var(--hero-ground);}
 
-/* HERO TEXT GOES CREAM, AND ONLY IN THE HEROES.
-   --blue-lift and --cream-dim were each mixed to clear a threshold ON NAVY --
-   7.38:1 and 11.39:1 there. On the blue ground they measure 3.25:1 and 4.37:1
-   and both fail, so carrying them over would have shipped fifteen heroes that
-   break the site's own contrast rule. Measured across all fifteen at 1440, 1024
-   and 390 before and after.
-   Qualified .on-navy so these are (0,3,0) and beat the .on-navy rules by
-   SPECIFICITY rather than by order. Order alone was not enough: .on-navy .lede
-   sits above this block and lost, but .on-navy .notecap sits ~630 lines BELOW it
-   and won, so the contact heroes shipped their note line at 2.51:1 while every
-   other element passed. Same specificity plus different source position is a
-   coin toss; this does not depend on where the block sits.
-   Any new text element added to a hero needs re-measuring; passing on navy says
-   nothing about blue. */
-/* .eyebrow LEFT THIS LIST on 2026-09-10 -- it is lime now, set above and measured at
-   16.97:1. It has to be out of here rather than overridden after, because this block
-   and that one are both (0,3,0) and this one used to sit later. */
 .hero.on-navy .lede,.pagehero.on-navy .lede,
 .hero.on-navy .sub,.pagehero.on-navy .sub,
 .hero.on-navy .notecap,.pagehero.on-navy .notecap{color:var(--cream);}
 
 .hero-streaks{position:absolute;inset:0;pointer-events:none;opacity:.85;}
-/* ONE HERO GRID FOR BOTH PAGES (2026-08-12). The branding hero used to run its own
-   columns, its own padding and its own size token, which is how the two birds ended
-   up different sizes in different places on two pages that are meant to read as one
-   product. There is now nothing page-specific left: same columns, same token, same
-   floor. The figure column is 1.36fr rather than .82fr because it has to fit the
-   WIDER of the two drawings at full height — the pointing bird is 0.821 aspect
-   against the perched bird's 0.546 — and a column that fits only one of them is
-   exactly what made them stop matching. */
+
 .hero-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);
   gap:clamp(24px,4vw,56px);align-items:start;min-height:var(--mascot-h);
   position:relative;z-index:2;}
-/* ONE RATIO, 2026-08-26, AND THE TWO CLASSES THAT USED TO BEND IT ARE GONE.
-   Every hero ran its own columns for a while: 1.36fr to the figure by default,
-   1.6fr to the copy under .art-wide, 1.15fr under .art-scene. Each was solved
-   honestly for one page, and together they put the artwork at three different
-   x positions and the copy at three different widths, which is exactly what JP
-   read as "they're all different sizes".
-   1.4fr IS DERIVED, NOT CHOSEN. The binding constraint is the widest run of
-   headline that cannot break: "Make your brand" measures 570px at 1440 and 553px
-   at 1101 in Clash Display, and branding.html carries a <br> after it, so any
-   column under that width breaks the hero into four lines. 1.4fr gives the copy
-   649px at 1440 and 559px at 1101 — the tightest ratio that clears 553 — and
-   leaves the figure 463px and 399px.
-   RE-MEASURE WITH h1width, NOT BY EYE, IF ANY HEADLINE CHANGES: the number that
-   matters is the widest segment between <br>s, not the whole string. */
-/* --hero-floor is GONE (2026-08-26). It held the last line of copy off the
-   section edge back when the copy was bottom-aligned to the artwork. Every hero
-   top-aligns its copy now, so the only floor left is the section's own
-   padding-bottom and one number does what two used to. */
-/* No max-width here. It was added on 2026-08-15 because a single-column hero let
-   an h1 set across the full 1280px shell; the figure column is back, so the grid
-   supplies the measure again and a second cap would fight it. */
+
 .hero-copy{padding-bottom:0;}
 .hero h1{margin-top:var(--s3);}
 .hero h1 .lime{color:var(--lime);}
 .hero .lede{color:var(--cream-dim);max-width:44ch;text-wrap:pretty;}
-/* Not scoped to .hero any more — the contact page's page-hero needs the same
-   primary-button-plus-text-link row. Every .ctas on the site is a hero row. */
+
 .ctas{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;margin-top:var(--s5);}
-/* LEFT edge, not centre (2026-08-12). The figure column has to fit the WIDER of the
-   two drawings, so centring parks the narrower one out in open navy — it read as the
-   mascot drifting away from the words it belongs to. Aligned to the column's start,
-   both files begin at the same x. */
+
 .hero-mascot{align-self:center;justify-self:start;}
-/* .art-bleed — THE ONE PAGE WHOSE DRAWING IS TOO WIDE TO BE BIG (2026-08-26, JP:
-   "the website image is a bit small"). The websites scene is 1.80:1, so at the
-   shared 463px column Hago rendered 242px against 480 on the homepage. Every other
-   way of growing it was measured and is worse:
-     · a wider figure column on this page costs the copy column the site now
-       shares, and buys almost nothing — at copy 560 / figure 552 Hago reaches 289,
-       which this does without touching the copy at all;
-     · the old default ratio (figure 641) breaks the English headline into four
-       lines with "outright" orphaned.
-   So the ART grows out of its column instead: anchored to the column's right edge,
-   120% wide, and bleeding into the shell's own right padding. The copy column, the
-   hero height, the eyebrow and headline positions are all untouched.
-   1.20 IS A CEILING, NOT A PREFERENCE, and the SPANISH headline sets it. Measured
-   at 1440/1280/1200/1101/1024/940, the smallest clearance between the artwork and
-   the nearest text line on es/websites.html is 24px at 1.20 and NEGATIVE at 1.35.
-   Re-measure both languages before raising it; English alone would allow 1.48. */
+
 .hero-mascot.art-bleed{justify-self:end;width:var(--bleed,120%);margin-right:calc(-1 * var(--pad));}
-/* .art-bleed-wide — the SAME ceiling re-measured on a different page (2026-09-10, JP:
-   "needs to be bigger, like the other ones"). The contact scene is 1.778:1, the widest
-   in the set, so the shared column caps its width long before its height fills the row:
-   556x313 against social's 556x415 and google-presence's 463x475. It was the shortest
-   artwork on the site.
-   The 1.20 ceiling above is real, but it was measured on es/websites.html, whose Spanish
-   headline sets it. Contact's copy is shorter, so it was re-measured the same way — the
-   smallest clearance between the artwork and any TEXT LINE sharing its vertical band,
-   both languages, six widths. Contact at 1.35, ENGLISH:
-     1440 +79px · 1280 +77px · 1200 +40px · 1101 -6px · 1024 -42px · 940 -30px
-   which says 1200. SPANISH says otherwise, and Spanish wins, exactly as it does on
-   websites: "O mándanos tus datos aquí abajo" is a longer line than "Or send your
-   details below", and at 1200 it leaves +12px — under the 24px this rule has always
-   treated as the floor. At 1280 it is +49px. So the query is 1280, not 1200.
-   Measure BOTH languages before touching this. Measuring English alone is how you
-   ship a number that is 28px wrong on the other half of the site. */
-/* SECOND PASS 2026-09-10, JP: "the contact us animation is still WAYYYY too small".
-   Measured, and the gap was the largest on the site: contact rendered 352px tall at
-   1440 against 480 on index/about/branding, and Hago HIMSELF -- who is only 29% of
-   this 1.778:1 frame, the rest being the form card drawn around him -- came out at
-   289px against about's 475.
-   135% was not the ceiling. What held it there was the LEDE, not the headline. At
-   44ch the lede was the binding line at all six widths, reaching to within 85-90px
-   of the artwork; the h1 is only 420px wide inside a 649px column and never was the
-   constraint on this page. Both changes were measured on BOTH languages at
-   1440/1280/1200/1101/1024/940 and 430/390/360/320:
-     1. the lede is 30ch here only. It is one sentence, so it goes from two lines to
-        three and gives back ~115px of horizontal room.
-     2. the bleed goes to 185% and the artwork is allowed past the viewport's right
-        edge, because the right 151px of this frame is empty plate -- the navy bars
-        stop at x969 of 1120. The overhang is capped at 13% of the rendered width so
-        no bar is ever clipped, which is why it steps down below 1101.
-   Result at 1440: 853x480, the same 480 every other hero reaches, Hago 289 -> 394.
-   Smallest SPANISH clearance across the six widths is 32px at 940, above the 24px
-   floor this file has always used, and nothing overflows at any width.
-   THE REST OF THE GAP IS THE RENDER, NOT THE CSS: 480 is the row ceiling, so contact
-   cannot grow again without a frame in which Hago fills more of it. */
+
 @media(min-width:1101px){
   .hero-mascot.art-bleed-wide{--bleed:185%;margin-right:calc(-1 * var(--pad) - 95px);}
 }
 @media(max-width:1100px){
   .hero-mascot.art-bleed-wide{--bleed:175%;margin-right:calc(-1 * var(--pad) - 65px);}
 }
-/* Scoped by the bleed class rather than a page class: art-bleed-wide is on contact
-   and its Spanish twin and nowhere else, so this cannot leak onto a hero whose lede
-   is not paying for artwork width. */
+
 .hero:has(.art-bleed-wide) .lede{max-width:30ch;}
-/* .art-bleed-scene — websites, the last hero still under the set (2026-09-10, JP: "fix the
-   websites hero too"). It was 556x309 at 1440 against 480 on index/about/branding, and Hago
-   himself 297 against About's 475.
-   IT IS NOT THE SAME PROBLEM AS CONTACT AND THE SAME FIX DOES NOT WORK. Contact grew by running
-   blank plate off the right edge; this frame has no blank plate — the alpha bbox is 1118x614 of
-   1120x622 and the right edge is the PHONE, ink to x1110. Anything sent off-screen here is
-   drawn content.
-   Three things were measured and rejected before this one:
-     · raising the shared .art-bleed — social carries the same class and went to -67px clearance
-       at 1440. The value is shared; the constraint is not.
-     · bottom-aligning the figure so the H1 leaves its vertical band — at 386-476px tall in a
-       480px row it still overlaps nearly all the copy. Gains nothing, measures worse.
-     · a hand-placed <br> in the Spanish H1 — it helped 1440 and cost 1280 and 1101, because it
-       stopped "Diseno de paginas web" from wrapping. text-wrap:balance is already on h1, so
-       605px IS the balanced result and there was nothing left to win there.
-   WHAT BINDS IS THE SPANISH H1 AT THE WIDEST WIDTHS and the LEDE below 1101, so the fix pays
-   both. The lede goes to 32ch here, and the overhang is viewport-aware rather than a flat number:
-   the shell stops growing at 1280 while the viewport does not, so a fixed px overhang lands the
-   artwork 25px past the edge at 1280 and 105px short of it at 1440. max(27px, 50vw - 613px) puts
-   the right edge the same 27px past the viewport at EVERY width, which is what keeps the clipping
-   constant instead of letting it swing with the window.
-   The clip is deliberate and bounded: 41-56 source px, the phone's rounded right corner, never
-   more than about 15% of the phone. Measured both languages at 1440/1366/1280/1101/1024/940 —
-   smallest Spanish clearance is 25px against the 24px floor, English never below 63, nothing
-   overflows. Result 686x381 at 1440, Hago 297 -> 366.
-   Like contact, the rest of the gap is the RENDER: a 1.80:1 frame with three objects in it
-   cannot fill a 480px row without either eating the copy column or eating the phone. */
+
 .hero-mascot.art-bleed-scene{--bleed:148%;
   margin-right:calc(-1 * var(--pad) - max(27px, 50vw - 613px));}
 .hero:has(.art-bleed-scene) .lede{max-width:32ch;}
-/* .bleed-1101 — branding takes the bleed only where it clears (2026-09-10, JP: "are the
-   Hago's in the heros different size? i like the size of the one in the about section").
-   He is right and it is measurable. Hago's DRAWN height at 1440, per hero:
-     about 470 · google 470 · index 440 · branding 379
-   Branding was the outlier at 19% under the one he likes, and the cause is in the render
-   rather than the CSS: that animation resolves on a WIDE wordmark, so its frame has to
-   hold both a tall robot and a wide lockup, and Hago at rest fills only 92% of the frame
-   height. Nothing can be cropped — the union across all 124 frames measures 936x776 of a
-   936x834 canvas.
-   What CAN change is which axis caps it. Unbled, branding is WIDTH-capped by the 463px
-   column at 463x413, leaving 67px of the row unused. With the bleed it becomes
-   HEIGHT-capped at 539x480, and Hago goes 379 -> 441.
-   The gate is Spanish again: at 1024 es/branding leaves 21px, under the 24px floor, while
-   1101 and up clear 46-148px. So below 1101 the bleed is undone and the artwork returns
-   to its column. */
+
 @media(max-width:1100px){
   .hero-mascot.art-bleed.bleed-1101{justify-self:start;width:100%;margin-right:0;}
 }
-/* ONE ALIGNMENT FOR EVERY HERO (2026-08-26). Three regimes used to live in this
-   gap and the essays arguing for each are deleted rather than kept: every one was
-   right about its own page and wrong about the set.
 
-   THE COPY IS TOP-ALIGNED, so the eyebrow starts 36px under the section top on
-   all four pages and the headlines line up when you click between them. Bottom-
-   aligning read fine on any single page and left google-presence's eyebrow 163px
-   down while every other page started at 36 — the drift JP named.
-
-   THE FIGURE SITS ON THE FLOOR of a row that is ALWAYS --mascot-h tall, which is
-   what min-height on .hero-grid buys: the artwork's base lands on the same line
-   whatever its own height, and the heroes stop changing height under the header
-   as you move between them.
-
-   The old objection to a fixed alignment was that the copy inherits the figure's
-   movement as the window grows. It cannot now — the copy is pinned to the top and
-   the figure to the bottom, so neither depends on the other's height. */
-/* Under the figure's floor, on every hero. This was scoped away from branding
-   while that page bottom-aligned its copy; nothing is scoped now. */
 .hero{padding-bottom:clamp(32px,3.4vw,48px);}
-/* --mascot-tail is GONE with the margin it fed (2026-08-26). It measured how far a
-   drawing continued BELOW the feet, so a figure with a tail could still land its
-   soles on the floor. Every Hago file is 0 — each one's lowest pixel is the sole of
-   a shoe — and the figure now sits on the grid row's own floor rather than on a
-   computed margin, so nothing reads it. Bring it back with the first drawing that
-   needs it, and measure that drawing rather than assuming the old value. */
+
 .hero-mascot{margin-bottom:0;}
-/* ONE HEIGHT FOR EVERY HERO MASCOT, and since 2026-08-26 it also sets the ROW: the
-   grid carries min-height:var(--mascot-h), so this is both the ceiling on the
-   artwork and the height of the hero itself. Pages are never seen side by side, so
-   the point is the four of them feeling like one product rather than four builds.
-   The middle leg is a FOLD guard: the last hero element lands at
-     nav(71.7) + hero pad-top + --mascot-h
-   and artwork sized off width alone knows nothing about the height it pushes the
-   copy into. MEASURED, not asserted — verify.py prints fold+N and fails under 16px. */
-/* THE CEILING WAS 980px UNTIL 2026-08-26, and that is what made this hero drift.
-   Hago is measured against window HEIGHT; the headline is measured against window
-   WIDTH and stops growing at 70px. So on a big screen he ran to 980px against a
-   frozen headline -- 13.9x its size, against 6.4x on a small one -- and because the
-   grid was align-items:end the copy was dragged down with him, travelling 583px
-   between the smallest window measured and the largest. JP saw it as the text
-   moving and misaligning with the figure, and only on this page: every other hero
-   sizes its art off the COLUMN, the same ruler the headline uses, so the two
-   cannot drift.
-   700 capped the swing at 9.9x and pulled the copy's travel to 146px. 540 followed
-   the same day, for a second reason: SCALE AGAINST THE REST OF THE PAGE. Measured at
-   1440, every other illustration on the homepage renders 270-372px tall (the pillars),
-   with the step icons at 80 and the value icons at 40. At 700 the hero figure was
-   1.88x the biggest thing beneath it and read as a different page; at 540 it is 1.45x,
-   still clearly the lead image, and close to the branding hero's 381px so the two
-   heroes sit in the same family. Going further
-   means removing the 100vh term altogether, which was measured and rejected: it
-   locks the ratio to 1.5 and the copy to 8px, and it costs the CTA -- "Book a free
-   call" lands 44px below the fold at 1100x620 and 117px below at 1000x540, with
-   319px of Hago below it. The term is a FOLD GUARD before it is a size, and the
-   real cause is the drawing being 2:3 tall against a fixed-width column. */
+
 :root{--mascot-h:clamp(300px,min(60vw,calc(100vh - 143.5px)),480px);}
-/* 540 BECAME 480 THE SAME DAY (2026-08-26), and it is the ROW now, not just the
-   art. The grid carries min-height:var(--mascot-h), so this number decides how
-   tall every hero is — and a row sized to the tallest drawing leaves the shorter
-   ones sitting in dead navy. At 540 that was 127px under the branding artwork and
-   283px under the websites scene. 480 is where the square google-presence drawing
-   lands on its own in a 463px column (475px), so the row is the height the widest
-   standing composition already wanted rather than a number picked to suit one file.
-   It also SHARPENS the scale argument above rather than working against it: the
-   homepage figure goes from 1.45x the biggest illustration beneath it to 1.29x,
-   and from 159px taller than the branding hero's artwork to 67px. */
-/* --flip is read by app.js when it writes the parallax transform, because the script
-   overwrites any CSS mirror. It is 1 — NO mirror — and for these two files that is
-   not a preference, it is a constraint: both carry the HD wordmark on the chest, and
-   a scaleX(-1) renders it backwards. The chart file has a second reason on top, the
-   one this token was invented for — its arrow rises to the right, and mirrored it
-   sells a falling line on a page about growth. Do not "simplify" this away. */
-/* --mascot-parallax is how far the drawing slides against the scroll, as a
-   fraction of scrollY, and app.js reads it from here rather than hardcoding a
-   number — same reason --flip lives on this element. It is a NEGATIVE value, so
-   the mascot rises as the page goes down. Beside the copy that is free
-   decoration; STACKED it is not, because the mascot sits under the CTA and every
-   10px of scroll eats 1px of the gap to it. See the phone override below. */
-/* MAX-height, not height (2026-08-26). height + max-width is a SQUASH: the width
-   cap bites, the declared height does not move, and the drawing renders distorted
-   with nothing reporting it. It never showed on the homepage because that figure
-   is narrow enough that the cap never bit; the google-presence figure is 0.975:1
-   and 527px wide at --mascot-h, so it clips the moment its column is narrower
-   than that. Capping BOTH axes and letting the intrinsic ratio choose is the same
-   540px wherever the old rule was safe, and honest where it was not. */
+
 .hero-mascot img{--flip:1;--mascot-parallax:-.10;height:auto;width:auto;
   max-height:var(--mascot-h);max-width:100%;transform:scaleX(var(--flip));}
-/* The homepage hero swaps its still for a transparent-WebM video at runtime, so
-   the video has to inherit exactly what the image had — same height token, same
-   floor, same flip. Anything it does not inherit is a jump at the moment of the
-   swap. --flip stays 1 for the same reason as the stills: the HD monogram on the
-   chest renders backwards mirrored. */
+
 .hero-mascot video{--flip:1;--mascot-parallax:-.10;height:auto;width:auto;
   max-height:var(--mascot-h);max-width:100%;display:block;transform:scaleX(var(--flip));}
 
-/* The branding hero's private layout — its own copy-width token, its own padding
-   escape from .shell's 1280px cap, its own width-driven size ceiling — is DELETED
-   (2026-08-12). It existed because that page once carried a landscape framed chart
-   that genuinely needed more room than a portrait mascot, and it long outlived the
-   artwork. Every one of those knobs was a way for the two heroes to drift apart, and
-   they did. If a future hero needs different room, widen the SHARED grid so both
-   pages move together, or the drift comes straight back. */
-/* .hero carries no bottom padding — deliberate, so a cutout mascot can stand on the
-   section edge. Stacked, the figure is the last thing in the hero, so it pays for
-   that padding itself. */
 @media(max-width:900px){
   .hero-mascot{margin-bottom:calc(var(--sect) * .8);}
 }
 @media(max-width:900px){
-  /* This used to need every :has() variant of .hero-grid repeated, because the
-     desktop overrides were (0,2,0) and a media query adds no specificity — the
-     branding hero held two columns all the way to 390px for as long as that page
-     had been live. One selector on the desktop side means one here.
-     min-height goes with it: --mascot-h is a DESKTOP row height, and stacked it
-     would reserve 300px of nothing under the copy. */
+
   .hero-grid{grid-template-columns:1fr;min-height:0;}
-  /* Stacked, the grid gap is the ONLY thing between the CTA button and Hago's
-     head, and clamp(24px,4vw,56px) resolves to its 24px floor on a phone -- the
-     vw leg needs a 600px viewport to beat it, so every phone got the minimum.
-     That read as the button and the robot touching. Its own row-gap here, with a
-     floor that actually binds at 390 (39px) instead of one that never does.
-     Column gap is untouched; this axis does not exist on desktop. */
+
   .hero-grid{row-gap:clamp(32px,10vw,56px);}
   .hero-copy{padding-bottom:0;order:1;}
   .hero-mascot{order:2;justify-self:center;}
-  /* NO PARALLAX ON THE STACKED MASCOT (2026-08-16). Beside the copy it slides
-     up harmlessly; underneath the CTA it slides INTO it. Measured at 390: the
-     gap starts at 39px, is 9px by 300px of scroll and -1px by 400px, so the
-     button and the robot overlap on any real scroll down the homepage. No
-     amount of padding survives it -- a static gap only sets how far you scroll
-     before they touch. The row-gap above is what holds them apart; this is what
-     stops the gap being spent. Restraint is in WHERE the motion goes: the
-     streak layer still parallaxes on a phone, this one does not. */
+
   .hero-mascot img{--mascot-parallax:0;}
-  /* Sat 48px off the section floor with the parallax carrying it further up the
-     longer you scrolled -- 108px of empty ground below it by 600px. Closer to
-     the floor on JP's call, and with the drift gone the number now holds. */
+
   .hero-mascot{margin-bottom:clamp(16px,5vw,32px);}
-  /* Stacked, the figure already has the full width; bleeding it would push the
-     drawing off the screen edge and hand verify.py a horizontal scrollbar. */
+
   .hero-mascot.art-bleed{justify-self:start;width:100%;margin-right:0;}
-  /* Stacked, both heroes are sized by HEIGHT for the same reason they are on
-     desktop: width-driven sizing gave the wider drawing a taller mascot, and the two
-     pages stopped matching on phones the moment they started matching on desktop.
-     One height, both pages; max-width keeps the wider one inside a 390px screen.
-     Was clamp(420px,74vw,560px), inherited from the birds and too big for Hago
-     (2026-08-15). A bird is a narrow silhouette; the robot is close to square on the
-     homepage and wider still on branding, so the same HEIGHT buys far more mass on a
-     phone. Cut twice the same day — 420 to 340, then to 270 — because the first cut
-     was still too big on a phone by JP's eye. Judge this one by WIDTH, not height:
-     height is what the rule sets, but what reads as "too big" is how much of a 390px
-     screen the drawing covers, and branding is the binding case at 0.830 aspect
-     against the homepage's 0.554. At 340 it was 260px of 390, two thirds of the
-     screen; at 270 it is 224, well under. The vw leg never binds on a phone — at
-     390px it resolves to 187 and the floor wins — so the FLOOR governs phones and
-     the ceiling governs the top of the stacked range. Changing the middle number
-     alone does nothing on the screens this rule exists for. */
+
   .hero-mascot img,.hero-mascot video{height:auto;width:auto;
     max-height:clamp(270px,48vw,390px);max-width:92%;}
 }
 
-/* ---------- system band ---------- */
 .band{background:var(--navy-2);text-align:center;padding-block:var(--sect-band);}
-/* THE LINE ABOVE A NAVY BAND IS EDITORIAL, NOT FUNCTIONAL -- JP, 2026-09-09:
-   "the little label above it is currently Instrument Sans, tiny, uppercase and
-   widely tracked. It looks like it comes from another design system." It does:
-   that treatment is the FORM LABEL treatment, and this is a section introduction.
-   Face follows what the text does, so it takes Clash at the smallest display
-   step -- clearly under the heading it introduces, clearly related to it.
-   This is deliberately NOT a global .eyebrow change. A 13px tracked capital
-   still labels a form section and a card, and should. */
+
 .band .eyebrow{
   font-family:var(--display);font-size:var(--d-xs);font-weight:600;
   letter-spacing:-.01em;text-transform:none;line-height:var(--lh-label);
   margin-bottom:var(--s2);
 }
-/* The band centres its TEXT, but .lede carries a 46ch max-width and no auto
-   margin, so the paragraph BOX still sat hard left inside the shell and the
-   sentence read as off-centre under a centred heading -- JP, 2026-09-09: "none
-   of those are properly centered". Centring the box is the fix; the measure
-   stays, because a full-width sentence under a balanced heading is worse. */
+
 .band .lede{margin-inline:auto;}
-/* branding.html's band breaks its heading over two lines. --blue-lift, not the
-   --blue-ink used for the same job on cream: that one is mixed FOR cream and
-   fails against navy-2. */
+
 .band .h-band span{display:block;color:var(--blue-lift);}
 
-/* ---------- pillars ---------- */
 .pillar .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
   gap:clamp(28px,5vw,72px);align-items:center;}
 .pillar .n{font-family:var(--body);font-weight:600;font-size:var(--t-body);color:var(--blue-ink);
   letter-spacing:.02em;}
 .on-navy .pillar .n,.pillar.on-navy .n{color:var(--blue-lift);}
 .pillar h2{margin-top:var(--s1);}
-/* THE PILLAR ILLUSTRATION HEIGHT BAND (2026-08-22, JP: the Google one reads
-   "absolutely massive" beside the others on the same page).
-   There was never a rule here. Each illustration was cut tight to its own drawing
-   and dropped in at width:100%, so its rendered HEIGHT was whatever its aspect
-   happened to be -- and the aspects run 1.085 to 2.076. Measured across all six
-   supplied pillar images: websites-navy 1.431, websites 1.517, brand-applied
-   1.534 and ai-human 1.627 all land 329-374px tall at the real column width.
-   Only two sit outside it: google-presence at 1.085 rendered 517px -- 1.9x the
-   shortest illustration on its own page -- and brand-identity at 2.076 rendered
-   270px. So the band is not invented; it is the one four of the six already
-   occupy, and 372px is its top edge. Capping there costs the cluster nothing and
-   brings the Google image down 517 -> 372.
-   BOTH maxima with auto sizing is what preserves the aspect. width:100% plus a
-   max-height SQUASHES the drawing, because the width is then fixed and only the
-   height gets clamped -- the image is not free to scale.
-   This rule does NOT rescue brand-identity. At 2.076 it already spans the full
-   column, so its only route to more height is more width and there is none.
-   That one needs a squarer composition, not CSS.
-   The cap only bites at desktop: at 390px the column is 350 wide, so even the
-   1.085 image renders 323px tall and passes under it untouched. */
+
 .pillar figure img{max-width:100%;max-height:372px;width:auto;height:auto;
   display:block;}
-/* A capped image is NARROWER than its column, so it has to be told where to sit
-   in it. Centring floats it: the Google row ended at 1225 while the identity row
-   directly above it reached 1304, and the page's outer margin -- the strongest
-   alignment on the page -- broke for one row only. So a capped image hugs the
-   OUTER edge of its column, which is the page margin on whichever side the
-   figure was authored. The slack then falls into the middle gutter, where a
-   two-column editorial row already has air. */
+
 .pillar .row > figure:first-child img{margin-inline:0 auto;}
 .pillar .row > figure:last-child img{margin-inline:auto 0;}
-/* The pillar figures on websites.html and google-presence.html are drawn SVG
-   rather than supplied artwork, so they need the same "fill the column" rule the
-   raster ones get. (start.html established this and was retired 2026-08-14; the
-   rule is still load-bearing for the two service pages.) They carry their own
-   navy panel inside the viewBox — same device as .scard .art — which is what lets
-   one sit on cream and the other on navy and still read as a matched pair.
-   Solid fills, not linework: the three system cards that are still line drawings
-   are exactly the ones that read lighter than everything beside them. */
+
 .pillar figure svg{width:100%;height:auto;display:block;border-radius:10px;}
-/* addendum: image sits in a restrained frame on the light ground (assets 08
-   carry a baked dark field), and directly on the dark ground for 09. */
+
 .framed{border:1px solid var(--rule-l);border-radius:10px;padding:8px;background:var(--navy);}
 .framed img{border-radius:6px;}
-/* THE PICTURE ALTERNATES SIDES — 01 words-left, 02 picture-left, 03 words-left.
-   Source order does it. The markup puts <figure> first on the even rows, so
-   there is no placement CSS here on purpose.
 
-   TRIED AND REVERTED, 2026-08-15. For one day a min-width:901px block forced
-   words-left / picture-right on every row, to buy one unbroken left edge: the
-   homepage heading edges run 128 · 735 · 128 · 735 · 128px, and every other
-   heading on the site starts at 128. JP reverted it the same day — the
-   alternating rhythm is worth more than the shared left edge, and that is the
-   decision, not an oversight. Do not re-apply it without asking him first.
-
-   If it is ever re-applied, the motion override has to come back WITH it: a
-   figure authored on the left carries data-rise="left", so forcing it to the
-   right makes it fly in from the side of the page it no longer sits on. Motion
-   direction follows the ELEMENT, not the markup it was authored in. Both halves
-   are one change; shipping either alone is a bug. */
 @media(max-width:900px){
   .pillar .row{grid-template-columns:1fr;}
-  /* MOBILE RULE (addendum): copy first, image second, every pillar. */
+
   .pillar .copy{order:1;}
   .pillar figure{order:2;}
 }
 
-/* ---------- process ---------- */
 .proc-head{text-align:center;}
 .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4);margin-top:var(--gap-l);
   position:relative;}
 .proc-step{text-align:center;position:relative;}
-/* No disc. It was a 60px navy circle carrying a 34px icon, and it made the row
-   read as four buttons rather than four steps — JP, 2026-08-21: "I don't want
-   them in circles". Taking it away lands the icon straight on the cream section,
-   which is why these four now come from the IVORY edition: the Navy edition's
-   exterior is an ivory keyline and it would have dissolved into #F8F5E6.
-   Measured both ways at 64px — Navy edition on cream loses 92-99% of its
-   contour, Ivory edition loses 0-38%. */
-/* Gap follows the icon. It was 16px when the icon was 64; at 80 the icon
-   dominates and 16 reads cramped under it, so it steps with the tier. Also a
-   raw 16px here where everything else uses the scale -- now --s4. */
+
 .proc-step .stepicon{display:grid;place-items:center;margin:0 auto var(--s4);}
 .proc-step .stepicon svg{width:var(--icon);height:var(--icon);}
 .proc-step .stepicon img{width:var(--icon);height:var(--icon);display:block;}
 .proc-step h3{font-size:var(--t-body);}
-/* --grey is 3.81:1 on navy and this stylesheet has said so since launch, on the
-   --cream-mute line. These rungs sit on navy on about.html in both languages and
-   were failing at exactly 3.81. Found 2026-08-20 by contrast-check.py, which reads
-   the rendered page rather than the CSS — nothing that reads CSS could tell which
-   ground this rule lands on. --grey stays correct on cream, so the fix is scoped
-   to the navy case rather than changing the token. */
+
 .proc-step p{font-size:var(--t-body);font-weight:500;color:var(--grey);margin-top:var(--s1);max-width:26ch;margin-inline:auto;}
 .on-navy .proc-step p{color:var(--cream-mute);}
-/* dashed connector between badges, desktop only */
-/* The dashed run joins the icons, so its geometry is derived from --icon rather
-   than from the 60px disc it used to cross: half the icon down, and inset by
-   half the icon plus the 12px breathing room on each side. Hardcoding 30/42/84
-   is how it would silently stop meeting the icons the next time the size moves. */
+
 .proc-step::before{content:"";position:absolute;top:calc(var(--icon) / 2);
   left:calc(-50% + (var(--icon) / 2) + 12px);width:calc(100% - var(--icon) - 24px);
   border-top:2px dashed rgba(0,10,24,.22);}
@@ -1036,67 +360,27 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
   .proc-step::before{display:none;}
 }
 @media(max-width:520px){.proc{grid-template-columns:1fr;}}
-/* THREE RUNGS, NOT FOUR STEPS (2026-08-15).
-   .proc was written for the homepage's four-step process and hard-codes
-   repeat(4,1fr). about.html's ladder reuses it with three rungs, so the three
-   sat in columns 1-3 and the empty fourth column pushed the whole group left:
-   measured at 1440, container 1168px, three 272.5px columns plus two 26px gaps
-   = 869.5px used, 298.5px empty on the right, block offset ~149px from centre.
-   It reads as "that section is not centred" because it is not.
-   Count-specific modifier rather than :has(), to match how the rest of this
-   sheet is written, and it must sit AFTER the two .proc media blocks above -
-   same specificity, so source order is what makes it win. */
+
 .proc--3{grid-template-columns:repeat(3,1fr);}
 @media(max-width:860px){.proc--3{grid-template-columns:1fr;}}
-/* The note under the ladder is the last line of a centred block, so it centres
-   with it. Scoped to a .notecap that FOLLOWS a .proc - the ones on contact,
-   thanks and 404 are body copy and stay left. */
+
 .proc + .notecap{text-align:center;max-width:70ch;margin-inline:auto;}
 
-/* ---------- about + cta ---------- */
-/* align-items:START, not center. Both text columns must begin on the same line;
-   whichever is shorter floats otherwise, and it has now been each of them in turn.
-   It was the CTA card until the copy column carried the .vals list, and the copy
-   column the moment that list was cut (2026-08-30) - the same 100-odd px drop,
-   the other side. Centring is the MASCOT's requirement alone, so it now asks for
-   itself instead of the row granting it to everything. */
 .about{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.66fr) minmax(0,.9fr);
   gap:clamp(24px,3.5vw,48px);align-items:start;}
 .about-mascot{align-self:center;}
-/* The two headings have to START ON THE SAME LINE, and the eyebrow above the left
-   one is the only reason they did not. It is lifted OUT OF FLOW into the section's
-   own top padding rather than offset against with a number on the card opposite:
-   the Spanish eyebrow WRAPS TO TWO LINES at 1101 (39.6px against English's 19.8),
-   so any fixed margin is correct in one language and wrong in the other at exactly
-   one width. Out of flow, a wrap grows upward into padding that is 81-104px deep
-   there and nothing below it moves. Scoped to the three-column layout - under 1080
-   the card sits beneath the copy and the eyebrow needs its space back. */
+
 .about-copy > .eyebrow{margin-bottom:8px;}
 @media(min-width:1081px){
   .about-copy{position:relative;}
   .about-copy > .eyebrow{position:absolute;bottom:100%;left:0;}
 }
-/* Sized INSIDE its column, not spilling out of it. The old rule was
-   width:138% with a -19% bleed, which was drawn for a 1.5 landscape bird and
-   only ever worked because of that aspect: a 774x1325 portrait robot under the
-   same rule rendered 628px tall against the bird's 245px and swamped the
-   section. A width percentage here is a statement about the ARTWORK's shape as
-   much as the layout, so it stays inside the column and the art is free to
-   change aspect without taking the section with it. */
+
 .about-mascot img{width:88%;max-width:none;margin-inline:auto;display:block;}
-/* Stacked, not three-across. The three-column rule fired at 600px, but .vals
-   sits inside the About grid's 1.1fr column — about 443px at full width — so
-   each value got roughly 88px of text and wrapped to four or five lines of
-   8px copy. Stacked they read at a sensible measure, and the taller left
-   column balances the CTA card opposite it. */
+
 .vals{display:grid;gap:var(--s4);margin-top:var(--s4);align-items:start;}
 @media(min-width:721px){.vals{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s5) var(--s4);}}
-/* ICON ON TOP, TEXT UNDER -- JP, 2026-09-09: "the text should go under the icons
-   just as everywhere else in the page, at the moment they're on the right and it
-   looks weird". Every other icon block on the site stacks; these two were the only
-   ones running the label beside the drawing, and the odd one out is what he saw. */
-/* Same treatment as .mini above, and for the same reason -- the three
-   Recognisable / Credible / Consistent blocks sit in the same section. */
+
 .val{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s2);align-items:start;
   justify-items:center;text-align:center;}
 .val svg,.val img{width:var(--icon-sm);height:var(--icon-sm);display:block;}
@@ -1115,52 +399,13 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
   .about-mascot img{width:100%;max-width:220px;margin-inline:auto;}
 }
 
-/* ============================================================
-   BRANDING PAGE (branding.html)
-   Built to the supplied render. Three deliberate departures from it,
-   all for the same reason the rest of this stylesheet has --blue-ink:
-
-   1. The render sets lime type on the cream ground (the section-four
-      heading, the card numbers, the tick rings). Lime is 1.07:1 there —
-      not low-contrast, invisible. Lime keeps its role as THE emphasis
-      colour, but on cream that role is carried by --blue-ink and on
-      navy by real lime. Same substitution as .on-cream .checks .ck.
-   2. The render's ten cards sit at five across. Five 1/5 columns give
-      each card ~200px, which wraps a four-word title to three lines.
-      They run at auto-fit with a 200px floor instead, so the row count
-      falls out of the viewport rather than being asserted.
-   3. Card art is inline SVG, not raster. Imagery is ChatGPT's to supply;
-      vector is the one illustrative form that can be authored here.
-   ============================================================ */
-
-/* The hero quote rail lived here and is deleted (2026-08-12). Its markup went
-   when the branding hero dropped its pull-quote, but three rules and a media
-   query stayed behind on zero pages. Found by a detector pass, not by reading:
-   dead CSS is invisible to a grep for something that looks wrong, because
-   nothing about it looks wrong. It carried the site's only thick single-side
-   accent rule on a card edge — a pattern worth not reintroducing.
-   (Written without the literal declaration on purpose: the detector matches
-   comment text as well as code, so quoting it here re-raises the finding.) */
-
-/* ---------- inline benefit row (hero + band) ---------- */
-/* EQUAL COLUMNS, NOT A RAGGED FLEX ROW. Once the icons moved on top of the text
-   (2026-09-09) each item sized to its own longest word, so three stacked blocks sat
-   at three different widths and read as misaligned rather than as a set. A grid
-   gives them one width and one top edge; the flex row was fine only while the icon
-   sat beside the text and fixed the height. */
 .minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:var(--s4) var(--s5);margin-top:var(--s5);align-items:start;}
-/* Inside a pillar the copy column is ~600px, which is a hair under what three
-   flex items need — they broke 2 + 1. A three-track grid keeps the row the
-   render's shape and lets the labels wrap instead of the row. */
+
 @media(min-width:901px){
   .pillar .minis{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4);}
 }
-/* CENTRED, like every other icon-over-text block on the site -- JP, 2026-09-09:
-   "icons, the titles and subtitles under there, they're all centered". The icon
-   moved on top of the text earlier today; left-aligning what sits under a centred
-   icon is what made these read as unaligned. justify-items centres the icon and
-   the text box, text-align centres the lines inside it. */
+
 .mini{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s2);align-items:start;
   justify-items:center;text-align:center;}
 .mini svg,.mini img{width:var(--icon-sm);height:var(--icon-sm);display:block;}
@@ -1169,23 +414,14 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .on-cream .mini b{color:var(--ink);}
 .on-cream .mini span{color:var(--grey);}
 
-/* ---------- brand / branding / identity trio ---------- */
-/* .trio-head is gone — that heading is a .band section of its own now, so the
-   rules that centred it inside the cream section have nothing left to style. */
 .trio{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:var(--s4);margin-top:var(--gap-l);align-items:start;
 }
-/* ...but that top margin existed to clear the heading it no longer follows. As
-   the section's first child it would stack on top of the section's own padding
-   and open a gap half again as deep as every other section's. */
+
 .shell > .trio:first-child{margin-top:0;}
 .tcard{text-align:center;position:relative;}
-/* Same call as the process row: the 74px navy circle with its lime keyline is
-   gone and the icon sits on the cream card. The middle card used to invert that
-   keyline to blue so the three read as a sequence — that device goes with the
-   ring, and nothing has replaced it yet. Say so rather than let it disappear
-   quietly; it is a real thing the row is now missing. */
+
 .tcard .cardicon{display:grid;place-items:center;margin:0 auto var(--s4);}
 .tcard .cardicon svg,.tcard .cardicon img{width:var(--icon);height:var(--icon);display:block;}
 .tcard h3{font-family:var(--body);font-weight:600;font-size:var(--t-body);
@@ -1196,71 +432,17 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 }
 .tcard .checks{margin-top:var(--s4);text-align:left;}
 .tcard .checks li{font-size:var(--t-body);font-weight:500;}
-/* The render put "VS" pills on the seams between the three cards. Cut
-   2026-08-09 — the section's point is that these are three different things
-   in one sequence, not three rivals, and the pills argued the opposite. */
+
 @media(max-width:860px){
   .trio{grid-template-columns:1fr;gap:var(--s6);}
   .tcard .checks{max-width:38ch;margin-inline:auto;}
 }
 
-/* ---------- .strip — the half-shade transition band ----------
-   THE RULE: a strip carries the half-shade of the ground it leads INTO, not of
-   the section it sits in. It is a transition, so it takes its colour from the
-   destination.
-     · #difference (cream) ends on a strip, then #service is navy — --navy-2
-     · branding.html ends on a strip into the footer — .to-cream, below
-   The .close on websites.html and google-presence.html used to end on a strip
-   too. It does not any more (2026-08-21): JP wanted the close to read as one
-   continuous ground, so its three claims moved inside .shell above the button
-   and the half-shade came out. Nothing else changed about the rule.
-   Full-bleed — it sits OUTSIDE .shell and its section pays no bottom padding,
-   so it runs edge to edge and flush into whatever follows.
-   --cream-2 is here for the mirror case and is currently unused; a strip only
-   takes it when the next section is cream. */
-/* Padding is section-scale, not --s5. At --s5 the strip read as a thin bar
-   stuck to the bottom of the section rather than a beat of its own; a band
-   needs the air a section gets. */
 .strip{padding-block:var(--sect-band);background:var(--navy-2);}
-/* to-cream was dead CSS until 2026-08-20, and it was written for markup that does
-   not exist: its colour rules target .payoff as a DESCENDANT, but on branding.html
-   the classes sit on ONE element — <div class="strip to-cream payoff">. So only this
-   background rule ever matched and the text kept .payoff's cream colour ON a cream
-   ground. Cream on cream. It shipped unreadable and JP caught it live.
-   Ground is --cream now, not --cream-2, so the strip continues the section above it
-   rather than banding against it — which is what the change was for. Both selector
-   shapes are matched below. --ink on --cream is 11.29:1. */
+
 .strip.to-cream{background:var(--cream);}
 .has-strip{padding-bottom:0;}
 
-/* ---------- section payoff ----------
-   Was .callout until 2026-08-14: a navy panel with a lime disc, floating at the
-   foot of the CREAM #difference section and directly above the NAVY #service
-   pillar. So a navy box on cream, touching navy — the last panel on the site
-   opting out of the ground alternation, and the same defect .endbar had.
-
-   It is not an aside. It is the conclusion of the three cards above it, and it
-   is the hinge into the service section, so it is now the full-width strip
-   rather than a box on the cream. The emphasis the lime disc was carrying is
-   carried by colour on the <b> instead. */
-/* PULL QUOTE, NOT A PARAGRAPH — settled 2026-08-15 after JP compared three
-   builds. It went through two wrong versions first and both failures are worth
-   keeping, because they are the same failure from opposite ends:
-     1. Manrope 700 at 24px across 52ch — display type stretched over a
-        182-character sentence, which reads as a slab. Display faces are cut
-        for short lines.
-     2. Instrument Sans 400 at 18px across 62ch — correct for the length, but
-        it turned the section's conclusion into another paragraph. Removing the
-        panel and then setting the type quietly left the section with no
-        structure at all, which is what "worse than the boxes" meant.
-   The measure is the variable that reconciles them: display type is fine at
-   this length IF the line is short. At 30ch the sentence breaks into a stack
-   of statement lines instead of a slab of prose, and the type can carry the
-   structure the panel used to.
-   The 56px lime rule above it is an editorial divider, not decoration — it is
-   what tells the eye a conclusion has started without drawing a box round it.
-   Lime is the site's existing statement accent (the hero emphasis), not a new
-   colour. */
 .payoff{text-align:center;}
 .strip.payoff{padding-block:var(--sect-compact);}
 .payoff::before{
@@ -1270,29 +452,22 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .payoff p{
   font-family:var(--display);font-weight:600;letter-spacing:-.02em;word-spacing:.06em;
   font-size:var(--d-m);line-height:var(--lh-display);
-  max-width:30ch;margin-inline:auto;color:var(--cream);       /* 17.63:1 on navy-2 */
+  max-width:30ch;margin-inline:auto;color:var(--cream);
 }
-.payoff b{font-weight:700;color:var(--lime);}                 /* 16.46:1 on navy-2 */
+.payoff b{font-weight:700;color:var(--lime);}
 .strip.to-cream .payoff::before,.strip.to-cream.payoff::before{background:var(--blue-ink);}
 .strip.to-cream .payoff p,.strip.to-cream.payoff p{color:var(--ink);}
 .strip.to-cream .payoff b,.strip.to-cream.payoff b{color:var(--blue-ink);}
 
-/* ---------- the ten-part system ---------- */
 .sys-head{text-align:center;}
 .sys-head .h2 span{color:var(--blue-ink);}
-/* .lede is capped at 46ch with no auto margins, which is right everywhere it sits
-   in a left-aligned column. Inside a centred head the text centres but the 46ch
-   BLOCK still hugs the left edge, so the paragraph reads visibly off-axis under
-   its own heading. Centre the block, not just the text. */
+
 .sys-head .lede{margin-inline:auto;}
 .sys{
   display:grid;gap:var(--s4);margin-top:var(--gap-l);
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 }
-/* auto-fit lands on 5 across at the 1280 shell and 1 across on a phone, where ten
-   stacked cards is a very long scroll for very little content. Two fixed tracks
-   below 620 halves it; the floor can't just be lowered instead, because a 160px
-   floor also gives SEVEN columns at full width. */
+
 @media(max-width:620px){
   .sys{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s3);}
   .scard p{font-size:var(--t-small);}
@@ -1304,78 +479,28 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 }
 .scard:hover{border-color:var(--blue);transform:translateY(-3px);
   box-shadow:0 14px 30px -18px rgba(0,10,24,.45);}
-/* Fixed-ratio art box so ten different drawings still line their titles up.
-   SQUARE, not 4:3 (2026-08-11). Four of the eight supplied tiles are 1:1 and in a
-   4:3 box they were height-bound — rendering three-quarters the width of the rest
-   and reading as a different, smaller set. A square box lets those four fill it
-   edge to edge, and costs the wide ones nothing: at 1.5:1 and 1.85:1 they are
-   width-bound either way, so they render at exactly the width they did before and
-   simply gain navy above and below, which is invisible against their own ground. */
+
 .scard .art{
   aspect-ratio:1/1;border-radius:6px;background:var(--navy);overflow:hidden;
   display:grid;place-items:center;margin-bottom:var(--s3);
 }
 .scard .art svg{width:100%;height:100%;display:block;}
-/* All ten are supplied artwork now — the last two drawn SVGs (5 and 10) went on
-   2026-08-11 — and every file is a 640 square with a transparent ground, so
-   contain and cover would fit identically. CONTAIN is kept deliberately: it is
-   what makes a non-square export letterbox rather than crop, and an earlier
-   square-cropped set lost the microphone's speech bubbles and the swatch fan's
-   outer cards to cover. Letterboxing costs nothing against .art's navy.
-   Scale is normalised in the ASSET, not here: each drawing's long edge is 76% of
-   its frame, so ten drawings of different natural proportions read as one set.
-   Anything dropped in later at a different fill will look wrong beside them
-   however this box is styled — re-measure, don't just swap the file. */
+
 .scard .art img{width:100%;height:100%;object-fit:contain;display:block;}
 .scard h3{font-family:var(--body);font-size:var(--t-small);font-weight:600;letter-spacing:.11em;
   text-transform:uppercase;color:var(--blue-ink);line-height:var(--lh-label);}
 .scard p{font-size:var(--t-small);font-weight:500;line-height:var(--lh-support);color:var(--grey);margin-top:var(--s1);}
 
-/* ---------- closing section ----------
-   Was .endbar until 2026-08-14: a navy panel with 10px corners and a lime disc,
-   dropped inside whatever section happened to be last. It replaced the
-   alternation instead of joining it — on websites.html and google-presence.html
-   the last pillar was cream AND the close was cream, so the only thing marking
-   the end of the page was the panel. That is what made three short claims read
-   as three cards stuck onto the page rather than part of it.
-
-   .close carries NO ground of its own. It takes .on-navy / .on-cream from the
-   page like every pillar does, so the rhythm decides how it looks and nothing
-   is chosen per page. On all three service pages the section above is cream, so
-   it lands navy, and every page now runs cream/navy to the footer with no
-   repeat and no floating panel.
-
-   It is a SIBLING of .band, not a replacement: .band always sits directly under
-   the hero, so it is always navy-on-navy and needs --navy-2 to separate itself.
-   .close never is. Give .close a hardcoded background and it breaks the
-   alternation it exists to join. */
-/* .has-strip zeroes the bottom padding so the strip runs flush to the footer,
-   and the page ends navy → navy-2 → footer navy rather than stopping on a gap. */
 .close{text-align:center;}
-/* The close reuses .h-band's markup but NOT its size. .h-band is sized for a
-   short interstitial under the hero (35.2px at 1440); the close is the page's
-   last argument and carries the CTA, so at .h-band it shipped SMALLER than the
-   pillar heads above it (41.6px) and the hierarchy inverted at the end of the
-   page. Measured 2026-08-15. It then went PAST .h2 rather than matching it:
-   with the panel gone, the close has no container, so the heading is the only
-   thing marking the end of the page and it has to be a statement, not a peer.
-   3.2rem against .h2's 2.6rem at 1440. */
+
 .close .h-band{
   font-size:var(--d-statement);letter-spacing:-.03em;line-height:var(--lh-h2);
 }
 .close .eyebrow{margin-bottom:var(--s1);}
-/* THE COLOURED HALF WAS FORCED ONTO ITS OWN LINE, and that -- not wrapping -- is
-   why JP saw "A site / you own" as two lines for a three-word phrase. display:block
-   suits a long close heading and breaks a short one. text-wrap:balance does the
-   same job for the long ones and leaves the short ones alone, so the rule goes. */
+
 .close .h-band span{display:inline;}
 .close .lede{margin-inline:auto;max-width:50ch;font-size:var(--t-body);}
-/* .close--split is branding's variant: it carries an illustration and three
-   values, so it puts the argument beside the picture instead of centring a
-   column. Everything else about .close is inherited, including the ground and
-   the blue second line. The CTA sits OUTSIDE the grid so that stacking on a
-   phone gives copy -> values -> picture -> button, rather than burying the
-   picture under the ask. */
+
 .close--split{text-align:left;}
 .close--split .close-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap:clamp(28px,4.5vw,64px);align-items:center;}
@@ -1392,111 +517,53 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 }
 .close .btn{margin-top:var(--s5);}
 
-/* THE SECOND TONE IS A SYSTEM DEVICE, NOT A HERO PATCH (2026-08-14).
-   --navy-2 existed for exactly one join: the hero and the .band under it, the
-   only two navy blocks on the site that touched. Generalised here on JP's call
-   — two moments of the same ground in a row should step rather than repeat, so
-   the three claims take the half-shade and the close reads as two beats instead
-   of one flat slab. The shared ground device is .strip, above.
-   The strip sits OUTSIDE .shell so it is full-bleed; the .shell inside it keeps
-   the content on the same grid as everything above. */
 .strip .close-three{margin-top:0;}
-/* The close's three sit INSIDE .shell now, above the button, on the section's
-   own navy — JP, 2026-08-21. The strip gave them their air through its own
-   padding; in flow they have to carry it themselves. */
+
 .close .close-three{margin-top:var(--s6);}
 
-/* The three claims that used to be the hero's tick row. Type on the ground,
-   not cards on a panel — the label colour carries the emphasis the tick disc
-   was carrying, which is the whole reason they read as boxes.
-   COLUMN RULES, NOT GAP. Removing the panel removed the only thing grouping
-   the three, and a plain gap did not put it back: three labels floating in a
-   row read as three loose fragments. A 1px divider between columns restores
-   the grouping for the cost of a hairline, and unlike a card it sits IN the
-   ground rather than on top of it. gap is 0 because the rules do the spacing —
-   padding-inline on the children, so the divider sits midway. */
 .close-three{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
 }
-/* NO DIVIDERS — JP, 2026-08-21. The 1px column rule was grouping the three
-   when they sat on their own half-shade band; with the strip gone the whole
-   close is one ground and a hairline is the only thing breaking it. Grouping is
-   carried by the shared ground and the row itself instead. */
+
 .close-three > div{padding-inline:var(--s4);}
-/* The closing three carried no icon slot at all — they were a label and a line.
-   The icon sits ABOVE the label rather than beside it because these three sit in
-   a row of equal columns, and a leading icon would have pushed three different
-   text measures out of alignment with each other. */
+
 .close-three img{width:var(--icon-close);height:var(--icon-close);display:block;
   margin:0 auto var(--s3);}
-/* The icon centred with its label when they stacked was previously overridden to
-   sit hard left — the row divider made each stacked item a band of its own and
-   carried the left edge. With the dividers gone (2026-08-21) a left icon over a
-   centred label is just misaligned, so the icon follows the text again. */
+
 .close-three b{display:block;font-family:var(--body);font-weight:600;
   font-size:var(--t-body);letter-spacing:-.02em;line-height:var(--lh-btn);}
 .close-three span{display:block;font-size:var(--t-small);line-height:var(--lh-support);
   margin-top:var(--s1);}
 
-/* Ground pairings. Every colour here already exists in the palette because the
-   raw one fails a contrast check on that ground — none of this is new.
-   NOTE THE SPLIT: the heading follows its SECTION, the three follow their
-   STRIP. Those are two different grounds — a .close can be on cream while its
-   strip is navy-2 — and keying both off .close.on-cream is how blue-ink ends
-   up on a navy band. */
 .close.on-navy  .h-band span{color:var(--blue-lift);}
 .close.on-cream .h-band{color:var(--ink);}
 .close.on-cream .h-band span{color:var(--blue-ink);}
 
-.close-three b{color:var(--lime);}                           /* 16.97:1 on navy */
-.close-three span{color:var(--cream-mute);}                  /* 7.54:1 on navy */
-.strip.to-cream .close-three b,.strip.to-cream.close-three b{color:var(--blue-ink);}       /* 6.32:1 on cream-2 */
-/* --ink, NOT --grey. Grey is 4.77:1 on cream and passes, but 4.34:1 on cream-2
-   and fails AA for text this size. The half-shade costs it the margin. */
-.strip.to-cream .close-three span,.strip.to-cream.close-three span{color:var(--ink);}         /* 10.28:1 on cream-2 */
+.close-three b{color:var(--lime);}
+.close-three span{color:var(--cream-mute);}
+.strip.to-cream .close-three b,.strip.to-cream.close-three b{color:var(--blue-ink);}
+
+.strip.to-cream .close-three span,.strip.to-cream.close-three span{color:var(--ink);}
 
 @media(max-width:620px){
-  /* Stacked, the vertical rules would be meaningless — the divider rotates to
-     sit between rows instead, so the grouping survives the reflow. */
-  /* STACKED, THE THREE BECOME ROWS LIKE .val AND .mini -- icon on the left,
-     text beside it, everything on one left edge. JP, 2026-08-22: on a phone the
-     home and branding pages read as left-aligned rows while websites and
-     google-presence centred their closing three, so the same kind of content
-     had two different alignments depending on which page you were on. This is
-     the pattern the other two pages already use, so it is the one that spreads.
-     text-align has to be overridden explicitly: .close sets center on the
-     section and it inherits straight through the reflow. */
+
   .close-three{grid-template-columns:1fr;text-align:left;}
   .close-three > div{
     display:grid;grid-template-columns:var(--icon-sm) 1fr;gap:var(--s3);
     align-items:start;padding-inline:0;padding-block:var(--s3);
   }
   .close-three > div:first-child{padding-top:0;}
-  /* The icon spans BOTH rows. Left in row 1 only, it sets that row's height to
-     40px and the sub-line drops to row 2 underneath it -- a gap the size of the
-     icon between a label and its own second line. */
-  /* AND IT GOES BACK TO 40px HERE. --icon-close is 64px for the desktop
-     composition, where the icon sits centred ABOVE its text; stacked, this row
-     is icon-BESIDE-text, which is the exact case the 40px tier was written for
-     and the same shape .val and .mini already use. Leaving it at 64 would also
-     overflow: the grid column beside it is var(--icon-sm). The size follows the
-     composition, and the composition changes at this breakpoint. */
+
   .close-three img{width:var(--icon-sm);height:var(--icon-sm);
     margin:0;grid-row:1/3;align-self:start;}
   .close-three b{grid-column:2;grid-row:1;}
   .close-three span{grid-column:2;grid-row:2;margin-top:2px;}
-  /* The 30ch measure that makes this a pull quote on desktop makes it SEVEN
-     lines on a 390px phone — the tallest block on the page, and a slab again.
-     Below 620 the line has to get longer, not shorter: the column is already
-     narrow, so the measure is doing no work and only the size is. Measured
-     2026-08-15: 7 lines at 21.6px/26ch, 5 at 19.2px/34ch. */
+
   .payoff p{font-size:var(--d-m);line-height:var(--lh-display);max-width:34ch;}
 }
 
-/* ---------- device mockup band ---------- */
 .mock{width:100%;height:auto;display:block;}
 
-/* ---------- footer ---------- */
 .ftr{background:var(--navy);border-top:1px solid var(--rule-d);padding-block:var(--s6) var(--s5);}
 .ftr-top{display:flex;flex-wrap:wrap;gap:20px 34px;align-items:center;}
 .ftr-nav{display:flex;flex-wrap:wrap;gap:22px;margin-inline:auto;}
@@ -1511,28 +578,17 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
   display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;
   font-size:var(--t-small);color:var(--cream-mute);}
 .ftr-bot .legal{display:flex;gap:20px;}
-/* 21px tall as bare inline links — under WCAG 2.2 SC 2.5.8's 24px floor. */
+
 .ftr-bot .legal a{display:inline-flex;align-items:center;min-height:32px;
   font-size:var(--t-small);}
 .ftr-bot .legal a:hover{color:var(--lime);}
 
-/* ============================================================
-   SCROLL MOTION
-   Elements carry data-rise / data-stagger in the markup; app.js adds
-   .in when they enter the viewport, then stops observing — a reveal
-   is one-shot and never re-hides on the way back up.
-
-   The hidden state is gated on html.js, which an inline head script
-   sets. With JavaScript off, none of these rules match: the page
-   renders exactly as it did before, fully visible, and a crawler
-   never meets an invisible-by-default section.
-   ============================================================ */
 :root{
-  --rise-t:.78s;      /* slow enough that the eye catches the arrival */
-  --rise-y:30px;      /* vertical travel */
-  --rise-x:48px;      /* sideways travel, pillar images only */
-  --rise-scale:.955;  /* images settle in rather than just slide */
-  --rise-step:95ms;   /* gap between staggered siblings */
+  --rise-t:.78s;
+  --rise-y:30px;
+  --rise-x:48px;
+  --rise-scale:.955;
+  --rise-step:95ms;
 }
 
 .js [data-rise]{
@@ -1540,16 +596,14 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
   transition:opacity var(--rise-t) var(--ease),transform var(--rise-t) var(--ease);
   will-change:opacity,transform;
 }
-/* the pillars alternate text/image, so each image enters from its own side */
+
 .js [data-rise="left"]{transform:translate3d(calc(var(--rise-x) * -1),0,0) scale(var(--rise-scale));}
 .js [data-rise="right"]{transform:translate3d(var(--rise-x),0,0) scale(var(--rise-scale));}
 .js [data-rise].in{opacity:1;transform:none;will-change:auto;}
 
-/* the four process badges pop rather than slide — they are icons, not copy */
 .js .proc[data-stagger] > *{transform:translate3d(0,var(--rise-y),0) scale(.93);}
 .js .proc[data-stagger].in > *{transform:none;}
 
-/* a group whose children arrive in sequence rather than together */
 .js [data-stagger] > *{
   opacity:0;transform:translate3d(0,var(--rise-y),0);
   transition:opacity var(--rise-t) var(--ease),transform var(--rise-t) var(--ease);
@@ -1563,69 +617,27 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .js [data-stagger].in > :nth-child(7){transition-delay:calc(var(--rise-step) * 6);}
 .js [data-stagger].in > :nth-child(8){transition-delay:calc(var(--rise-step) * 7);}
 
-/* header condenses once the page has moved */
 .hdr{transition:background .28s var(--ease),box-shadow .28s var(--ease);}
 .hdr-in{transition:padding .28s var(--ease);}
 .hdr[data-scrolled="true"]{background:rgba(0,10,24,.97);box-shadow:0 12px 30px rgba(0,10,24,.42);}
-/* The condense is an ABSOLUTE travel, not a ratio. 7px against the 12px rest
-   state is a 10px drop and reads as movement; an 8px rest state was tried on
-   2026-08-25 and left only 2px, which reads as nothing happening at all — the
-   background and shadow change, the bar does not. Whatever the rest value
-   becomes, keep about 10px between the two. The floor is 0px: every control in
-   the row carries min-height:44px, so the bar cannot go below 45px. */
+
 .hdr[data-scrolled="true"] .hdr-in{padding-block:9px;}
 
-/* Phones get a shorter bar. The burger is the tallest thing in the row there and
-   it stays 44px — that is the tap-target floor, not a style choice — so padding
-   is the only lever: 10px gives a 65px bar against the 73px desktop one. The
-   condense keeps its ~10px of travel at 5px scrolled. */
 @media(max-width:620px){
   .hdr-in{padding-block:10px;}
   .hdr[data-scrolled="true"] .hdr-in{padding-block:5px;}
 }
 
-
-/* Parallax rides the decorative layers only — the streak field and the
-   mascot. Never the copy: parallaxed body text hurts reading and is the
-   part of scroll motion that actually makes people queasy.
-   The field is oversized top and bottom so shifting it never exposes an
-   edge inside the hero. app.js writes the transform. */
-/* -22% top and bottom: the field travels 0.22x the scroll, so it needs at least
-   that much slack or its top edge rides down into the hero as a visible seam. */
 .hero-streaks{inset:-22% 0;will-change:transform;}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto;}
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}
-  /* Reveal state is reset here as well as being skipped in app.js. The CSS
-     rule is the one that matters: it holds even if the script never runs. */
+
   .js [data-rise],.js [data-stagger] > *{opacity:1!important;transform:none!important;}
   .hero-streaks{inset:0;}
 }
 
-/* ============================================================
-   SUBPAGES — about / contact / thanks / 404
-   Built on the same tokens as the homepage. No new colours.
-   ============================================================ */
-
-/* language switcher — the site is bilingual, EN and ES target different segments */
-/* NO BORDER, NO PILL (JP, 2026-08-25). It carried a 1px edge and a 6px radius,
-   which made it the only boxed thing in a bar of plain links — tolerable while
-   it was two letters, obvious once a flag went inside it. It now behaves like
-   every other nav item: muted at rest, cream on hover, no ground of its own.
-   min-height went 36px -> 44px in the same pass. It was the one control in the
-   header under the 44px the rest of the bar holds, and with nothing painted
-   around it any more the larger target costs no pixels.
-   Flag + language code, never the flag alone. A flag on a language switcher says
-   COUNTRY, and both sides of this site are worldwide — the code beside it is what
-   keeps the control meaning "language". Drawn inline rather than as flag emoji:
-   Windows ships no flag glyphs at all and renders them as the two letters. */
-/* display and alignment are DECLARED here, not inherited (2026-08-26). This used
-   to be a child of .nav and took inline-flex, centring and min-height from
-   `.nav a:not(.btn)`. Out in the bar it inherited none of that and collapsed to
-   an inline box 20px wide — the flag alone, with the language code beside it
-   contributing nothing and min-height ignored, because min-height does not apply
-   to an inline element. It stands on its own now. */
 .lang-toggle{display:inline-flex;align-items:center;
   font-size:var(--t-small)!important;font-weight:600!important;letter-spacing:.08em;
   padding:7px 0!important;gap:7px!important;line-height:1;
@@ -1633,18 +645,15 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
   transition:color .2s var(--ease);}
 .lang-toggle:hover{color:var(--cream)!important;}
 .lang-toggle::after{display:none!important;}
-/* The hairline stays. Not decoration: the Australian flag is a navy field on a
-   navy bar, and without it the flag's left edge vanishes into the header. */
+
 .lang-toggle .flag{width:20px;height:13px;flex:none;display:block;border-radius:1.5px;
   box-shadow:0 0 0 1px rgba(248,245,230,.22);}
 
-/* page hero — shorter than the homepage hero, no mascot */
 .pagehero{padding-block:var(--sect) var(--sect-compact);}
 .h1-page{font-family:var(--display);font-weight:600;line-height:var(--lh-h1);letter-spacing:-.02em;word-spacing:.04em;
   color:var(--cream);font-size:var(--d-xl);margin:var(--s1) 0 var(--s3);}
 .pagehero .lede{max-width:60ch;}
 
-/* long-form copy */
 .prose{max-width:68ch;}
 .prose p{margin:0 0 20px;font-size:var(--t-body);font-weight:500;line-height:var(--lh-prose);}
 .on-cream .prose p{color:var(--ink);}
@@ -1656,34 +665,14 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .on-navy .prose a:hover{color:var(--lime);}
 .signoff{font-weight:600;margin-top:var(--s4)!important;}
 
-/* SUB-HEADINGS INSIDE A PROSE BLOCK (2026-08-30). about.html was one
-   undifferentiated column of six paragraphs; JP broke it into named movements,
-   which needs a heading level between .h2 (a SECTION head, up to 2.6rem) and the
-   body. This is that level and nothing else uses it. Deliberately NOT .h2: at
-   this measure a section-sized heading inside a 68ch column reads as a new
-   section starting, which is exactly the confusion the split was meant to fix. */
 .prose h2{font-family:var(--display);font-weight:600;letter-spacing:-.015em;
   font-size:var(--d-m);line-height:var(--lh-display);margin:var(--s6) 0 var(--s2);}
 .prose h2:first-child{margin-top:0;}
 .on-cream .prose h2{color:var(--navy);}
 .on-navy .prose h2{color:var(--cream);}
 
-/* small caption line under a block */
 .notecap{margin-top:var(--s4);font-size:var(--t-small);line-height:var(--lh-support);}
 
-/* TWO CLASSES THAT REPLACE THIRTY-FOUR INLINE STYLES. Every one of the odd sizes
-   left on the site -- 13.76px and 14.72px, which are .86rem and .92rem -- was
-   written into a style= attribute in the HTML rather than into a rule, which is
-   why the three-size pass missed them: nothing in the stylesheet said .86rem.
-   .microcap is supporting copy under a block; .dlede is an editorial line that
-   was carrying its own copy of the display settings inline. */
-/* A SERVICE NAME IS ONE THING, SO IT BREAKS AS ONE THING. The homepage hero
-   label lists the four lines separated by a middot, and between 1101 and 1440 it
-   was breaking INSIDE the last one -- "Social media" on the first line and
-   "management" alone on the second. JP, 2026-09-09: "put social media in the
-   second line so you read it all together and it looks more balanced." Making
-   each name unbreakable moves the break to a separator, which is the only place
-   a break in a list of names reads as deliberate. */
 .nb{white-space:nowrap;}
 .microcap{font-size:var(--t-small);line-height:var(--lh-support);}
 .microcap b,.microcap strong{font-weight:600;}
@@ -1692,58 +681,32 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .on-cream .notecap{color:var(--grey);}
 .on-navy .notecap{color:var(--cream-mute);}
 .notecap a{position:relative;color:inherit;text-decoration:underline;text-underline-offset:3px;}
-/* Inline links inside a flowing sentence render ~20px tall, under the 24px AA
-   floor. WCAG 2.5.8 exempts links in a sentence, so this was left alone on
-   2026-08-20 — padding an inline-block inside a paragraph pushes the lines
-   around it apart. An absolutely positioned pseudo-element extends the hit
-   area 7px above and below WITHOUT entering layout, so the text does not move
-   and the target clears the floor. One link per sentence here, so extended
-   areas cannot overlap and steal each other's taps. */
+
 .notecap a::after{content:"";position:absolute;inset:-7px -3px;}
 
-/* contact channels */
 .chans{display:grid;gap:var(--s3);margin-top:var(--s4);}
-/* auto-fit, not a hardcoded 3: the Call channel is gone and a fixed third column
-   would leave a dead gap on the right of every contact block. */
+
 @media(min-width:640px){.chans{grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:18px;}}
 .chan{border:1px solid var(--rule-l);border-radius:12px;padding:20px 22px;background:#fff;}
 .on-navy .chan{background:var(--navy-3);border-color:var(--rule-d);}
 .chan h3{font-family:var(--body);font-size:var(--t-small);font-weight:600;letter-spacing:.11em;
   text-transform:uppercase;color:var(--grey);margin:0 0 8px;}
 .on-navy .chan h3{color:var(--cream-mute);}
-/* These two are the WhatsApp and email links on thanks.html — the only actions
-   on a page someone reaches straight after enquiring, and the most likely of
-   any link on the site to be tapped on a phone. They rendered 20px tall,
-   under the 24px WCAG 2.2 AA floor. Vertical padding only, same fix and same
-   reasoning as .endmeta a. Found 2026-08-20 by mobile-check.py. */
+
 .chan a{font-size:var(--t-body);font-weight:600;color:var(--blue);text-decoration:none;
   word-break:break-word;display:inline-block;padding-block:8px;}
 .on-navy .chan a{color:var(--lime);}
 .chan a:hover{text-decoration:underline;text-underline-offset:3px;}
 
-/* enquiry form */
 .formwrap{max-width:760px;}
 .leadform{margin-top:var(--s4);display:grid;gap:var(--s3);}
 .frow{display:grid;gap:18px;}
 @media(min-width:640px){.frow{grid-template-columns:1fr 1fr;}}
-/* align-content:start ADDED 2026-09-10 (JP: "align it with the bar on the left").
-   .field is a grid, .frow stretches its two children to equal height, and auto rows
-   then absorb the difference -- so whichever field had no hint under it grew its own
-   control to fill the gap. Measured on contact at 1440: the two selects in the
-   budget row were the same 315px wide and sat on the same top edge, but the left one
-   rendered 81.9px tall against 57.2 purely because its neighbour carried a hint line.
-   Rows now keep their natural height and the spare space stays at the bottom of the
-   shorter field, where it is invisible, instead of inside a control, where it is not. */
+
 .field{display:grid;gap:7px;align-content:start;}
-/* .field[hidden] needs the class in the selector to WIN. `.field{display:grid}` and the
-   UA's `[hidden]{display:none}` are both one class/attribute of specificity, and the
-   stylesheet's grid comes later, so a plain [hidden] left the conditional link boxes
-   fully visible with the attribute set. Two selectors, one specificity fix. */
+
 .field[hidden]{display:none;}
-/* A group of radios is labelled by a <span class="label">, not a <label>: a <label> may
-   only point at ONE control, so labelling a yes/no pair with it is invalid and screen
-   readers announce it against the first radio alone. The radiogroup carries
-   aria-labelledby to this span instead, and it has to LOOK like every other label. */
+
 .field label,.field .label{font-size:var(--t-small);font-weight:600;line-height:var(--lh-label);color:var(--cream);}
 .field .opt{font-weight:400;color:var(--cream-mute);}
 .field input,.field textarea{width:100%;font:inherit;font-size:var(--t-body);color:var(--cream);
@@ -1755,20 +718,9 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .field input::placeholder,.field textarea::placeholder{color:var(--cream-mute);}
 .hint{font-size:var(--t-small);line-height:var(--lh-support);color:var(--cream-mute);}
 .leadform .btn{justify-self:start;}
-/* Web3Forms honeypot. MUST be display:none, not merely off-screen (2026-08-13).
-   It was `position:absolute;left:-9999px;opacity:0`, which leaves the checkbox
-   rendered and interactive — a password manager, an autofill pass or a browser
-   AI assistant can tick it, and a ticked `botcheck` is THE documented condition
-   for Web3Forms marking a submission as spam. Spam-marked submissions are
-   accepted and never emailed, with no error anywhere: three of them had
-   accumulated before anyone looked at the dashboard.
-   Their documented snippet is `style="display: none;"` — match it exactly. */
+
 .hp{display:none;}
 
-/* Qualifying form (2026-08-13). The enquiry form became a three-part brief, so it
-   needed grouping, selects and choice lists the short form never had. Same tokens
-   throughout — navy-3 ground, rule-d border, lime focus ring, 9px like the inputs
-   above rather than the 6px buttons use. */
 .fsec{border:0;padding:0;margin:0;display:grid;gap:var(--s3);}
 .fsec + .fsec{margin-top:var(--s5);padding-top:var(--s5);border-top:1px solid var(--rule-d);}
 .fsec legend{padding:0;font-family:var(--body);font-weight:600;font-size:var(--t-body);
@@ -1778,8 +730,7 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .field select{width:100%;font:inherit;font-size:var(--t-body);color:var(--cream);
   background:var(--navy-3);border:1px solid var(--rule-d);border-radius:9px;
   padding:13px 14px;min-height:48px;appearance:none;
-  /* the caret is inline so no request is made for it, and it is drawn in cream
-     because a UA-default arrow renders near-black on this ground and vanishes */
+
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 9' fill='none'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%23F8F5E6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 14px center;background-size:13px;
   padding-right:40px;}
@@ -1793,13 +744,6 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
   transition:border-color .16s ease,background-color .16s ease;}
 .choice:hover{border-color:var(--edge-d);}
 
-/* THE PADDING RESET IS LOAD-BEARING, not tidying. `.field input` above sets
-   width:100% and vertical padding for text inputs, and a checkbox inside a
-   .field matches that selector too. Equal specificity, so only the properties
-   .choice input actually re-declares get overridden — padding was not one of
-   them, so every box inherited it and inflated: measured 26x40 for a control
-   declared 20x20, which is why the checkboxes read as lozenges and the radios
-   as ovals rather than circles. Reset padding and pin both axes. */
 .choice input{appearance:none;-webkit-appearance:none;
   flex:0 0 20px;width:20px;height:20px;min-width:20px;min-height:20px;
   padding:0;margin:0;border:2px solid var(--cream-mute);border-radius:6px;
@@ -1807,10 +751,6 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
   transition:background-color .16s ease,border-color .16s ease;}
 .choice input[type=radio]{border-radius:50%;}
 
-/* Tick drawn with two borders on a rotated box, not a clip-path polygon.
-   The polygon it replaces was a hand-plotted six-point path rendered at 10px,
-   where a half-pixel on any vertex shows; two borders stay crisp at any size
-   and pick up the browser's own antialiasing. */
 .choice input[type=checkbox]::after{content:"";width:5px;height:10px;margin-top:-2px;
   border:solid var(--navy);border-width:0 2.5px 2.5px 0;
   transform:rotate(45deg) scale(0);transform-origin:center;
@@ -1822,25 +762,12 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .choice input[type=checkbox]:checked::after{transform:rotate(45deg) scale(1);}
 .choice input[type=radio]:checked::after{transform:scale(1);}
 
-/* One selected state, said twice quietly rather than once loudly: the card
-   picks up a lime edge and an 8% wash of the same lime, so a ticked row reads
-   at a glance down a column of four without the border alone doing all of it.
-   Literal rgba because the wash is 8% of --lime and color-mix is not assumed. */
 .choice:has(input:checked){border-color:var(--lime);background:rgba(206,255,0,.08);}
 .choice input:focus-visible{outline:3px solid var(--lime);outline-offset:2px;}
 
-/* 1-5 readiness row: a SEGMENTED CONTROL, not five circles with numbers under
-   them. The circle was pure redundancy — the number is the answer, and stacking
-   an empty ring above it asked the reader to parse two marks for one choice.
-   The tile is now the control: the whole 56px block is the hit target, the
-   input is present for the form and the keyboard but never painted. */
 .scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;}
 .scale .choice{position:relative;justify-content:center;text-align:center;gap:0;
-  /* THE 1-5 TILES ARE A CONTROL, NOT A DISPLAY LINE. They carried the display
-     face at 1.15rem, which landed at 18.4px -- half a pixel from --t-body and
-     0.7px from the smallest display step, so it read as a third size that nobody
-     had decided on. As the body face at --t-body it is the same size as every
-     other control on the form and the segmented row loses nothing. */
+
   padding:0;min-height:56px;font-family:var(--body);font-weight:600;
   font-size:var(--t-body);line-height:var(--lh-btn);letter-spacing:-.01em;}
 .scale .choice input{position:absolute;inset:0;width:100%;height:100%;
@@ -1855,127 +782,44 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
   .choice,.choice input,.choice input::after{transition:none;}
 }
 
-/* closing CTA on subpages */
 .endcta{text-align:center;max-width:62ch;}
 .endcta .lede{margin-inline:auto;}
 .endcta .btn{margin-top:var(--s4);}
 .endmeta{margin-top:var(--s4);font-size:var(--t-small);color:var(--cream-mute);}
-/* padding-block is the tap target, not decoration. These are the email and
-   WhatsApp links at the end of about and contact — real actions someone taps on a
-   phone — and they rendered 16px tall, under the 24px WCAG 2.2 AA minimum, sitting
-   7px apart. Vertical padding only: horizontal padding would widen the boxes and
-   close that 7px gap rather than open it. 16 + 8 + 8 = 32px, matching the footer
-   legal links, which were given min-height:32px deliberately. Found 2026-08-20 by
-   mobile-check.py. */
-/* padding-block fixed the HEIGHT of these on 2026-08-20; the pair was still 7px
-   apart horizontally, one under the 8px neighbour minimum, because the only thing
-   between them is a middot and two spaces. margin rather than padding: the boxes
-   need to move apart, and padding would grow the target under the underline
-   instead of opening the gap. 2px a side reads as unchanged and measures 11px. */
+
 .endmeta a{color:var(--cream-dim);text-decoration:underline;text-underline-offset:3px;display:inline-block;padding-block:8px;margin-inline:2px;}
 .endmeta a:hover{color:var(--lime);}
 
-/* plain bulleted list — the checks grid expects an icon column */
 .checks.plain li{grid-template-columns:1fr;}
-/* 404.html routes people out through this list. Its links sat at 23px, a
-   hair under the AA floor, on the one page where the visitor is already lost. */
+
 .checks.plain a{color:inherit;text-decoration:underline;text-underline-offset:3px;
   display:inline-block;padding-block:6px;}
 .on-cream .checks.plain a:hover{color:var(--blue);}
 .on-navy .checks.plain a:hover{color:var(--lime);}
 
-/* ---------- meet the team (about.html) — 2026-09-08 ----------
-   THE GROUND IS --navy-2 AND THAT IS NOT A STYLE CHOICE. This section sits
-   between the navy hero and the cream prose, so on --navy it would meet the hero
-   at a seam between two identical darks — the exact fault rhythm-check found
-   under #service on branding.html. --navy-2 is the raised band shade and it is
-   what puts an edge there.
-   IT IS ALSO BAKED INTO THE PHOTOGRAPHS. The portraits arrive on a studio black
-   of (0,0,0)-(5,5,5); their near-black is lifted to THIS colour and their frame
-   is faded to transparent against it, so the join disappears. Change this
-   background and the two portraits become visible rectangles in a different
-   dark — rebuild them from the source PNGs, do not recolour the section alone.
-   NO LUMA KEY ON THE PHOTOS EITHER: both subjects are wearing black, so keying
-   by brightness deletes the clothing and leaves two floating heads. */
-/* SMALLER, AND SIDE BY SIDE AT EVERY WIDTH — JP, 2026-09-08, on seeing it live.
-   The first build gave each portrait 382px and a line of copy underneath, and
-   the section ran 1023px tall between a hero and a page of prose. This is a
-   name badge, not a gallery: the pictures are 200px, the caption is two lines,
-   and the section takes a little over half the standard block. */
 .team{background:var(--navy-2);padding-block:var(--sect-compact);}
-/* .sys-head paints its heading span --blue-ink, which is mixed for cream and
-   fails against navy. Same job, the navy-safe mix. */
-/* THE HEADING IS CREAM, NOT CREAM-DIM. Every other heading on a navy ground gets
-   its colour from its own context rule -- .h-band, .cta-card h2, .on-navy .prose
-   h2, the pillars -- and this section, added 2026-09-08, had none, so it fell
-   through to --cream-dim, the BODY colour on navy. Measured 2026-09-09: 2 of 45
-   navy headings across both languages were dimmer than the rest, and both were
-   this one. JP saw it without measuring: "should go in a clearer white like the
-   rest of the same sections for the other pages". */
+
 .team .sys-head .h2{color:var(--cream);}
 .team .sys-head .h2 span{color:var(--blue-lift);}
-/* RESTORED 2026-09-09 (JP) TO THE ec4724e GEOMETRY, not re-invented. The name-badge
-   pass (726be08) capped the grid at 440px, which put each portrait near 200px, and
-   removed the single-column break on the grounds that the pair should read as a pair
-   at any size. JP has overruled both: too small to see, and they must run one after
-   the other on a phone, him first. These are the numbers that were here before that
-   pass — 820px cap, --s3 caption pull, 620px break at 340px. DOM order is already
-   JP then Bernardo, so the stack needs no order property.
-   THE PORTRAITS ARE NOW TRUE CUT-OUTS (2026-09-09, second pass). There is no plate
-   and no frame fade left to hide one: the files are 880x1100 silhouettes, 99.4% of
-   their alpha either fully clear or fully opaque, and the transparent area
-   composites onto this ground to within 0.0004 of a luma unit. The 820px cap became
-   940px in the same pass — JP asked for one more step up, and the card draws ~442px
-   against an 880px asset, still under 1:1. Do not re-downscale these files to
-   "match" the display size; that is the change that produced the fade in the first
-   place. THE GROUND STILL MATTERS, but for a smaller reason than before: the cut-out
-   carries no recoloured plate, so changing --navy-2 no longer reveals a rectangle —
-   it only changes what the silhouette sits on. */
+
 .team-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   gap:clamp(20px,4vw,56px);margin-top:var(--gap-l);
   max-width:940px;margin-inline:auto;}
 .team-card{margin:0;text-align:center;}
 .team-card img{width:100%;height:auto;display:block;}
-/* THE NEGATIVE PULL IS GONE, 2026-09-09, and the reason it existed is gone with it.
-   It pulled the caption up into the tail of the bottom fade, because a caption at
-   its natural distance from a picture that had already dissolved read as floating.
-   The cut-outs end on a hard edge, so there is no tail to sit in — a negative
-   margin here now lands the name on the torso. */
-/* The caption sat one step off the photograph and read as attached to it. A step
-   up separates the person from their name -- JP, 2026-09-09: "a little bit more
-   padding in between the images and our names". */
+
 .team-card figcaption{margin-top:var(--s5);}
-/* Bigger and heavier on JP's call, 2026-09-09. Two names on the page carry the
-   only faces on the site; at 600 and 1.2rem they read as a caption under a
-   photograph rather than as the people the section is about. */
+
 .team-card b{display:block;font-family:var(--display);font-weight:700;
   font-size:var(--d-m);line-height:1.15;letter-spacing:-.015em;color:var(--cream);}
-/* The role moves up to the body size and gains weight with the name above it.
-   18px is the reading size in the three-size scale, so this stays on it. */
+
 .team-card .role{display:block;margin-top:8px;font-size:var(--t-body);font-weight:600;
   line-height:var(--lh-label);letter-spacing:.02em;color:var(--blue-lift);}
-/* Two 4:5 portraits side by side stop being faces long before the layout breaks.
-   One column under 620px, and the card capped so a single portrait does not
-   inflate to the full measure. */
+
 @media(max-width:620px){
   .team-grid{grid-template-columns:minmax(0,1fr);max-width:380px;gap:var(--s5);}
 }
 
-/* CONTACT ON A PHONE -- STACKED, AND STILL BLEEDING. The general mobile rule undoes
-   every bleed because pushing a drawing off the screen edge hands verify.py a
-   horizontal scrollbar. That reasoning holds for artwork whose edge is DRAWN; it does
-   not hold here, where the right 13.5% of the frame is blank plate. Stacked and capped
-   at max-width:92%, contact came out 322x181 at 390 -- the smallest hero on a phone,
-   under social's 240 and branding's 270, which is the same complaint in a second place.
-   Running the blank edge off-screen gives 419x235 with the visible drawing unchanged:
-   at 390 the overhang hides source x989 and out, and the navy bars stop at x969.
-   Measured at 430/390/360/320 in both languages -- widest overhang is 56px at 430,
-   still 20px clear of the bars, and nothing overflows at any of them.
-   PLACED LAST ON PURPOSE. Written in its natural home beside the other bleed rules it
-   was (0,2,0) against the max-width:900px stacking block's identical (0,2,0) forty
-   lines below, so source order won and this did nothing at all -- the measurement came
-   back byte-identical to the run before it. Raising specificity instead would have
-   meant a selector that no longer says what it is for. */
 @media(max-width:900px){
   .hero-mascot.art-bleed-wide{width:130%;max-width:none;margin-right:-30%;justify-self:start;}
   .hero-mascot.art-bleed-wide img{width:100%;max-width:none;max-height:none;height:auto;}
