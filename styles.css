@@ -593,6 +593,24 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
    Measure BOTH languages before touching this. Measuring English alone is how you
    ship a number that is 28px wrong on the other half of the site. */
 @media(min-width:1280px){.hero-mascot.art-bleed-wide{--bleed:135%;}}
+/* .bleed-1101 — branding takes the bleed only where it clears (2026-09-10, JP: "are the
+   Hago's in the heros different size? i like the size of the one in the about section").
+   He is right and it is measurable. Hago's DRAWN height at 1440, per hero:
+     about 470 · google 470 · index 440 · branding 379
+   Branding was the outlier at 19% under the one he likes, and the cause is in the render
+   rather than the CSS: that animation resolves on a WIDE wordmark, so its frame has to
+   hold both a tall robot and a wide lockup, and Hago at rest fills only 92% of the frame
+   height. Nothing can be cropped — the union across all 124 frames measures 936x776 of a
+   936x834 canvas.
+   What CAN change is which axis caps it. Unbled, branding is WIDTH-capped by the 463px
+   column at 463x413, leaving 67px of the row unused. With the bleed it becomes
+   HEIGHT-capped at 539x480, and Hago goes 379 -> 441.
+   The gate is Spanish again: at 1024 es/branding leaves 21px, under the 24px floor, while
+   1101 and up clear 46-148px. So below 1101 the bleed is undone and the artwork returns
+   to its column. */
+@media(max-width:1100px){
+  .hero-mascot.art-bleed.bleed-1101{justify-self:start;width:100%;margin-right:0;}
+}
 /* ONE ALIGNMENT FOR EVERY HERO (2026-08-26). Three regimes used to live in this
    gap and the essays arguing for each are deleted rather than kept: every one was
    right about its own page and wrong about the set.
