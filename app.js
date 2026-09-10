@@ -282,6 +282,44 @@ var DESTINATIONS = {
   }
   upgradeHeroToVideo();
 
+  /* CONDITIONAL FIELDS ON THE ENQUIRY FORM (2026-09-10, JP: "do you have a website?
+     y/n. if yes, the space to request the link appears").
+
+     THE LINK BOXES ARE NOT HIDDEN IN THE MARKUP, and that is the whole design. This
+     function hides them on load and reveals them on Yes, so a browser that never runs
+     it shows all three and the form still submits — the same failure-is-silent-and-
+     correct rule the hero video follows. Hiding them in the HTML would make JS a
+     requirement for a form that is the only way to reach the business.
+
+     The Yes radio carries data-yes rather than the script matching its VALUE, because
+     the value is "Yes" in English and "Sí" in Spanish. One script, two languages, no
+     list of translations to keep in step. */
+  (function conditionalFields() {
+    var deps = document.querySelectorAll("[data-when]");
+    if (!deps.length) return;
+    Array.prototype.forEach.call(deps, function (dep) {
+      var radios = document.querySelectorAll(
+        'input[type="radio"][name="' + dep.getAttribute("data-when") + '"]');
+      if (!radios.length) return;
+      function sync() {
+        var on = null;
+        Array.prototype.forEach.call(radios, function (r) { if (r.checked) on = r; });
+        var show = !!(on && on.hasAttribute("data-yes"));
+        dep.hidden = !show;
+        /* A hidden input must not be submitted with a stale value from before the
+           answer changed to No. */
+        if (!show) {
+          var f = dep.querySelector("input, textarea");
+          if (f) f.value = "";
+        }
+      }
+      Array.prototype.forEach.call(radios, function (r) {
+        r.addEventListener("change", sync);
+      });
+      sync();
+    });
+  })();
+
   if (hdr || streaks) {
     window.addEventListener("scroll", function () {
       if (!pending) { pending = true; requestAnimationFrame(frame); }
