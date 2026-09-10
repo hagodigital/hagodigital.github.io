@@ -291,15 +291,26 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .hero .eyebrow .nb + .nb::before,.pagehero .eyebrow .nb + .nb::before{
   content:"·";margin-right:.45em;opacity:.45;
 }
-/* The promise keeps the DISPLAY face it always had -- it just sits above the headline
-   now instead of below it. Set in the body face at label size it read as a third line
-   of the service rail, which is the opposite of what a master promise should do. Cream
-   against the rail's lime, Clash against its Instrument Sans, and its own space above:
-   three separate signals that it is a different kind of line. */
+/* THE PROMISE JOINS THE RAIL -- JP, 2026-09-10: "should be the same typography as
+   Brand identity Websites Google Business Profile Social media management but just
+   keep it in that same white color... and put a - in between so its clear".
+   This REVERSES the Clash-on-its-own-line treatment set earlier the same day. That
+   version separated the two with three signals at once -- different face, different
+   size, its own line -- and separating them was never the problem; telling the reader
+   how they RELATE was. One line, one dash: the four things we sell, and what they are
+   for. Colour is now the only thing that marks the boundary, which is why it is the
+   one thing he kept.
+   THE DASH LEADS, IT DOES NOT TRAIL, for the same reason the middots do: a wrapped
+   line must never end on a hanging separator. It inherits cream, not lime, so it reads
+   as belonging to the promise rather than as a fifth service.
+   The promise is nowrap so it can drop to its own line whole rather than break inside
+   itself, and the markup carries a space before it -- that space is the break
+   opportunity, exactly as between the rail names. */
 .hero .eyebrow .promise,.pagehero .eyebrow .promise{
-  display:block;color:var(--cream);margin-top:10px;
-  font-family:var(--display);font-weight:600;font-size:var(--d-s);
-  letter-spacing:-.02em;line-height:var(--lh-display);word-spacing:.05em;
+  color:var(--cream);white-space:nowrap;
+}
+.hero .eyebrow .promise::before,.pagehero .eyebrow .promise::before{
+  content:"—";margin-right:.45em;opacity:.45;
 }
 .on-navy .sub{color:var(--cream-mute);}
 .lede{font-size:var(--t-body);font-weight:500;line-height:var(--lh-body);margin-top:var(--s3);max-width:46ch;}
