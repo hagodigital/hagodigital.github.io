@@ -10,9 +10,7 @@ var DESTINATIONS = {
 
   privacy:   "privacy.html",
   terms:     "terms.html",
-  email:     "mailto:jp@hagodigital.ai",
-  privacy:   null,
-  terms:     null
+  email:     "mailto:jp@hagodigital.ai"
 };
 
 (function () {
