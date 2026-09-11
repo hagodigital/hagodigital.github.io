@@ -7,6 +7,9 @@ var DESTINATIONS = {
   message:   "contact.html#enquire",
   instagram: null,
   linkedin:  null,
+
+  privacy:   "privacy.html",
+  terms:     "terms.html",
   email:     "mailto:jp@hagodigital.ai",
   privacy:   null,
   terms:     null
