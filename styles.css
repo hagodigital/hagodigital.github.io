@@ -127,6 +127,11 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .hero .eyebrow .promise::before,.pagehero .eyebrow .promise::before{
   content:"—";margin-right:.45em;opacity:.45;
 }
+
+@media(max-width:720px){
+  .hero .eyebrow .nb,.pagehero .eyebrow .nb{display:block;}
+  .hero .eyebrow .nb + .nb::before,.pagehero .eyebrow .nb + .nb::before{content:none;}
+}
 .on-navy .sub{color:var(--cream-mute);}
 .lede{font-size:var(--t-body);font-weight:500;line-height:var(--lh-body);margin-top:var(--s3);max-width:46ch;}
 .on-navy .lede{color:var(--cream-dim);}
