@@ -266,7 +266,7 @@ h1{font-size:var(--d-xl);letter-spacing:-.03em;line-height:var(--lh-h1);color:va
 .hero:has(.art-bleed-wide) .lede{max-width:30ch;}
 
 .hero-mascot.art-bleed-scene{--bleed:148%;
-  margin-right:calc(-1 * var(--pad) - max(27px, 50vw - 613px));}
+  margin-right:calc(-1 * var(--pad) - clamp(27px, 50vw - 613px, 107px));}
 .hero:has(.art-bleed-scene) .lede{max-width:32ch;}
 
 @media(max-width:1100px){
