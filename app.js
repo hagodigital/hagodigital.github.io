@@ -49,15 +49,24 @@ var DESTINATIONS = {
 
     for (i = 0; i < revealed.length; i++) revealed[i].classList.add("in");
   } else {
+
+    var watch = [];
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
-        e.target.classList.add("in");
+        for (var k = 0; k < watch.length; k++) {
+          if (watch[k][0] === e.target) watch[k][1].classList.add("in");
+        }
         io.unobserve(e.target);
       });
 
     }, { rootMargin: "0px 0px -18% 0px", threshold: 0.1 });
-    for (i = 0; i < revealed.length; i++) io.observe(revealed[i]);
+    for (i = 0; i < revealed.length; i++) {
+      var box = revealed[i];
+      while (box.parentElement && getComputedStyle(box).display === "contents") box = box.parentElement;
+      watch.push([box, revealed[i]]);
+      io.observe(box);
+    }
   }
 
   var hdr     = document.querySelector(".hdr");
@@ -203,6 +212,21 @@ var DESTINATIONS = {
         r.addEventListener("change", sync);
       });
       sync();
+    });
+  })();
+
+  (function enquirySubject() {
+    var form = document.querySelector("form.leadform");
+    if (!form) return;
+    form.addEventListener("submit", function () {
+      var subj = form.querySelector('input[name="subject"]');
+      var who = form.querySelector('input[name="name"]');
+      var biz = form.querySelector('input[name="business"]');
+      if (!subj || !who) return;
+      var base = subj.getAttribute("data-base") || subj.value;
+      subj.setAttribute("data-base", base);
+      var tail = [who.value.trim(), biz ? biz.value.trim() : ""].filter(Boolean).join(", ");
+      subj.value = tail ? base + ": " + tail : base;
     });
   })();
 
