@@ -23,6 +23,7 @@
   --icon:80px;
 
   --icon-sm:40px;
+  --icon-card:104px;
 
   --icon-close:64px;
 
@@ -442,7 +443,8 @@ p,li,figcaption,dd,blockquote{text-wrap:pretty;}
 .tcard{text-align:center;position:relative;}
 
 .tcard .cardicon{display:grid;place-items:center;margin:0 auto var(--s4);}
-.tcard .cardicon svg,.tcard .cardicon img{width:var(--icon);height:var(--icon);display:block;}
+
+.tcard .cardicon svg,.tcard .cardicon img{width:var(--icon-card);height:var(--icon-card);display:block;}
 .tcard h3{font-family:var(--body);font-weight:600;font-size:var(--t-body);
   letter-spacing:-.02em;}
 .tcard .role{
