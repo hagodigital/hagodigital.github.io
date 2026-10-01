@@ -846,3 +846,22 @@ p,li,figcaption,dd,blockquote{text-wrap:pretty;}
     margin-left:calc(-1 * var(--pad) + 8px);margin-right:0;justify-self:start;}
   .hero-mascot.art-bleed-wide img,.hero-mascot.art-bleed-wide video{width:100%;max-width:none;max-height:none;height:auto;}
 }
+
+.consent {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+  background: var(--navy); color: var(--cream);
+  border-top: 1px solid var(--cream-mute);
+  padding: 16px max(16px, env(safe-area-inset-left)) calc(16px + env(safe-area-inset-bottom));
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 24px;
+  font-size: 15px; line-height: 1.45;
+}
+.consent[hidden] { display: none; }
+.consent-text { margin: 0; max-width: 46rem; text-wrap: balance; }
+.consent-text a { color: var(--cream); text-decoration: underline; text-underline-offset: 3px; }
+.consent-actions { display: flex; gap: 12px; }
+.consent-btn {
+  min-height: 44px; min-width: 110px; padding: 0 20px; font: inherit; font-weight: 600; cursor: pointer;
+  background: transparent; color: var(--cream); border: 1.5px solid var(--cream); border-radius: 6px;
+}
+.consent-btn--yes { background: var(--lime); color: var(--navy); border-color: var(--lime); }
+.consent-btn:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }

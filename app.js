@@ -241,3 +241,105 @@ var DESTINATIONS = {
     frame();
   }
 })();
+
+var MEASURE = {
+  ga4: "G-BD2JLV83WR",
+  ads: "",
+  adsLeadLabel: "",
+  adsWhatsappLabel: "",
+  meta: ""
+};
+(function measurement() {
+  if (!MEASURE.ga4 && !MEASURE.ads && !MEASURE.meta) return;
+  var STRICT = ["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU",
+    "MT","NL","PL","PT","RO","SK","SI","ES","SE","IS","LI","NO","GB","CH","CO","CL","AR"];
+  var es = (document.documentElement.lang || "").indexOf("es") === 0;
+  var T = es
+    ? { text: "Usamos cookies para medir visitas y la publicidad, solo si aceptas.", more: "Privacidad",
+        yes: "Aceptar", no: "Rechazar", link: "Cookies", label: "Cookies" }
+    : { text: "We use cookies to measure visits and advertising, only if you accept.", more: "Privacy",
+        yes: "Accept", no: "Reject", link: "Cookies", label: "Cookies" };
+  var choice = null;
+  try { choice = localStorage.getItem("hd-consent"); } catch (e) {}
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { dataLayer.push(arguments); };
+  var all = function (v) { return { ad_storage: v, analytics_storage: v, ad_user_data: v, ad_personalization: v }; };
+  gtag("consent", "default", all("granted"));
+  var strict = all("denied"); strict.region = STRICT; strict.wait_for_update = 500;
+  gtag("consent", "default", strict);
+  if (choice === "granted" || choice === "denied") gtag("consent", "update", all(choice));
+  gtag("js", new Date());
+  var cfg = { allow_google_signals: false, allow_ad_personalization_signals: false };
+  if (MEASURE.ga4) gtag("config", MEASURE.ga4, cfg);
+  if (MEASURE.ads) gtag("config", MEASURE.ads, cfg);
+  var s = document.createElement("script");
+  s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + (MEASURE.ga4 || MEASURE.ads);
+  document.head.appendChild(s);
+
+  var metaOn = false;
+  function loadMeta() {
+    if (!MEASURE.meta || metaOn) return;
+    metaOn = true;
+    !function(f,b,e,v,n,t,x){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;x=b.getElementsByTagName(e)[0];x.parentNode.insertBefore(t,x)}(window,
+    document,"script","https://connect.facebook.net/en_US/fbevents.js");
+    fbq("init", MEASURE.meta);
+    fbq("track", "PageView");
+  }
+  var tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+  var needsAsk = /^(Europe\/|Atlantic\/(Canary|Madeira|Azores|Reykjavik|Faroe)|Africa\/Ceuta|Asia\/(Nicosia|Famagusta)|America\/(Bogota|Santiago|Punta_Arenas|Argentina\/|Buenos_Aires|Cordoba|Mendoza|Guadeloupe|Martinique|Cayenne)|Pacific\/Easter|Indian\/(Reunion|Mayotte))/.test(tz);
+
+  if (choice === "granted" || (!choice && !needsAsk)) loadMeta();
+
+  var box = document.createElement("div");
+  box.className = "consent";
+  box.setAttribute("role", "region");
+  box.setAttribute("aria-label", T.label);
+  box.hidden = true;
+  box.innerHTML = '<p class="consent-text">' + T.text + ' <a href="' + (es ? '/es/privacy.html' : '/privacy.html') + '">' + T.more + '</a></p>' +
+    '<div class="consent-actions"><button type="button" class="consent-btn" data-consent="denied">' + T.no +
+    '</button><button type="button" class="consent-btn consent-btn--yes" data-consent="granted">' + T.yes + '</button></div>';
+  document.body.appendChild(box);
+  box.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-consent]");
+    if (!b) return;
+    var c = b.getAttribute("data-consent");
+    try { localStorage.setItem("hd-consent", c); } catch (err) {}
+    box.hidden = true;
+    gtag("consent", "update", all(c));
+    if (c === "granted") loadMeta();
+  });
+  if (!choice && needsAsk) box.hidden = false;
+
+  var legal = document.querySelector(".ftr .legal");
+  if (legal) {
+    var a = document.createElement("a");
+    a.href = "#cookies";
+    a.textContent = T.link;
+    a.addEventListener("click", function (e) { e.preventDefault(); box.hidden = false; box.querySelector("button").focus(); });
+    legal.appendChild(a);
+  }
+
+  document.addEventListener("click", function (e) {
+    var l = e.target.closest("a[href]");
+    if (!l) return;
+    var h = l.getAttribute("href");
+    if (h.indexOf("wa.me/") !== -1) {
+      gtag("event", "whatsapp_click");
+      if (MEASURE.ads && MEASURE.adsWhatsappLabel) gtag("event", "conversion", { send_to: MEASURE.ads + "/" + MEASURE.adsWhatsappLabel });
+      if (window.fbq) fbq("track", "Contact");
+    } else if (h.indexOf("mailto:") === 0) {
+      gtag("event", "contact_email");
+    }
+  });
+  if (/\/thanks(\.html)?$/.test(location.pathname)) {
+    gtag("event", "generate_lead");
+    if (MEASURE.ads && MEASURE.adsLeadLabel) gtag("event", "conversion", { send_to: MEASURE.ads + "/" + MEASURE.adsLeadLabel });
+    if (window.fbq) fbq("track", "Lead");
+  }
+})();
